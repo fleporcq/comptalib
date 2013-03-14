@@ -1,0 +1,117 @@
+body{
+    padding:40px 0 40px 0;
+}
+
+table.accounting.table-bordered{
+    border: none;
+}
+
+table.accounting thead th{
+    text-align: center;
+    font-size: 12px;
+    padding:2px 4px;
+}
+
+table.accounting.recipe thead th{
+    background-color: #dff0d8;
+    color:#468847;
+    border-color:#A7D1A7;
+}
+
+table.accounting.expense thead th{
+    background-color: #f2dede;
+    color:#b94a48;
+    border-color:#DCA5A5;
+}
+
+
+table.accounting thead th.day-column{
+    min-width: 30px;
+}
+table.accounting thead th.label-column{
+    min-width: 300px;
+}
+table.accounting thead th.category-column,
+table.accounting thead th.treasury-column{
+    min-width: 100px;
+}
+
+
+table tr.important{
+    font-weight:bold;
+    background-color: #d9edf7;
+}
+
+table.accounting tr.reports td{
+    background-color:#fcf8e3;
+    color:#c09853;
+}
+
+table.accounting tr td.numeric{
+    text-align: right;
+}
+
+.capitalize:first-letter{
+    text-transform: uppercase;
+}
+
+ul.accounting-books{
+    list-style: none;
+}
+
+ul.accounting-books li{
+    display: inline-block;
+    margin:20px;
+}
+
+ul.accounting-books li a{
+    display: block;
+    background: url('../images/book.png') no-repeat;
+    width:128px;
+    height:128px;
+}
+
+ul.accounting-books li a span{
+    display: block;
+    color:#FFF;
+    font-weight: bold;
+    font-size: 18px;
+    line-height:128px;
+    text-align: center;
+}
+
+ul.accounting-books li a:hover{
+    text-decoration: none;
+}
+
+.modal.large{
+    width: 700px;
+    margin-left: -350px;
+}
+.modal.large .modal-body{
+    max-height:600px;
+}
+a.outline-none:focus {
+    outline: none;
+}
+.slider-selection {
+    background: #d9edf7 !important;
+}
+.slider-handle {
+    width:10px !important;
+    margin-left: -5px !important;
+}
+.slider-handle.disabled {
+    background: none !important;
+    background-color: #999 !important;
+}
+#personalWithdrawalField{
+    display: inline-block;
+    width:220px;
+}
+#personalWithdrawalField input#amountPercentage{
+    width:155px;
+}
+#personalWithdrawalField #amountPercentageLabel{
+    margin-left:5px;
+}

@@ -1,0 +1,45 @@
+@(rowType: String, year: Int, month: Int)(content: Html)
+@import utils.DateUtils
+@import play.i18n._
+@import helper._
+@styles = {
+    <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/bootstrap-slider.css")">
+}
+@scripts = {
+    <script src="@routes.Assets.at("javascripts/bootstrap-slider.js")" type="text/javascript"></script>
+    <script src="@routes.Assets.at("javascripts/accounting.js")" type="text/javascript"></script>
+}
+@main(DateUtils.month(month)+" "+year, styles, scripts) {
+    <div class="navbar navbar-fixed-top">
+        <div class="navbar-inner">
+            <div class="container">
+                <div class="nav-collapse collapse">
+                    <ul class="nav">
+                        <li><a href="@routes.ApplicationController.index()"><i class="icon-home"></i></a></li>
+                    </ul>
+                    <span class="brand">@year </span>
+                    <ul class="nav">
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle brand capitalize" data-toggle="dropdown">@DateUtils.month(month)&nbsp;<b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                @for(m <- 1 to 12) {
+                                    <li><a href="@routes.AccountingController.byMonth(rowType,year,m)" class="capitalize">@{DateUtils.month(m)}</a></li>
+                                }
+                            </ul>
+                        </li>
+                    </ul>
+
+                    <ul class="nav">
+                        <li @if(rowType==ERowType.RECIPE.lower()){class="active"}><a id="recipe-button" href="@routes.AccountingController.byMonth(ERowType.RECIPE.lower(), year, month)">@Messages.get("rowType.recipe")</a></li>
+                        <li @if(rowType==ERowType.EXPENSE.lower()){class="active"}><a id="expense-button" href="@routes.AccountingController.byMonth(ERowType.EXPENSE.lower(), year, month)">@Messages.get("rowType.expense")</a></li>
+                    </ul>
+                    <ul class="nav">
+                        <li><a id="add-row-button" class="outline-none" href="@routes.AccountingController.add(rowType, year,month)"><i class="icon-plus"></i>&nbsp;@Messages.get("action.add")</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    @content
+    @twitterBootstrap.modal("add-row-modal", DateUtils.month(month) + " " + year + " - " + Messages.get("action.accounting." + rowType + ".add"))
+}

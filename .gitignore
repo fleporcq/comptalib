@@ -1,0 +1,12 @@
+logs
+project/project
+project/target
+target
+tmp
+dist
+.cache
+.idea
+.idea_modules
+.settings
+atlassian-ide-plugin.xml
+playdb.lock.db

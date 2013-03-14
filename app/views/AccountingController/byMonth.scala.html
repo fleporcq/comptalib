@@ -1,0 +1,107 @@
+@(rowType: String, year: Int, month: Int, accountingRows: List[AccountingRow], parentCategories: List[Category], childrenCategories: List[Category], leafCategories: List[Category], treasuries: List[Treasury])
+@import utils.DateUtils
+@import java.text.SimpleDateFormat
+@import play.i18n._
+
+@views.html.AccountingController.accounting(rowType, year, month) {
+
+    <table class="table table-bordered table-striped table-hover accounting @rowType">
+        <thead>
+            <tr>
+                <th rowspan="2" class="day-column">@Messages.get("accountingRow.day")</th>
+                <th rowspan="2" class="label-column">@Messages.get("accountingRow.label")</th>
+                <th colspan="@{treasuries.size}" class="rowTreasury">@Messages.get("accountingRow.treasury")</th>
+                @if(ERowType.value(rowType) == ERowType.EXPENSE){
+                    <th rowspan="2" class="category-column">@Messages.get("accountingRow.personalWithdrawal")</th>
+                }
+                @for(parentCategory <- parentCategories) {
+                    @if(parentCategory.hasChildren){
+                        <th colspan="@parentCategory.children.size()" class="rowCategory">@{parentCategory.name}</th>
+                    }else{
+                        <th rowspan="2" class="category-column">@{parentCategory.name}</th>
+                    }
+                }
+            </tr>
+            <tr>
+                @for(treasury <- treasuries) {
+                    <th class="treasury-column">@{treasury.name}</th>
+                }
+                @for(childrenCategory <- childrenCategories) {
+                    <th class="category-column">@{childrenCategory.name}</th>
+                }
+            </tr>
+        </thead>
+        <tfoot>
+            <tr class="important">
+                <td colspan="2">@Messages.get("accounting.monthSum")</td>
+                @for(treasury <- treasuries) {
+                    <td class="numeric">@{treasury.monthSum(year, month)}</td>
+                }
+                @if(ERowType.value(rowType) == ERowType.EXPENSE){
+                    <td class="numeric">@{Accounting.personalWithdrawalMonthSum(year, month)}</td>
+                }
+                @for(leafCategory <- leafCategories) {
+                    <td class="numeric">@{leafCategory.monthSum(year, month)}</td>
+                }
+            </tr>
+        @if(month > 1){
+            <tr class="important">
+                <td colspan="2">@Messages.get("accounting.fromJanuarySum")</td>
+                @for(treasury <- treasuries) {
+                    <td class="numeric">@{treasury.fromJanuarySum(year, month)}</td>
+                }
+                @if(ERowType.value(rowType) == ERowType.EXPENSE){
+                    <td class="numeric">@{Accounting.personalWithdrawalFromJanuarySum(year, month)}</td>
+                }
+                @for(leafCategory <- leafCategories) {
+                    <td class="numeric">@{leafCategory.fromJanuarySum(year, month)}</td>
+                }
+            </tr>
+        }
+        </tfoot>
+        <tbody>
+        @if(month > 1){
+            <tr class="reports">
+                <td>#</td>
+                <td>Report</td>
+                @for(treasury <- treasuries) {
+                    <td class="numeric">@{treasury.fromJanuarySum(year, month-1)}</td>
+                }
+                @if(ERowType.value(rowType) == ERowType.EXPENSE){
+                    <td class="numeric">@{Accounting.personalWithdrawalFromJanuarySum(year, month-1)}</td>
+                }
+                @for(leafCategory <- leafCategories) {
+                    <td class="numeric">@{leafCategory.fromJanuarySum(year, month-1)}</td>
+                }
+            </tr>
+        }
+        @for(accountingRow <- accountingRows) {
+            <tr>
+                <td>@if(accountingRow.date != null){@accountingRow.date.format("dd")}</td>
+                <td class="capitalize">@accountingRow.label</td>
+                @for(treasury <- treasuries) {
+                    <td class="numeric">@if(accountingRow.treasury==treasury){@{accountingRow.getTotalAmount()}}</td>
+                }
+                @if(ERowType.value(rowType) == ERowType.EXPENSE){
+                    <td class="numeric">@if(accountingRow.personalWithdrawal != null){@accountingRow.personalWithdrawal}</td>
+                }
+                @for(leafCategory <- leafCategories) {
+                    <td class="numeric">@if(accountingRow.category==leafCategory){@{accountingRow.amount}}</td>
+                }
+            </tr>
+        }
+        </tbody>
+    </table>
+
+    <div class="navbar navbar-fixed-bottom">
+        <div class="navbar-inner">
+            <div class="container">
+                <ul class="nav">
+                    @for(m <- 1 to 12) {
+                        <li @if(m == month){class="active"}><a href="@routes.AccountingController.byMonth(rowType,year,m)" class="capitalize">@{DateUtils.shortMonth(m)}</a></li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+}

@@ -1,0 +1,13 @@
+@()
+@if(flash.get("success")){
+    <div class="alert alert-success">@flash.get("success")</div>
+}
+@if(flash.get("error")){
+    <div class="alert alert-error">@flash.get("error")</div>
+}
+@if(flash.get("info")){
+    <div class="alert alert-info">@flash.get("info")</div>
+}
+@if(flash.get("warning")){
+    <div class="alert">@flash.get("warning")</div>
+}

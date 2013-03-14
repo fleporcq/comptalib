@@ -1,0 +1,305 @@
+
+categories:
+
+    - !!models.Category
+        id: 1
+        name: Virements internes
+        rowType: RECIPE
+        ordering: 1
+
+    - !!models.Category
+        id: 2
+        name: T.V.A. sur honoraires
+        rowType: RECIPE
+        ordering: 2
+
+    - !!models.Category
+        id: 3
+        name: Honoraires
+        rowType: RECIPE
+        ordering: 3
+
+    - !!models.Category
+        id: 4
+        name: Autres recettes diverses
+        rowType: RECIPE
+        ordering: 4
+
+    - !!models.Category
+        id: 5
+        name: Apport de l'exploitant
+        rowType: RECIPE
+        ordering: 5
+
+    - !!models.Category
+        id: 6
+        name: Virements internes
+        rowType: EXPENSE
+        ordering: 6
+
+    - !!models.Category
+        id: 7
+        name: T.V.A. payée à récupérer
+        rowType: EXPENSE
+        ordering: 7
+
+    - !!models.Category
+        id: 8
+        name: Honoraires rétrocédés
+        rowType: EXPENSE
+        ordering: 8
+
+    - !!models.Category
+        id: 9
+        name: Achats
+        rowType: EXPENSE
+        ordering: 9
+
+    - !!models.Category
+        id: 10
+        name: Frais de personnel
+        rowType: EXPENSE
+        ordering: 10
+
+    - !!models.Category
+        id: 11
+        name: Salaires nets et avantages en nature
+        rowType: EXPENSE
+        ordering: 11
+        parent: !!models.Category
+            id: 10
+
+    - !!models.Category
+        id: 12
+        name: Charges sociales sur salaire (parts patronale et ouvrière)
+        rowType: EXPENSE
+        ordering: 12
+        parent: !!models.Category
+            id: 10
+
+    - !!models.Category
+        id: 13
+        name: Impôts et taxes
+        rowType: EXPENSE
+        ordering: 13
+
+    - !!models.Category
+        id: 14
+        name: Taxe sur la valeur ajoutée
+        rowType: EXPENSE
+        ordering: 14
+        parent: !!models.Category
+            id: 13
+
+    - !!models.Category
+        id: 15
+        name: Taxe professionnelle et autres impôts
+        rowType: EXPENSE
+        ordering: 15
+        parent: !!models.Category
+            id: 13
+
+    - !!models.Category
+        id: 16
+        name: Loyer et charges locatives
+        rowType: EXPENSE
+        ordering: 16
+
+    - !!models.Category
+        id: 17
+        name: Location de matériel et de mobilier
+        rowType: EXPENSE
+        ordering: 17
+
+    - !!models.Category
+        id: 18
+        name: Travaux, fournitures et services extérieurs
+        rowType: EXPENSE
+        ordering: 18
+
+    - !!models.Category
+        id: 19
+        name: Entretien et réparations
+        rowType: EXPENSE
+        ordering: 19
+        parent: !!models.Category
+            id: 18
+
+    - !!models.Category
+        id: 20
+        name: Personnel intérimaire
+        rowType: EXPENSE
+        ordering: 20
+        parent: !!models.Category
+            id: 18
+
+    - !!models.Category
+        id: 21
+        name: Petit outillage
+        rowType: EXPENSE
+        ordering: 21
+        parent: !!models.Category
+            id: 18
+
+    - !!models.Category
+        id: 22
+        name: Chauffage, eau, gaz, électricité
+        rowType: EXPENSE
+        ordering: 22
+        parent: !!models.Category
+            id: 18
+
+    - !!models.Category
+        id: 23
+        name: Honoraires ne constituant pas des rétrocessions
+        rowType: EXPENSE
+        ordering: 23
+        parent: !!models.Category
+            id: 18
+
+    - !!models.Category
+        id: 24
+        name: Primes d'assurances
+        rowType: EXPENSE
+        ordering: 24
+        parent: !!models.Category
+            id: 18
+
+    - !!models.Category
+        id: 25
+        name: Transports et déplacements
+        rowType: EXPENSE
+        ordering: 25
+
+    - !!models.Category
+        id: 26
+        name: Frais de voiture automobile
+        rowType: EXPENSE
+        ordering: 26
+        parent: !!models.Category
+            id: 25
+
+    - !!models.Category
+        id: 27
+        name: Autres frais de déplacement (voyage…)
+        rowType: EXPENSE
+        ordering: 27
+        parent: !!models.Category
+            id: 25
+
+    - !!models.Category
+        id: 28
+        name: Charges sociales personnelles
+        rowType: EXPENSE
+        ordering: 28
+
+    - !!models.Category
+        id: 29
+        name: Obligatoires
+        rowType: EXPENSE
+        ordering: 29
+        parent: !!models.Category
+            id: 28
+
+    - !!models.Category
+        id: 30
+        name: Facultatives
+        rowType: EXPENSE
+        ordering: 30
+        parent: !!models.Category
+            id: 28
+
+    - !!models.Category
+        id: 31
+        name: Frais de réception, de représentation et de congrés
+        rowType: EXPENSE
+        ordering: 31
+
+    - !!models.Category
+        id: 32
+        name: Frais divers de gestion
+        rowType: EXPENSE
+        ordering: 32
+
+    - !!models.Category
+        id: 33
+        name: Fournitures de bureau, documentation, PTT
+        rowType: EXPENSE
+        ordering: 33
+        parent: !!models.Category
+            id: 32
+
+    - !!models.Category
+        id: 34
+        name: Frais d'actes et de contentieux
+        rowType: EXPENSE
+        ordering: 34
+        parent: !!models.Category
+            id: 32
+
+    - !!models.Category
+        id: 35
+        name: Cotisations syndicales et professionnelles
+        rowType: EXPENSE
+        ordering: 35
+        parent: !!models.Category
+            id: 32
+
+    - !!models.Category
+        id: 36
+        name: Autres frais divers de gestion
+        rowType: EXPENSE
+        ordering: 36
+        parent: !!models.Category
+            id: 32
+
+    - !!models.Category
+        id: 37
+        name: Frais financiers
+        rowType: EXPENSE
+        ordering: 37
+
+    - !!models.Category
+        id: 38
+        name: Charges non déductibles immobilisations emprunt (part capital)
+        rowType: EXPENSE
+        ordering: 38
+
+    - !!models.Category
+        id: 39
+        name: Remboursement capital sur emprunt
+        rowType: EXPENSE
+        ordering: 39
+
+    - !!models.Category
+        id: 40
+        name: Apport SCM ou compte commun
+        rowType: EXPENSE
+        ordering: 40
+
+treasuries:
+
+    - !!models.Treasury
+        name: Banques
+        rowType: RECIPE
+        ordering: 1
+
+    - !!models.Treasury
+        name: Caisse
+        rowType: RECIPE
+        ordering: 2
+
+    - !!models.Treasury
+        name: Virements tiers payant
+        rowType: RECIPE
+        ordering: 3
+
+    - !!models.Treasury
+        name: Banques
+        rowType: EXPENSE
+        ordering: 1
+
+    - !!models.Treasury
+        name: Caisse
+        rowType: EXPENSE
+        ordering: 2

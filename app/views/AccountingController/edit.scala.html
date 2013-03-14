@@ -1,0 +1,83 @@
+@(rowType: String, year: Int, month: Int, accountingRowForm: Form[AccountingRow])
+@import utils.DateUtils
+@import java.text.SimpleDateFormat
+@import helper._
+@import play.i18n._
+@implicitFieldConstructor = @{ FieldConstructor(twitterBootstrap.fieldConstructor.render) }
+@views.html.AccountingController.accounting(rowType, year, month) {
+
+
+
+    <h1>@Messages.get("rowType." + rowType)</h1>
+
+    @form(routes.AccountingController.save(rowType, year, month),'class -> "form-horizontal", 'id -> "accountingRow-form") {
+
+        @twitterBootstrap.alerts()
+        @if(accountingRowForm.hasGlobalErrors){<div class="alert alert-error">@accountingRowForm.globalError.message</div>}
+
+        @inputText(accountingRowForm("day"),
+            '_label -> Messages.get("accountingRow.day"),
+            '_help -> Messages.get("constraint.required"),
+            'maxlength -> 2
+        )
+
+        @inputText(accountingRowForm("label"),
+            '_label -> Messages.get("accountingRow.label")
+        )
+
+        @select(
+            accountingRowForm("treasury.id"),
+            options(Treasury.options(ERowType.value(rowType))),
+            '_label -> Messages.get("accountingRow.treasury"),
+            '_default -> "",
+            '_help -> Messages.get("constraint.required")
+        )
+
+        @inputText(accountingRowForm("amount"),
+            '_label -> Messages.get("accountingRow.amount")
+        )
+
+        @if(ERowType.value(rowType) == ERowType.EXPENSE){
+            @input(
+                accountingRowForm("personalWithdrawal"),
+                '_label -> Messages.get("accountingRow.personalWithdrawal")
+            ) { (id, name, value, args) =>
+                <div id="personalWithdrawalField">
+                    <input type="text" id="@id" name="@name" value="@value" @toHtmlArgs(args)>
+                    <br>
+                    <input id="amountPercentage" type="text">
+                    <small id="amountPercentageLabel"></small>
+                </div>
+            }
+        }
+
+        @input(
+            accountingRowForm("category.id"),
+            '_label -> Messages.get("accountingRow.category."+rowType),
+            '_help -> Messages.get("constraint.required")
+        ) { (id, name, value, args) =>
+            <select id="@id" name="@name" @toHtmlArgs(args)>
+                <option></option>
+                @for(parentCategory <- Category.findParents(ERowType.value(rowType))){
+                    @if(parentCategory.hasChildren()){
+                        <optgroup label="@parentCategory.name">
+                            @for(childCategory <- parentCategory.children){
+                                <option @if(Some(childCategory.id.toString())==value){selected="selected"} value="@childCategory.id">@childCategory.name</option>
+                            }
+                        </optgroup>
+                    }else{
+                        <option @if(Some(parentCategory.id.toString())==value){selected="selected"} value="@parentCategory.id">@parentCategory.name</option>
+                    }
+                }
+            </select>
+        }
+
+
+
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">@Messages.get("action.save")</button>
+        </div>
+
+    }
+}
