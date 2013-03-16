@@ -1,4 +1,4 @@
-@(rowType: String, year: Int, month: Int, accountingRowForm: Form[AccountingRow])
+@(rowType: String, year: Int, month: Int, accountingRowForm: Form[forms.AccountingRowForm])
 @import utils.DateUtils
 @import java.text.SimpleDateFormat
 @import helper._
@@ -15,6 +15,14 @@
         @twitterBootstrap.alerts()
         @if(accountingRowForm.hasGlobalErrors){<div class="alert alert-error">@accountingRowForm.globalError.message</div>}
 
+
+
+        <input type="hidden" name="rowType" value="@ERowType.value(rowType)">
+        <input type="hidden" name="year" value="@year">
+        <input type="hidden" name="month" value="@month">
+
+
+
         @inputText(accountingRowForm("day"),
             '_label -> Messages.get("accountingRow.day"),
             '_help -> Messages.get("constraint.required"),
@@ -26,14 +34,14 @@
         )
 
         @select(
-            accountingRowForm("treasury.id"),
+            accountingRowForm("treasuryId"),
             options(Treasury.options(ERowType.value(rowType))),
             '_label -> Messages.get("accountingRow.treasury"),
             '_default -> "",
             '_help -> Messages.get("constraint.required")
         )
 
-        @inputText(accountingRowForm("amount"),
+        @inputText(accountingRowForm("totalAmount"),
             '_label -> Messages.get("accountingRow.amount")
         )
 
@@ -52,7 +60,7 @@
         }
 
         @input(
-            accountingRowForm("category.id"),
+            accountingRowForm("categoryId"),
             '_label -> Messages.get("accountingRow.category."+rowType),
             '_help -> Messages.get("constraint.required")
         ) { (id, name, value, args) =>

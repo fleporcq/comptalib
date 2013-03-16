@@ -61,17 +61,6 @@ public class Category extends Model {
         return leafs;
     }
 
-    public static Map<String, String> options(ERowType type) {
-        LinkedHashMap<String, String> options = new LinkedHashMap<String, String>();
-        List<Category> categories = Category.find(type);
-        for (Category category : categories) {
-            if (!category.hasChildren()) {
-                options.put(category.id.toString(), category.name);
-            }
-        }
-        return options;
-    }
-
     public boolean hasChildren() {
         return this.children.size() > 0;
     }
@@ -82,23 +71,23 @@ public class Category extends Model {
 
     public float monthSum(int year, int month) {
         List<AccountingRow> accountingRows = AccountingRow.month(this.rowType, year, month, this);
-        float sum = 0F;
+        int sum = 0;
         for (AccountingRow accountingRow : accountingRows) {
             if (accountingRow.amount != null) {
                 sum += accountingRow.amount;
             }
         }
-        return sum;
+        return sum / 100F;
     }
 
     public float fromJanuarySum(int year, int month) {
         List<AccountingRow> accountingRows = AccountingRow.fromJanuary(this.rowType, year, month, this);
-        float sum = 0F;
+        int sum = 0;
         for (AccountingRow accountingRow : accountingRows) {
             if (accountingRow.amount != null) {
                 sum += accountingRow.amount;
             }
         }
-        return sum;
+        return sum / 100F;
     }
 }

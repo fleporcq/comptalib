@@ -2,9 +2,10 @@ package models;
 
 import com.avaje.ebean.ExpressionList;
 import com.avaje.ebean.Page;
+import forms.AccountingRowForm;
 import org.joda.time.DateTime;
-import play.data.validation.Constraints;
 import play.db.ebean.Model;
+import utils.DateUtils;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -13,14 +14,13 @@ import java.util.List;
 @Entity
 public class AccountingRow extends Model {
 
+
     public static Finder<Long, AccountingRow> find = new Finder<Long, AccountingRow>(Long.class, AccountingRow.class);
     @Id
     public Long id;
-    @Constraints.Required
     public String label;
-    @Constraints.Required
-    public Float amount;
-    public Float personalWithdrawal;
+    public Integer amount;
+    public Integer personalWithdrawal;
     @Enumerated(EnumType.STRING)
     public ERowType rowType;
     @ManyToOne
@@ -28,6 +28,30 @@ public class AccountingRow extends Model {
     @ManyToOne
     public Treasury treasury;
     public Date date;
+
+    public AccountingRow(AccountingRowForm form) {
+        this.id = form.id;
+        this.label = form.label;
+        if (form.personalWithdrawal != null) {
+            this.personalWithdrawal = Math.round(form.personalWithdrawal * 100);
+        }
+        if (form.totalAmount != null && form.personalWithdrawal != null) {
+            this.amount = Math.round((form.totalAmount - form.personalWithdrawal) * 100);
+            if (this.amount == 0) {
+                this.amount = null;
+            }
+        } else if (form.totalAmount != null) {
+            this.amount = Math.round(form.totalAmount * 100);
+        }
+        this.rowType = form.rowType;
+        this.date = DateUtils.createDate(form.year, form.month, form.day).getTime();
+        Category category = new Category();
+        category.id = form.categoryId;
+        this.category = category;
+        Treasury treasury = new Treasury();
+        treasury.id = form.treasuryId;
+        this.treasury = treasury;
+    }
 
     public static Page<AccountingRow> page(int page, int pageSize, String sortBy, String order, String filter) {
         return find.where()
@@ -88,23 +112,37 @@ public class AccountingRow extends Model {
 
     public Float getTotalAmount() {
         if (personalWithdrawal != null && amount != null) {
+            return (amount + personalWithdrawal) / 100F;
+        } else if (amount != null) {
+            return getAmount();
+        } else if (personalWithdrawal != null) {
+            return getPersonalWithdrawal();
+        }
+        return null;
+    }
+	
+    public Integer getTotalAmountIntValue() {
+        if (personalWithdrawal != null && amount != null) {
             return amount + personalWithdrawal;
-        } else if(amount != null){
+        } else if (amount != null) {
             return amount;
-        } else if(personalWithdrawal != null){
+        } else if (personalWithdrawal != null) {
             return personalWithdrawal;
         }
         return null;
     }
-
-    @Override
-    public void save() {
-        if (personalWithdrawal != null) {
-            amount = amount - personalWithdrawal;
-            if(amount == 0){
-                amount = null;
-            }
+	
+    public Float getAmount() {
+        if (amount != null) {
+            return amount / 100F;
         }
-        super.save();
+        return null;
+    }
+
+    public Float getPersonalWithdrawal() {
+        if (personalWithdrawal != null) {
+            return personalWithdrawal / 100F;
+        }
+        return null;
     }
 }

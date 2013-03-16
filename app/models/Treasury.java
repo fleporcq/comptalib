@@ -41,19 +41,19 @@ public class Treasury extends Model {
 
     public float monthSum(int year, int month) {
         List<AccountingRow> accountingRows = AccountingRow.month(this.rowType, year, month, this);
-        float sum = 0F;
+        int sum = 0;
         for (AccountingRow accountingRow : accountingRows) {
-            sum += accountingRow.getTotalAmount();
+            sum += accountingRow.getTotalAmountIntValue();
         }
-        return sum;
+        return sum / 100F;
     }
 
     public float fromJanuarySum(int year, int month) {
         List<AccountingRow> accountingRows = AccountingRow.fromJanuary(this.rowType, year, month, this);
-        float sum = 0F;
+        int sum = 0;
         for (AccountingRow accountingRow : accountingRows) {
-            sum += accountingRow.getTotalAmount();
+            sum += accountingRow.getTotalAmountIntValue();
         }
-        return sum;
+        return sum / 100F;
     }
 }

@@ -80,13 +80,13 @@
                 <td>@if(accountingRow.date != null){@accountingRow.date.format("dd")}</td>
                 <td class="capitalize">@accountingRow.label</td>
                 @for(treasury <- treasuries) {
-                    <td class="numeric">@if(accountingRow.treasury==treasury){@{accountingRow.getTotalAmount()}}</td>
+                    <td class="numeric">@if(accountingRow.treasury==treasury){@accountingRow.getTotalAmount()}</td>
                 }
                 @if(ERowType.value(rowType) == ERowType.EXPENSE){
-                    <td class="numeric">@if(accountingRow.personalWithdrawal != null){@accountingRow.personalWithdrawal}</td>
+                    <td class="numeric">@if(accountingRow.personalWithdrawal != null){@accountingRow.getPersonalWithdrawal()}</td>
                 }
                 @for(leafCategory <- leafCategories) {
-                    <td class="numeric">@if(accountingRow.category==leafCategory){@{accountingRow.amount}}</td>
+                    <td class="numeric">@if(accountingRow.category==leafCategory){@accountingRow.getAmount()}</td>
                 }
             </tr>
         }

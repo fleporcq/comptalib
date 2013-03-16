@@ -8,9 +8,9 @@ $(function(){
    });
 
     var toggleCategories = function(){
-        var amount = $('#add-row-modal').find('input#amount').val();
+        var amount = $('#add-row-modal').find('input#totalAmount').val();
         var personalWithdrawal = $('#add-row-modal').find('input#personalWithdrawal').val();
-        var $category = $('#add-row-modal').find('select#category_id');
+        var $category = $('#add-row-modal').find('select#categoryId');
         if($.isNumeric(amount) && $.isNumeric(personalWithdrawal) && Number(amount) <= Number(personalWithdrawal)){
             $category.val("").attr("disabled", "disabled").next(".help-inline").hide();
         }else{
@@ -28,7 +28,7 @@ $(function(){
     }
 
     var computePercentage = function(){
-        var amount = $('#add-row-modal').find('input#amount').val();
+        var amount = $('#add-row-modal').find('input#totalAmount').val();
         var personalWithdrawal = $('#add-row-modal').find('input#personalWithdrawal').val();
         var $amountPercentage =  $('#add-row-modal').find('input#amountPercentage');
         if($.isNumeric(amount) && $.isNumeric(personalWithdrawal) && amount > 0){
@@ -58,7 +58,7 @@ $(function(){
             "tooltip": "hide"
 
         }).on('slide', function(e){
-            var amount = $('#add-row-modal').find('input#amount').val();
+            var amount = $('#add-row-modal').find('input#totalAmount').val();
             var $personalWithdrawal = $('#add-row-modal').find('input#personalWithdrawal');
             if($.isNumeric(amount) && amount > 0){
                 var personalWithdrawal =  Number((amount  * amountPercentageSlider.getValue() / 100).toFixed(2));
@@ -74,7 +74,7 @@ $(function(){
     }
 
     $('#add-row-modal').on('shown', function () {
-        $('#add-row-modal').find('#accountingRow-form').find(':input').first().focus();
+        $('#add-row-modal').find('#accountingRow-form').find(':input[type!=hidden]').first().focus();
     });
     $('#add-row-modal').on('show', function () {
         initSlider();
@@ -129,7 +129,7 @@ $(function(){
                 toggleCategories();
                 if($form.find('.alert-success').length > 0){
                     $('table.accounting').load(location.href + ' table.accounting');
-                    $('#add-row-modal').find('#accountingRow-form').find(':input').first().focus();
+                    $('#add-row-modal').find('#accountingRow-form').find(':input[type!=hidden]').first().focus();
                 }else{
                     $('#add-row-modal').find('#accountingRow-form').find('.control-group.error').first().find(':input').focus();
                 }
@@ -140,7 +140,7 @@ $(function(){
 
 
 
-    $('#add-row-modal').on('keyup', 'input#amount, input#personalWithdrawal',function(){
+    $('#add-row-modal').on('keyup', 'input#totalAmount, input#personalWithdrawal',function(){
         computePercentage();
         toggleCategories();
     });

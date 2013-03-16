@@ -26,23 +26,23 @@ public class Accounting {
 
     public static float personalWithdrawalMonthSum(int year, int month) {
         List<AccountingRow> accountingRows = AccountingRow.month(ERowType.EXPENSE, year, month);
-        float sum = 0F;
+        int sum = 0;
         for (AccountingRow accountingRow : accountingRows) {
             if (accountingRow.personalWithdrawal != null) {
                 sum += accountingRow.personalWithdrawal;
             }
         }
-        return sum;
+        return sum / 100F;
     }
 
     public static float personalWithdrawalFromJanuarySum(int year, int month) {
         List<AccountingRow> accountingRows = AccountingRow.fromJanuary(ERowType.EXPENSE, year, month);
-        float sum = 0F;
+        int sum = 0;
         for (AccountingRow accountingRow : accountingRows) {
             if (accountingRow.personalWithdrawal != null) {
                 sum += accountingRow.personalWithdrawal;
             }
         }
-        return sum;
+        return sum / 100F;
     }
 }
