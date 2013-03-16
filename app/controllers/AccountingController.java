@@ -6,6 +6,7 @@ import models.Category;
 import models.ERowType;
 import models.Treasury;
 import org.apache.commons.lang3.StringUtils;
+import play.data.DynamicForm;
 import play.data.Form;
 import play.i18n.Messages;
 import play.mvc.Controller;
@@ -15,7 +16,9 @@ import views.html.AccountingController.byMonth;
 import views.html.AccountingController.edit;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class AccountingController extends Controller {
 
@@ -47,8 +50,7 @@ public class AccountingController extends Controller {
     }
 
     public static Result add(String rowType, int year, int month) {
-        ERowType eRowType = ERowType.value(rowType);
-        if (eRowType == null) {
+        if (ERowType.value(rowType) == null) {
             return notFound();
         }
 
@@ -77,6 +79,24 @@ public class AccountingController extends Controller {
             flash("success", Messages.get("alert.accounting.save.success", new SimpleDateFormat("dd/MM/yyyy").format(accountingRow.date), accountingRow.label, accountingRow.getTotalAmount()));
             return redirect(routes.AccountingController.add(rowType, year, month));
         }
+    }
+
+    public static Result delete(String rowType, int year, int month) {
+        DynamicForm form = Form.form().bindFromRequest();
+
+        for (Map.Entry<String, String> entry : form.data().entrySet()){
+            String key = entry.getKey();
+            if(key != null && key.startsWith("accountingRowIds[")){
+                AccountingRow accountingRow = AccountingRow.find.byId(Long.valueOf(entry.getValue()));
+                accountingRow.delete();
+            }
+        }
+
+        return redirect(routes.AccountingController.byMonth(rowType, year, month));
+    }
+
+    public static Result edit(String rowType, int year, int month) {
+        return redirect(routes.AccountingController.byMonth(rowType, year, month));
     }
 
 

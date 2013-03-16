@@ -15,40 +15,36 @@
         @twitterBootstrap.alerts()
         @if(accountingRowForm.hasGlobalErrors){<div class="alert alert-error">@accountingRowForm.globalError.message</div>}
 
-
-
         <input type="hidden" name="rowType" value="@ERowType.value(rowType)">
         <input type="hidden" name="year" value="@year">
         <input type="hidden" name="month" value="@month">
 
-
-
         @inputText(accountingRowForm("day"),
-            '_label -> Messages.get("accountingRow.day"),
+            '_label -> Messages.get("accountingRowForm.day"),
             '_help -> Messages.get("constraint.required"),
             'maxlength -> 2
         )
 
         @inputText(accountingRowForm("label"),
-            '_label -> Messages.get("accountingRow.label")
+            '_label -> Messages.get("accountingRowForm.label")
         )
 
         @select(
             accountingRowForm("treasuryId"),
             options(Treasury.options(ERowType.value(rowType))),
-            '_label -> Messages.get("accountingRow.treasury"),
+            '_label -> Messages.get("accountingRowForm.treasury"),
             '_default -> "",
             '_help -> Messages.get("constraint.required")
         )
 
         @inputText(accountingRowForm("totalAmount"),
-            '_label -> Messages.get("accountingRow.amount")
+            '_label -> Messages.get("accountingRowForm.amount")
         )
 
         @if(ERowType.value(rowType) == ERowType.EXPENSE){
             @input(
                 accountingRowForm("personalWithdrawal"),
-                '_label -> Messages.get("accountingRow.personalWithdrawal")
+                '_label -> Messages.get("accountingRowForm.personalWithdrawal")
             ) { (id, name, value, args) =>
                 <div id="personalWithdrawalField">
                     <input type="text" id="@id" name="@name" value="@value" @toHtmlArgs(args)>
@@ -61,7 +57,7 @@
 
         @input(
             accountingRowForm("categoryId"),
-            '_label -> Messages.get("accountingRow.category."+rowType),
+            '_label -> Messages.get("accountingRowForm.category."+rowType),
             '_help -> Messages.get("constraint.required")
         ) { (id, name, value, args) =>
             <select id="@id" name="@name" @toHtmlArgs(args)>

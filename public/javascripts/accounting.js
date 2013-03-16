@@ -27,12 +27,21 @@ $(function(){
         }
     }
 
+    var validateDecimal = function (value)    {
+        var RE = /^\d*\.?\d{0,2}$/
+        if(RE.test(value)){
+           return true;
+        }else{
+           return false;
+        }
+    };
+
     var computePercentage = function(){
         var amount = $('#add-row-modal').find('input#totalAmount').val();
         var personalWithdrawal = $('#add-row-modal').find('input#personalWithdrawal').val();
         var $amountPercentage =  $('#add-row-modal').find('input#amountPercentage');
         if($.isNumeric(amount) && $.isNumeric(personalWithdrawal) && amount > 0){
-            var percentage =  Math.round(personalWithdrawal / amount * 100);
+            var percentage =  Number(personalWithdrawal / amount * 100).toFixed(1);
             $amountPercentage.slider('setValue', percentage);
 
             updatePercentageLabel(percentage);
@@ -143,5 +152,15 @@ $(function(){
     $('#add-row-modal').on('keyup', 'input#totalAmount, input#personalWithdrawal',function(){
         computePercentage();
         toggleCategories();
+    });
+
+    $('#add-row-modal').on('keypress', 'input#totalAmount, input#personalWithdrawal',function(e){
+        var code = (e.keyCode ? e.keyCode : e.which);
+        var char = String.fromCharCode(code);
+        var value =   $(this).val() + char;
+        if(!validateDecimal(value)){
+            e.preventDefault();
+        }
+
     });
 });

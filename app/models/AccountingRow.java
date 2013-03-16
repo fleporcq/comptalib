@@ -110,6 +110,8 @@ public class AccountingRow extends Model {
         return accountingRows;
     }
 
+
+
     public Float getTotalAmount() {
         if (personalWithdrawal != null && amount != null) {
             return (amount + personalWithdrawal) / 100F;

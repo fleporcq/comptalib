@@ -33,17 +33,27 @@ action.home=Accueil
 action.save=Enregistrer
 action.close=Fermer
 action.add=Ajouter
+action.delete=Supprimer
+action.edit=Modifier
 action.accounting.recipe.add=Ajouter une recette
 action.accounting.expense.add=Ajouter une dépense
+
 
 # --- Accounting Row
 accountingRow.label=Libellé
 accountingRow.day=Jour
-accountingRow.amount=Montant
 accountingRow.treasury=Trésorerie
-accountingRow.category.expense=Poste de dépense
-accountingRow.category.recipe=Type de recette
-accountingRow.personalWithdrawal=Prélèvements personnels
+accountingRow.personalWithdrawals=Prélèvements personnels
+
+# --- Accounting Row Form
+accountingRowForm.label=Libellé
+accountingRowForm.day=Jour
+accountingRowForm.treasury=Trésorerie
+accountingRowForm.amount=Montant
+accountingRowForm.category.expense=Poste de dépense
+accountingRowForm.category.recipe=Type de recette
+accountingRowForm.personalWithdrawal=Prélèvement personnel
+
 accounting.monthSum=Totaux du mois
 accounting.fromJanuarySum=Totaux depuis Janvier
 
