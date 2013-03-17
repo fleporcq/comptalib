@@ -199,12 +199,20 @@ $(function(){
         }
         $(this).toggleClass("selected");
          $checked = $('table.accounting').find('input[type=checkbox]:checked');
-         var $button = $('#delete-row-button');
+         var $deleteButton = $('#delete-row-button');
+         var $editButton = $('#edit-row-button');
+
          if($checked.length > 0){
-            $button.removeClass("disabled");
-         }else if(!$button.hasClass('disabled')){
-            $button.addClass("disabled");
+            $deleteButton.removeClass("disabled");
+         }else if(!$deleteButton.hasClass('disabled')){
+            $deleteButton.addClass("disabled");
          }
+
+         if($checked.length == 1){
+             $editButton.removeClass("disabled");
+          }else if(!$editButton.hasClass('disabled')){
+             $editButton.addClass("disabled");
+          }
     });
 
 
