@@ -31,6 +31,8 @@ error.accountingRow.category.mustBeEmpty = Ne doit pas être renseigné
 # --- Actions
 action.home=Accueil
 action.save=Enregistrer
+action.cancel=Annuler
+action.confirm=Confirmer
 action.close=Fermer
 action.add=Ajouter
 action.delete=Supprimer
@@ -65,4 +67,6 @@ rowType.recipe = Recette
 rowType.expense = Dépense
 
 alert.save.error = Veuillez corriger les erreurs.
+
+confirm.accountingRows.delete = Êtes-vous sûr de vouloir supprimer les lignes sélectionnées ?<br> Attention, cette action sera irréversible.
 

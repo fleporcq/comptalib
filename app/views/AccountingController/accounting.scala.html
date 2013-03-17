@@ -36,8 +36,8 @@
                     </ul>
                     <ul class="nav pull-right">
                         <li class="divider-vertical"></li>
-                        <li><a id="delete-row-button" href="javascript:$('#accountingRows-form').attr('action','@routes.AccountingController.delete(rowType, year, month)').submit();"><i class="icon-trash"></i>&nbsp;@Messages.get("action.delete")</a></li>
-                        <li><a id="edit-row-button" href="javascript:$('#accountingRows-form').attr('action','@routes.AccountingController.edit(rowType, year, month)').submit();"><i class="icon-edit"></i>&nbsp;@Messages.get("action.edit")</a></li>
+                        <li><a id="delete-row-button" class="disabled" href="#" data-message="@Messages.get("confirm.accountingRows.delete")" data-cancel="@Messages.get("action.cancel")" data-confirm="@Messages.get("action.confirm")"><i class="icon-trash"></i>&nbsp;@Messages.get("action.delete")</a></li>
+                        <li><a id="edit-row-button" class="disabled"><i class="icon-edit"></i>&nbsp;@Messages.get("action.edit")</a></li>
                         <li><a id="add-row-button" class="outline-none" href="@routes.AccountingController.add(rowType, year, month)"><i class="icon-plus"></i>&nbsp;@Messages.get("action.add")</a></li>
                     </ul>
                 </div>

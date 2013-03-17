@@ -1,11 +1,6 @@
 $(function(){
-   $('#add-row-button').on('click', function(e){
-       e.preventDefault();
-       $('#add-row-modal').find('.modal-body').load($(this).attr('href') + ' #accountingRow-form',function(){
-           $('#add-row-modal').find('#accountingRow-form').find('.form-actions').remove();
-           $('#add-row-modal').modal();
-       });
-   });
+
+
 
     var toggleCategories = function(){
         var amount = $('#add-row-modal').find('input#totalAmount').val();
@@ -82,6 +77,14 @@ $(function(){
 
     }
 
+   $('#add-row-button').on('click', function(e){
+       e.preventDefault();
+       $('#add-row-modal').find('.modal-body').load($(this).attr('href') + ' #accountingRow-form',function(){
+           $('#add-row-modal').find('#accountingRow-form').find('.form-actions').remove();
+           $('#add-row-modal').modal();
+       });
+   });
+
     $('#add-row-modal').on('shown', function () {
         $('#add-row-modal').find('#accountingRow-form').find(':input[type!=hidden]').first().focus();
     });
@@ -146,7 +149,32 @@ $(function(){
         });
     });
 
+    $('#delete-row-button').on('click', function(e){
+        e.preventDefault();
+        if(!$(this).hasClass('disabled')){
+            bootbox.confirm($(this).attr("data-message"), $(this).attr("data-cancel"), $(this).attr("data-confirm"), function(yes) {
+              if(yes){
+                $('#accountingRows-form').submit();
+              }
+            });
+        }
+    });
 
+
+
+    $('#accountingRows-form').on('submit', function(e){
+        e.preventDefault();
+        $.ajax({
+            url: $(this).attr('action'),
+            type: $(this).attr('method'),
+            data: $(this).serialize(),
+            success: function(data) {
+                var $holder = $('<div></div>').html(data);
+                var $table = $holder.find('table.accounting');
+                $('table.accounting').html($table.html());
+            }
+        });
+    });
 
 
     $('#add-row-modal').on('keyup', 'input#totalAmount, input#personalWithdrawal',function(){
@@ -163,4 +191,22 @@ $(function(){
         }
 
     });
+
+    $('table.accounting').on('click', 'tr.accounting-row',function(e){
+        $checkbox = $(this).find('td').first().find('input[type=checkbox]');
+        if(e.target != $checkbox.get(0)){
+            $checkbox.prop("checked", !$checkbox.prop("checked"));
+        }
+        $(this).toggleClass("selected");
+         $checked = $('table.accounting').find('input[type=checkbox]:checked');
+         var $button = $('#delete-row-button');
+         if($checked.length > 0){
+            $button.removeClass("disabled");
+         }else if(!$button.hasClass('disabled')){
+            $button.addClass("disabled");
+         }
+    });
+
+
+
 });
