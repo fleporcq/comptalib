@@ -4,16 +4,46 @@
 @import play.i18n._
 
 @views.html.AccountingController.accounting(rowType, year, 0) {
-    <div class="navbar navbar-fixed-bottom">
-        <div class="navbar-inner">
-            <div class="container">
-                <ul class="nav">
-                    @for(m <- 1 to 12) {
-                        <li><a href="@routes.AccountingController.byMonth(rowType,year,m)" class="capitalize">@{DateUtils.shortMonth(m)}</a></li>
+    <table class="table table-bordered table-striped table-hover accounting @rowType">
+        <thead>
+            <tr>
+                <th rowspan="2" class="month-column">@Messages.get("accountingSummary.month")</th>
+                <th colspan="@{treasuries.size}" class="rowTreasury">@Messages.get("accountingRow.treasury")</th>
+                @if(ERowType.value(rowType) == ERowType.EXPENSE){
+                    <th rowspan="2" class="category-column">@Messages.get("accountingRow.personalWithdrawals")</th>
+                }
+                @for(parentCategory <- parentCategories) {
+                    @if(parentCategory.hasChildren){
+                        <th colspan="@parentCategory.children.size()" class="rowCategory">@{parentCategory.name}</th>
+                    }else{
+                        <th rowspan="2" class="category-column">@{parentCategory.name}</th>
                     }
-                    <li class="active"><a href="@routes.AccountingController.summary(rowType,year)">@Messages.get("accounting.summary")</a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
+                }
+            </tr>
+            <tr>
+                @for(treasury <- treasuries) {
+                    <th class="treasury-column">@{treasury.name}</th>
+                }
+                @for(childrenCategory <- childrenCategories) {
+                    <th class="category-column">@{childrenCategory.name}</th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @for(month <- 1 to 12) {
+                <tr class="accounting-row">
+                    <td class="capitalize"><a href="@routes.AccountingController.byMonth(rowType, year, month)">@DateUtils.month(month)</a></td>
+                    @for(treasury <- treasuries) {
+                        <td class="numeric">@CurrencyUtils.format(treasury.monthSum(year, month))</td>
+                    }
+                    @if(ERowType.value(rowType) == ERowType.EXPENSE){
+                        <td class="numeric">@CurrencyUtils.format(Accounting.personalWithdrawalMonthSum(year, month))</td>
+                    }
+                    @for(leafCategory <- leafCategories) {
+                        <td class="numeric">@CurrencyUtils.format(leafCategory.monthSum(year, month))</td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
 }

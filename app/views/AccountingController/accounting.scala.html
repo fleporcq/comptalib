@@ -48,5 +48,17 @@
         </div>
     </div>
     @content
+    <div class="navbar navbar-fixed-bottom">
+        <div class="navbar-inner">
+            <div class="container">
+                <ul class="nav">
+                    @for(m <- 1 to 12) {
+                    <li @if(m == month){class="active"}><a href="@routes.AccountingController.byMonth(rowType,year,m)" class="capitalize">@{DateUtils.shortMonth(m)}</a></li>
+                    }
+                    <li @if(month == 0){class="active"}><a href="@routes.AccountingController.summary(rowType,year)">@Messages.get("accounting.summary")</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
     @twitterBootstrap.modal("add-row-modal", DateUtils.month(month) + " " + year + " - " + Messages.get("action.accounting." + rowType + ".add"))
 }

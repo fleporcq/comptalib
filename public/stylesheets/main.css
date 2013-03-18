@@ -31,6 +31,9 @@ table.accounting thead th.day-column{
 table.accounting thead th.label-column{
     min-width: 300px;
 }
+table.accounting thead th.month-column{
+    min-width: 200px;
+}
 table.accounting thead th.category-column,
 table.accounting thead th.treasury-column{
     min-width: 100px;
