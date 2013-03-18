@@ -1,5 +1,6 @@
 package forms;
 
+import models.AccountingRow;
 import models.ERowType;
 import play.data.validation.Constraints;
 import play.data.validation.ValidationError;
@@ -25,6 +26,30 @@ public class AccountingRowForm {
     public Float personalWithdrawal;
     public Long categoryId;
 
+    public AccountingRowForm() {
+
+    }
+
+    public AccountingRowForm(AccountingRow accountingRow) {
+        if (accountingRow != null) {
+            this.id = accountingRow.id;
+            this.rowType = accountingRow.rowType;
+            this.year = accountingRow.getYear();
+            this.month = accountingRow.getMonth();
+            this.day = accountingRow.getDay();
+            this.label = accountingRow.label;
+            if (accountingRow.treasury != null) {
+                this.treasuryId = accountingRow.treasury.id;
+            }
+            this.totalAmount = accountingRow.getTotalAmount();
+            this.personalWithdrawal = accountingRow.getPersonalWithdrawal();
+            if (accountingRow.category != null) {
+                this.categoryId = accountingRow.category.id;
+            }
+
+        }
+    }
+
     public List<ValidationError> validate() {
         List<ValidationError> errors = new ArrayList<ValidationError>();
         if (!DateUtils.checkDay(year, month, day)) {
@@ -46,7 +71,7 @@ public class AccountingRowForm {
                     errors.add(new ValidationError("categoryId", Messages.get("error.accountingRow.category.mustBeEmpty")));
                 }
             }
-        }else{
+        } else {
             if (categoryId == null) {
                 errors.add(new ValidationError("categoryId", Messages.get("error.required")));
             }

@@ -8,6 +8,7 @@ import play.db.ebean.Model;
 import utils.DateUtils;
 
 import javax.persistence.*;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -32,9 +33,11 @@ public class AccountingRow extends Model {
     public AccountingRow(AccountingRowForm form) {
         this.id = form.id;
         this.label = form.label;
+
         if (form.personalWithdrawal != null) {
             this.personalWithdrawal = Math.round(form.personalWithdrawal * 100);
         }
+
         if (form.totalAmount != null && form.personalWithdrawal != null) {
             this.amount = Math.round((form.totalAmount - form.personalWithdrawal) * 100);
             if (this.amount == 0) {
@@ -144,6 +147,30 @@ public class AccountingRow extends Model {
     public Float getPersonalWithdrawal() {
         if (personalWithdrawal != null) {
             return personalWithdrawal / 100F;
+        }
+        return null;
+    }
+
+    public Integer getYear(){
+        if(date != null){
+            SimpleDateFormat formatYear = new SimpleDateFormat("yyyy");
+            return Integer.valueOf(formatYear.format(date));
+        }
+        return null;
+    }
+
+    public Integer getMonth(){
+        if(date != null){
+            SimpleDateFormat formatMonth = new SimpleDateFormat("MM");
+            return Integer.valueOf(formatMonth.format(date));
+        }
+        return null;
+    }
+
+    public Integer getDay(){
+        if(date != null){
+            SimpleDateFormat formatDay = new SimpleDateFormat("dd");
+            return Integer.valueOf(formatDay.format(date));
         }
         return null;
     }

@@ -54,7 +54,9 @@ table.accounting tr.selected td{
     background-color:#0088cc;
     color:#FFF;
 }
-
+table.accounting tr.selected td a{
+    color:#FFF;
+}
 .capitalize:first-letter{
     text-transform: uppercase;
 }

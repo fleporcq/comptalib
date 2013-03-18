@@ -85,6 +85,16 @@ $(function(){
        });
    });
 
+    $('table.accounting').on('click', '.edit-row-link', function(e){
+        e.preventDefault();
+        $('#add-row-modal').find('.modal-body').load($(this).attr('href') + ' #accountingRow-form',function(){
+            $('#add-row-modal').find('#accountingRow-form').find('.form-actions').remove();
+            toggleCategories();
+            $('#add-row-modal').modal();
+        });
+    });
+
+
     $('#add-row-modal').on('shown', function () {
         $('#add-row-modal').find('#accountingRow-form').find(':input[type!=hidden]').first().focus();
     });
@@ -160,6 +170,15 @@ $(function(){
         }
     });
 
+    $('#edit-row-button').on('click', function(e){
+        e.preventDefault();
+        if(!$(this).hasClass('disabled')){
+            var $checked = $('table.accounting').find('input[type=checkbox]:checked');
+            if($checked.length == 1){
+                $($checked.get(0)).parentsUntil("tr").parent().find("a.edit-row-link").trigger("click");
+            }
+        }
+    });
 
 
     $('#accountingRows-form').on('submit', function(e){
@@ -193,26 +212,28 @@ $(function(){
     });
 
     $('table.accounting').on('click', 'tr.accounting-row',function(e){
-        $checkbox = $(this).find('td').first().find('input[type=checkbox]');
-        if(e.target != $checkbox.get(0)){
-            $checkbox.prop("checked", !$checkbox.prop("checked"));
+        if(e.target.nodeName != "A"){
+            if(e.target.nodeName != "INPUT"){
+                var $checkbox = $(this).find('td').first().find('input[type=checkbox]');
+                $checkbox.prop("checked", !$checkbox.prop("checked"));
+            }
+            $(this).toggleClass("selected");
+             var $checked = $('table.accounting').find('input[type=checkbox]:checked');
+             var $deleteButton = $('#delete-row-button');
+             var $editButton = $('#edit-row-button');
+
+             if($checked.length > 0){
+                $deleteButton.removeClass("disabled");
+             }else if(!$deleteButton.hasClass('disabled')){
+                $deleteButton.addClass("disabled");
+             }
+
+             if($checked.length == 1){
+                 $editButton.removeClass("disabled");
+              }else if(!$editButton.hasClass('disabled')){
+                 $editButton.addClass("disabled");
+              }
         }
-        $(this).toggleClass("selected");
-         $checked = $('table.accounting').find('input[type=checkbox]:checked');
-         var $deleteButton = $('#delete-row-button');
-         var $editButton = $('#edit-row-button');
-
-         if($checked.length > 0){
-            $deleteButton.removeClass("disabled");
-         }else if(!$deleteButton.hasClass('disabled')){
-            $deleteButton.addClass("disabled");
-         }
-
-         if($checked.length == 1){
-             $editButton.removeClass("disabled");
-          }else if(!$editButton.hasClass('disabled')){
-             $editButton.addClass("disabled");
-          }
     });
 
 

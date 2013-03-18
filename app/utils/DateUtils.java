@@ -1,6 +1,8 @@
 package utils;
 
 
+import org.apache.commons.lang3.text.WordUtils;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -30,10 +32,11 @@ public class DateUtils {
     }
 
     public static String month(int month) throws ParseException {
-        return new SimpleDateFormat("MMMM").format(new SimpleDateFormat("MM").parse(String.valueOf(month)));
+        return WordUtils.capitalize(new SimpleDateFormat("MMMM").format(new SimpleDateFormat("MM").parse(String.valueOf(month))));
+
     }
 
     public static String shortMonth(int month) throws ParseException {
-        return new SimpleDateFormat("MMM").format(new SimpleDateFormat("MM").parse(String.valueOf(month)));
+        return WordUtils.capitalize(new SimpleDateFormat("MMM").format(new SimpleDateFormat("MM").parse(String.valueOf(month))));
     }
 }

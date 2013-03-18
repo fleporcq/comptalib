@@ -16,7 +16,6 @@ import views.html.AccountingController.byMonth;
 import views.html.AccountingController.edit;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -62,6 +61,8 @@ public class AccountingController extends Controller {
 
     }
 
+
+
     public static Result save(String rowType, int year, int month) {
 
         if (!DateUtils.checkYear(year) || !DateUtils.checkMonth(month)) {
@@ -75,9 +76,16 @@ public class AccountingController extends Controller {
             return ok(edit.render(rowType, year, month, accountingRowForm));
         } else {
             AccountingRow accountingRow = new AccountingRow(accountingRowForm.get());
-            accountingRow.save();
-            flash("success", Messages.get("alert.accounting.save.success", new SimpleDateFormat("dd/MM/yyyy").format(accountingRow.date), accountingRow.label, accountingRow.getTotalAmount()));
-            return redirect(routes.AccountingController.add(rowType, year, month));
+            if(accountingRow.id == null){
+                accountingRow.save();
+                flash("success", Messages.get("alert.accounting.save.success", new SimpleDateFormat("dd/MM/yyyy").format(accountingRow.date), accountingRow.label, accountingRow.getTotalAmount()));
+                return redirect(routes.AccountingController.add(rowType, year, month));
+            }else{
+                accountingRow.update();
+                flash("success", Messages.get("alert.accounting.update.success", new SimpleDateFormat("dd/MM/yyyy").format(accountingRow.date), accountingRow.label, accountingRow.getTotalAmount()));
+                return redirect(routes.AccountingController.edit(accountingRow.id));
+            }
+
         }
     }
 
@@ -95,8 +103,21 @@ public class AccountingController extends Controller {
         return redirect(routes.AccountingController.byMonth(rowType, year, month));
     }
 
-    public static Result edit(String rowType, int year, int month) {
-        return redirect(routes.AccountingController.byMonth(rowType, year, month));
+    public static Result edit(Long accountingRowId) {
+        if(accountingRowId == null){
+            notFound();
+        }
+        AccountingRow accountingRow = AccountingRow.find.byId(accountingRowId);
+        if(accountingRow == null){
+            notFound();
+        }
+
+        AccountingRowForm form = new AccountingRowForm(accountingRow);
+        Form<AccountingRowForm> accountingRowForm = Form.form(AccountingRowForm.class).fill(form);
+        String rowType = accountingRow.rowType.lower();
+        int year = accountingRow.getYear();
+        int month = accountingRow.getMonth();
+        return ok(edit.render(rowType, year, month, accountingRowForm));
     }
 
 

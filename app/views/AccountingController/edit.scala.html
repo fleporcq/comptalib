@@ -15,9 +15,12 @@
         @twitterBootstrap.alerts()
         @if(accountingRowForm.hasGlobalErrors){<div class="alert alert-error">@accountingRowForm.globalError.message</div>}
 
+        <input type="hidden" name="id" value="@accountingRowForm.field("id").value()">
         <input type="hidden" name="rowType" value="@ERowType.value(rowType)">
         <input type="hidden" name="year" value="@year">
         <input type="hidden" name="month" value="@month">
+
+
 
         @inputText(accountingRowForm("day"),
             '_label -> Messages.get("accountingRowForm.day"),
