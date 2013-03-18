@@ -10,3 +10,5 @@ dist
 .settings
 atlassian-ide-plugin.xml
 playdb.lock.db
+playdb.h2.db
+playdb.trace.db
