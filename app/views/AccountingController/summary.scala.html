@@ -29,18 +29,44 @@
                 }
             </tr>
         </thead>
+        <tfoot>
+            <tr class="important">
+                <td>@Messages.get("accounting.fromJanuarySum")</td>
+                @for(treasury <- treasuries) {
+                    <td class="numeric">@CurrencyUtils.format(treasury.fromJanuarySum(year, 12))</td>
+                }
+                @if(ERowType.value(rowType) == ERowType.EXPENSE){
+                    <td class="numeric">@CurrencyUtils.format(Accounting.personalWithdrawalFromJanuarySum(year, 12))</td>
+                }
+                @for(leafCategory <- leafCategories) {
+                    <td class="numeric">@CurrencyUtils.format(leafCategory.fromJanuarySum(year, 12))</td>
+                }
+            </tr>
+        </tfoot>
         <tbody>
             @for(month <- 1 to 12) {
                 <tr class="accounting-row">
                     <td class="capitalize"><a href="@routes.AccountingController.byMonth(rowType, year, month)">@DateUtils.month(month)</a></td>
                     @for(treasury <- treasuries) {
-                        <td class="numeric">@CurrencyUtils.format(treasury.monthSum(year, month))</td>
+                        <td class="numeric">
+                            @defining(treasury.monthSum(year, month)) { monthSum =>
+                                @if(monthSum>0){@CurrencyUtils.format(monthSum)}
+                            }
+                        </td>
                     }
                     @if(ERowType.value(rowType) == ERowType.EXPENSE){
-                        <td class="numeric">@CurrencyUtils.format(Accounting.personalWithdrawalMonthSum(year, month))</td>
+                        <td class="numeric">
+                            @defining(Accounting.personalWithdrawalMonthSum(year, month)) { monthSum =>
+                                @if(monthSum>0){@CurrencyUtils.format(monthSum)}
+                            }
+                        </td>
                     }
                     @for(leafCategory <- leafCategories) {
-                        <td class="numeric">@CurrencyUtils.format(leafCategory.monthSum(year, month))</td>
+                        <td class="numeric">
+                            @defining(leafCategory.monthSum(year, month)) { monthSum =>
+                                @if(monthSum>0){@CurrencyUtils.format(monthSum)}
+                            }
+                        </td>
                     }
                 </tr>
             }
