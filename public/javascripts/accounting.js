@@ -7,7 +7,7 @@ $(function(){
         var personalWithdrawal = $('#add-row-modal').find('input#personalWithdrawal').val();
         var $category = $('#add-row-modal').find('select#categoryId');
         if($.isNumeric(amount) && $.isNumeric(personalWithdrawal) && Number(amount) <= Number(personalWithdrawal)){
-            $category.val("").attr("disabled", "disabled").next(".help-inline").hide();
+            $category.attr("disabled", "disabled").next(".help-inline").hide();
         }else{
             $category.removeAttr("disabled").next(".help-inline").show();
         }

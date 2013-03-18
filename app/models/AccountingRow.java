@@ -20,8 +20,8 @@ public class AccountingRow extends Model {
     @Id
     public Long id;
     public String label;
-    public Integer amount;
-    public Integer personalWithdrawal;
+    public int amount;
+    public int personalWithdrawal;
     @Enumerated(EnumType.STRING)
     public ERowType rowType;
     @ManyToOne
@@ -40,9 +40,6 @@ public class AccountingRow extends Model {
 
         if (form.totalAmount != null && form.personalWithdrawal != null) {
             this.amount = Math.round((form.totalAmount - form.personalWithdrawal) * 100);
-            if (this.amount == 0) {
-                this.amount = null;
-            }
         } else if (form.totalAmount != null) {
             this.amount = Math.round(form.totalAmount * 100);
         }
@@ -116,39 +113,19 @@ public class AccountingRow extends Model {
 
 
     public Float getTotalAmount() {
-        if (personalWithdrawal != null && amount != null) {
-            return (amount + personalWithdrawal) / 100F;
-        } else if (amount != null) {
-            return getAmount();
-        } else if (personalWithdrawal != null) {
-            return getPersonalWithdrawal();
-        }
-        return null;
+        return (amount + personalWithdrawal) / 100F;
     }
 	
     public Integer getTotalAmountIntValue() {
-        if (personalWithdrawal != null && amount != null) {
             return amount + personalWithdrawal;
-        } else if (amount != null) {
-            return amount;
-        } else if (personalWithdrawal != null) {
-            return personalWithdrawal;
-        }
-        return null;
     }
 	
     public Float getAmount() {
-        if (amount != null) {
-            return amount / 100F;
-        }
-        return null;
+        return amount / 100F;
     }
 
     public Float getPersonalWithdrawal() {
-        if (personalWithdrawal != null) {
-            return personalWithdrawal / 100F;
-        }
-        return null;
+        return personalWithdrawal / 100F;
     }
 
     public Integer getYear(){

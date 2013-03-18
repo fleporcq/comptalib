@@ -8,9 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 @Entity
 public class Category extends Model {
@@ -73,9 +71,7 @@ public class Category extends Model {
         List<AccountingRow> accountingRows = AccountingRow.month(this.rowType, year, month, this);
         int sum = 0;
         for (AccountingRow accountingRow : accountingRows) {
-            if (accountingRow.amount != null) {
-                sum += accountingRow.amount;
-            }
+            sum += accountingRow.amount;
         }
         return sum / 100F;
     }
@@ -84,9 +80,7 @@ public class Category extends Model {
         List<AccountingRow> accountingRows = AccountingRow.fromJanuary(this.rowType, year, month, this);
         int sum = 0;
         for (AccountingRow accountingRow : accountingRows) {
-            if (accountingRow.amount != null) {
-                sum += accountingRow.amount;
-            }
+            sum += accountingRow.amount;
         }
         return sum / 100F;
     }

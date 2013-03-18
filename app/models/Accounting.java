@@ -15,7 +15,7 @@ public class Accounting {
 
     public int year;
 
-    public static List<Accounting> all(){
+    public static List<Accounting> all() {
         String sql = "SELECT YEAR(date) AS year FROM accounting_row GROUP BY year ORDER BY year ASC";
         RawSql rawSql = RawSqlBuilder.parse(sql).create();
         Query<Accounting> query = Ebean.find(Accounting.class);
@@ -23,14 +23,11 @@ public class Accounting {
     }
 
 
-
     public static float personalWithdrawalMonthSum(int year, int month) {
         List<AccountingRow> accountingRows = AccountingRow.month(ERowType.EXPENSE, year, month);
         int sum = 0;
         for (AccountingRow accountingRow : accountingRows) {
-            if (accountingRow.personalWithdrawal != null) {
-                sum += accountingRow.personalWithdrawal;
-            }
+            sum += accountingRow.personalWithdrawal;
         }
         return sum / 100F;
     }
@@ -39,9 +36,7 @@ public class Accounting {
         List<AccountingRow> accountingRows = AccountingRow.fromJanuary(ERowType.EXPENSE, year, month);
         int sum = 0;
         for (AccountingRow accountingRow : accountingRows) {
-            if (accountingRow.personalWithdrawal != null) {
-                sum += accountingRow.personalWithdrawal;
-            }
+            sum += accountingRow.personalWithdrawal;
         }
         return sum / 100F;
     }

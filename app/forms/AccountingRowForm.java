@@ -43,6 +43,9 @@ public class AccountingRowForm {
             }
             this.totalAmount = accountingRow.getTotalAmount();
             this.personalWithdrawal = accountingRow.getPersonalWithdrawal();
+            if (this.personalWithdrawal == 0) {
+                this.personalWithdrawal = null;
+            }
             if (accountingRow.category != null) {
                 this.categoryId = accountingRow.category.id;
             }
