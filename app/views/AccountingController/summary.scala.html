@@ -1,0 +1,19 @@
+@(rowType: String, year: Int, parentCategories: List[Category], childrenCategories: List[Category], leafCategories: List[Category], treasuries: List[Treasury])
+@import utils.DateUtils
+@import utils.CurrencyUtils
+@import play.i18n._
+
+@views.html.AccountingController.accounting(rowType, year, 0) {
+    <div class="navbar navbar-fixed-bottom">
+        <div class="navbar-inner">
+            <div class="container">
+                <ul class="nav">
+                    @for(m <- 1 to 12) {
+                        <li><a href="@routes.AccountingController.byMonth(rowType,year,m)" class="capitalize">@{DateUtils.shortMonth(m)}</a></li>
+                    }
+                    <li class="active"><a href="@routes.AccountingController.summary(rowType,year)">@Messages.get("accounting.summary")</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+}

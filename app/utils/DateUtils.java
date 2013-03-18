@@ -32,11 +32,16 @@ public class DateUtils {
     }
 
     public static String month(int month) throws ParseException {
-        return WordUtils.capitalize(new SimpleDateFormat("MMMM").format(new SimpleDateFormat("MM").parse(String.valueOf(month))));
-
+        if(month > 0 && month < 13){
+            return WordUtils.capitalize(new SimpleDateFormat("MMMM").format(new SimpleDateFormat("MM").parse(String.valueOf(month))));
+        }
+        return "";
     }
 
     public static String shortMonth(int month) throws ParseException {
-        return WordUtils.capitalize(new SimpleDateFormat("MMM").format(new SimpleDateFormat("MM").parse(String.valueOf(month))));
+        if(month > 0 && month < 13){
+            return WordUtils.capitalize(new SimpleDateFormat("MMM").format(new SimpleDateFormat("MM").parse(String.valueOf(month))));
+        }
+        return "";
     }
 }

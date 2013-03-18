@@ -5,7 +5,6 @@ import models.AccountingRow;
 import models.Category;
 import models.ERowType;
 import models.Treasury;
-import org.apache.commons.lang3.StringUtils;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.i18n.Messages;
@@ -14,6 +13,7 @@ import play.mvc.Result;
 import utils.DateUtils;
 import views.html.AccountingController.byMonth;
 import views.html.AccountingController.edit;
+import views.html.AccountingController.summary;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -30,22 +30,32 @@ public class AccountingController extends Controller {
         if (eRowType == null) {
             return notFound();
         }
-        try {
-            eRowType = ERowType.valueOf(StringUtils.upperCase(rowType));
-        } catch (IllegalArgumentException ex) {
-            return notFound();
-        }
         if (!DateUtils.checkYear(year) || !DateUtils.checkMonth(month)) {
             return notFound();
         }
         List<AccountingRow> accountingRows = AccountingRow.month(eRowType, year, month);
-
         List<Category> parentCategories = Category.findParents(eRowType);
         List<Category> childCategories = Category.findChildren(eRowType);
         List<Category> leafCategories = Category.findLeafs(eRowType);
         List<Treasury> treasuries = Treasury.findByType(eRowType);
 
         return ok(byMonth.render(rowType, year, month, accountingRows, parentCategories, childCategories, leafCategories, treasuries));
+    }
+
+    public static Result summary(String rowType, int year) {
+        ERowType eRowType = ERowType.value(rowType);
+        if (eRowType == null) {
+            return notFound();
+        }
+        if (!DateUtils.checkYear(year)) {
+            return notFound();
+        }
+        List<Category> parentCategories = Category.findParents(eRowType);
+        List<Category> childCategories = Category.findChildren(eRowType);
+        List<Category> leafCategories = Category.findLeafs(eRowType);
+        List<Treasury> treasuries = Treasury.findByType(eRowType);
+
+        return ok(summary.render(rowType, year, parentCategories, childCategories, leafCategories, treasuries));
     }
 
     public static Result add(String rowType, int year, int month) {
