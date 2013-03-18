@@ -26,7 +26,7 @@ public class AccountingRowForm {
     public Long categoryId;
 
     public List<ValidationError> validate() {
-        List<ValidationError> errors = new ArrayList<>();
+        List<ValidationError> errors = new ArrayList<ValidationError>();
         if (!DateUtils.checkDay(year, month, day)) {
             errors.add(new ValidationError("day", Messages.get("error.invalid")));
         }
