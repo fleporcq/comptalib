@@ -4,9 +4,8 @@
 @import helper._
 @import play.i18n._
 @implicitFieldConstructor = @{ FieldConstructor(twitterBootstrap.fieldConstructor.render) }
-@views.html.AccountingController.accounting(rowType, year, month) {
 
-
+@main(DateUtils.month(month)+" "+year) {
 
     <h1>@Messages.get("rowType." + rowType)</h1>
 
@@ -20,8 +19,6 @@
         <input type="hidden" name="year" value="@year">
         <input type="hidden" name="month" value="@month">
 
-
-
         @inputText(accountingRowForm("day"),
             '_label -> Messages.get("accountingRowForm.day"),
             '_help -> Messages.get("constraint.required"),
@@ -29,7 +26,8 @@
         )
 
         @inputText(accountingRowForm("label"),
-            '_label -> Messages.get("accountingRowForm.label")
+            '_label -> Messages.get("accountingRowForm.label"),
+            'maxlength -> 255
         )
 
         @select(
@@ -41,7 +39,8 @@
         )
 
         @inputText(accountingRowForm("totalAmount"),
-            '_label -> Messages.get("accountingRowForm.amount")
+            '_label -> Messages.get("accountingRowForm.amount"),
+            'maxlength -> 7
         )
 
         @if(ERowType.value(rowType) == ERowType.EXPENSE){
@@ -52,7 +51,7 @@
                 <div id="personalWithdrawalField">
                     <input type="text" id="@id" name="@name" value="@value" @toHtmlArgs(args)>
                     <br>
-                    <input id="amountPercentage" type="text">
+                    <input id="amountPercentage" type="hidden">
                     <small id="amountPercentageLabel"></small>
                 </div>
             }

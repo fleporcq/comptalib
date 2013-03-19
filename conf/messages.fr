@@ -39,7 +39,8 @@ action.delete=Supprimer
 action.edit=Modifier
 action.accounting.recipe.add=Ajouter une recette
 action.accounting.expense.add=Ajouter une dépense
-
+action.accounting.recipe.edit=Modifier une recette
+action.accounting.expense.edit=Modifier une dépense
 
 # --- Accounting Row
 accountingRow.label=Libellé

@@ -3,9 +3,9 @@ $(function(){
 
 
     var toggleCategories = function(){
-        var amount = $('#add-row-modal').find('input#totalAmount').val();
-        var personalWithdrawal = $('#add-row-modal').find('input#personalWithdrawal').val();
-        var $category = $('#add-row-modal').find('select#categoryId');
+        var amount = $('#accountingRow-modal').find('input#totalAmount').val();
+        var personalWithdrawal = $('#accountingRow-modal').find('input#personalWithdrawal').val();
+        var $category = $('#accountingRow-modal').find('select#categoryId');
         if($.isNumeric(amount) && $.isNumeric(personalWithdrawal) && Number(amount) <= Number(personalWithdrawal)){
             $category.attr("disabled", "disabled").next(".help-inline").hide();
         }else{
@@ -14,7 +14,7 @@ $(function(){
     }
 
     var updatePercentageLabel = function(percentage){
-        var $amountPercentageLabel = $('#add-row-modal').find('#amountPercentageLabel')
+        var $amountPercentageLabel = $('#accountingRow-modal').find('#amountPercentageLabel')
         if(percentage != null && percentage > 0){
             $amountPercentageLabel.text((percentage < 100 ? percentage : percentage > 100 ? ">" + 100 : 100) + " %");
         }else{
@@ -32,9 +32,9 @@ $(function(){
     };
 
     var computePercentage = function(){
-        var amount = $('#add-row-modal').find('input#totalAmount').val();
-        var personalWithdrawal = $('#add-row-modal').find('input#personalWithdrawal').val();
-        var $amountPercentage =  $('#add-row-modal').find('input#amountPercentage');
+        var amount = $('#accountingRow-modal').find('input#totalAmount').val();
+        var personalWithdrawal = $('#accountingRow-modal').find('input#personalWithdrawal').val();
+        var $amountPercentage =  $('#accountingRow-modal').find('input#amountPercentage');
         if($.isNumeric(amount) && $.isNumeric(personalWithdrawal) && amount > 0){
             var percentage =  Number(personalWithdrawal / amount * 100).toFixed(1);
             $amountPercentage.slider('setValue', percentage);
@@ -45,7 +45,7 @@ $(function(){
 
             updatePercentageLabel();
         }
-        var $sliderHandle = $('#add-row-modal').find('.slider-handle');
+        var $sliderHandle = $('#accountingRow-modal').find('.slider-handle');
         if($.isNumeric(amount) && amount > 0){
             $sliderHandle.removeClass("disabled");
         }else{
@@ -54,7 +54,7 @@ $(function(){
     }
 
     var initSlider = function(){
-        var amountPercentageSlider = $('#add-row-modal').find('#amountPercentage').slider({
+        var amountPercentageSlider = $('#accountingRow-modal').find('#amountPercentage').slider({
             "min": 0,
             "max": 100,
             "step": 1,
@@ -62,8 +62,8 @@ $(function(){
             "tooltip": "hide"
 
         }).on('slide', function(e){
-            var amount = $('#add-row-modal').find('input#totalAmount').val();
-            var $personalWithdrawal = $('#add-row-modal').find('input#personalWithdrawal');
+            var amount = $('#accountingRow-modal').find('input#totalAmount').val();
+            var $personalWithdrawal = $('#accountingRow-modal').find('input#personalWithdrawal');
             if($.isNumeric(amount) && amount > 0){
                 var personalWithdrawal =  Number((amount  * amountPercentageSlider.getValue() / 100).toFixed(2));
                 $personalWithdrawal.val(personalWithdrawal > 0 ? personalWithdrawal : "");
@@ -79,34 +79,36 @@ $(function(){
 
    $('#add-row-button').on('click', function(e){
        e.preventDefault();
-       $('#add-row-modal').find('.modal-body').load($(this).attr('href') + ' #accountingRow-form',function(){
-           $('#add-row-modal').find('#accountingRow-form').find('.form-actions').remove();
-           $('#add-row-modal').modal();
+       $('#accountingRow-modal').find('.modal-header').find('h3').text($(this).attr('data-modal-title'));
+       $('#accountingRow-modal').find('.modal-body').load($(this).attr('href') + ' #accountingRow-form',function(){
+           $('#accountingRow-modal').find('#accountingRow-form').find('.form-actions').remove();
+           $('#accountingRow-modal').modal();
        });
    });
 
     $('table.accounting').on('click', '.edit-row-link', function(e){
         e.preventDefault();
-        $('#add-row-modal').find('.modal-body').load($(this).attr('href') + ' #accountingRow-form',function(){
-            $('#add-row-modal').find('#accountingRow-form').find('.form-actions').remove();
+        $('#accountingRow-modal').find('.modal-header').find('h3').text($(this).attr('data-modal-title'));
+        $('#accountingRow-modal').find('.modal-body').load($(this).attr('href') + ' #accountingRow-form',function(){
+            $('#accountingRow-modal').find('#accountingRow-form').find('.form-actions').remove();
             toggleCategories();
-            $('#add-row-modal').modal();
+            $('#accountingRow-modal').modal();
         });
     });
 
 
-    $('#add-row-modal').on('shown', function () {
-        $('#add-row-modal').find('#accountingRow-form').find(':input[type!=hidden]').first().focus();
+    $('#accountingRow-modal').on('shown', function () {
+        $('#accountingRow-modal').find('#accountingRow-form').find(':input[type!=hidden]').first().focus();
     });
-    $('#add-row-modal').on('show', function () {
+    $('#accountingRow-modal').on('show', function () {
         initSlider();
     });
-    $('#add-row-modal').on('hidden', function () {
+    $('#accountingRow-modal').on('hidden', function () {
         $('#add-row-button').focus();
     });
 
 
-    $('#add-row-modal').on('click', '#modal-save-button',function(){
+    $('#accountingRow-modal').on('click', '#modal-save-button',function(){
         $('#accountingRow-form').submit();
     });
 
@@ -127,7 +129,7 @@ $(function(){
 
     });
 
-    $('#add-row-modal').on('keypress', '#accountingRow-form',function(e){
+    $('#accountingRow-modal').on('keypress', '#accountingRow-form',function(e){
 
         var code = (e.keyCode ? e.keyCode : e.which);
         if(code == 13) {
@@ -136,7 +138,7 @@ $(function(){
         }
     });
 
-    $('#add-row-modal').on('submit','#accountingRow-form',function(e){
+    $('#accountingRow-modal').on('submit','#accountingRow-form',function(e){
         e.preventDefault();
         $.ajax({
             url: $(this).attr('action'),
@@ -146,14 +148,14 @@ $(function(){
                 var $holder = $('<div></div>').html(data);
                 var $form = $holder.find('#accountingRow-form');
                 $form.find('.form-actions').remove();
-                $('#add-row-modal').find('.modal-body').html($form);
+                $('#accountingRow-modal').find('.modal-body').html($form);
                 initSlider();
                 toggleCategories();
                 if($form.find('.alert-success').length > 0){
                     $('table.accounting').load(location.href + ' table.accounting');
-                    $('#add-row-modal').find('#accountingRow-form').find(':input[type!=hidden]').first().focus();
+                    $('#accountingRow-modal').find('#accountingRow-form').find(':input[type!=hidden]').first().focus();
                 }else{
-                    $('#add-row-modal').find('#accountingRow-form').find('.control-group.error').first().find(':input').focus();
+                    $('#accountingRow-modal').find('#accountingRow-form').find('.control-group.error').first().find(':input').focus();
                 }
             }
         });
@@ -196,12 +198,12 @@ $(function(){
     });
 
 
-    $('#add-row-modal').on('keyup', 'input#totalAmount, input#personalWithdrawal',function(){
+    $('#accountingRow-modal').on('keyup', 'input#totalAmount, input#personalWithdrawal',function(){
         computePercentage();
         toggleCategories();
     });
 
-    $('#add-row-modal').on('keypress', 'input#totalAmount, input#personalWithdrawal',function(e){
+    $('#accountingRow-modal').on('keypress', 'input#totalAmount, input#personalWithdrawal',function(e){
         var code = (e.keyCode ? e.keyCode : e.which);
         var char = String.fromCharCode(code);
         var value =   $(this).val() + char;

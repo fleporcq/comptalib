@@ -1,7 +1,6 @@
 @(rowType: String, year: Int, month: Int)(content: Html)
 @import utils.DateUtils
 @import play.i18n._
-@import helper._
 @styles = {
     <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/bootstrap-slider.css")">
 }
@@ -40,7 +39,7 @@
                             <li class="divider-vertical"></li>
                             <li><a id="delete-row-button" class="disabled" href="#" data-message="@Messages.get("confirm.accountingRows.delete")" data-cancel="@Messages.get("action.cancel")" data-confirm="@Messages.get("action.confirm")"><i class="icon-trash"></i>&nbsp;@Messages.get("action.delete")</a></li>
                             <li><a id="edit-row-button" class="disabled" href="#"><i class="icon-edit"></i>&nbsp;@Messages.get("action.edit")</a></li>
-                            <li><a id="add-row-button" class="outline-none" href="@routes.AccountingController.add(rowType, year, month)"><i class="icon-plus"></i>&nbsp;@Messages.get("action.add")</a></li>
+                            <li><a id="add-row-button" class="outline-none" href="@routes.AccountingController.add(rowType, year, month)" data-modal-title="@{DateUtils.month(month) + " " + year + " - " + Messages.get("action.accounting." + rowType + ".add")}"><i class="icon-plus"></i>&nbsp;@Messages.get("action.add")</a></li>
                         </ul>
                     }
                 </div>
@@ -60,5 +59,4 @@
             </div>
         </div>
     </div>
-    @twitterBootstrap.modal("add-row-modal", DateUtils.month(month) + " " + year + " - " + Messages.get("action.accounting." + rowType + ".add"))
 }

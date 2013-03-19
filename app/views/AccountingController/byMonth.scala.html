@@ -2,7 +2,7 @@
 @import utils.DateUtils
 @import utils.CurrencyUtils
 @import play.i18n._
-
+@import helper._
 @views.html.AccountingController.accounting(rowType, year, month) {
     <form method="POST" action="@routes.AccountingController.delete(rowType, year, month)" id="accountingRows-form">
         <table class="table table-bordered table-striped table-hover accounting @rowType">
@@ -81,7 +81,7 @@
                 <tr class="accounting-row">
                     <td><input name="accountingRowIds[]" type="checkbox" value="@accountingRow.id"> </td>
                     <td>@if(accountingRow.date != null){@accountingRow.date.format("dd")}</td>
-                    <td class="capitalize"><a class="edit-row-link" href="@routes.AccountingController.edit(accountingRow.id)">@accountingRow.label</a></td>
+                    <td class="capitalize"><a class="edit-row-link" href="@routes.AccountingController.edit(accountingRow.id)" data-modal-title="@{DateUtils.month(month) + " " + year + " - " + Messages.get("action.accounting." + rowType + ".edit")}">@accountingRow.label</a></td>
                     @for(treasury <- treasuries) {
                         <td class="numeric">@if(accountingRow.treasury==treasury){@CurrencyUtils.format(accountingRow.getTotalAmount())}</td>
                     }
@@ -96,4 +96,5 @@
             </tbody>
         </table>
     </form>
+    @twitterBootstrap.modal("accountingRow-modal", DateUtils.month(month) + " " + year)
 }
