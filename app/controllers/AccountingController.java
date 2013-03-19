@@ -10,6 +10,7 @@ import play.data.Form;
 import play.i18n.Messages;
 import play.mvc.Controller;
 import play.mvc.Result;
+import utils.CurrencyUtils;
 import utils.DateUtils;
 import views.html.AccountingController.byMonth;
 import views.html.AccountingController.edit;
@@ -88,11 +89,11 @@ public class AccountingController extends Controller {
             AccountingRow accountingRow = new AccountingRow(accountingRowForm.get());
             if(accountingRow.id == null){
                 accountingRow.save();
-                flash("success", Messages.get("alert.accounting.save.success", new SimpleDateFormat("dd/MM/yyyy").format(accountingRow.date), accountingRow.label, accountingRow.getTotalAmount()));
+                flash("success", Messages.get("alert.accounting.save.success", new SimpleDateFormat("dd/MM/yyyy").format(accountingRow.date), accountingRow.label, CurrencyUtils.format(accountingRow.getTotalAmount())));
                 return redirect(routes.AccountingController.add(rowType, year, month));
             }else{
                 accountingRow.update();
-                flash("success", Messages.get("alert.accounting.update.success", new SimpleDateFormat("dd/MM/yyyy").format(accountingRow.date), accountingRow.label, accountingRow.getTotalAmount()));
+                flash("success", Messages.get("alert.accounting.update.success", new SimpleDateFormat("dd/MM/yyyy").format(accountingRow.date), accountingRow.label, CurrencyUtils.format(accountingRow.getTotalAmount())));
                 return redirect(routes.AccountingController.edit(accountingRow.id));
             }
 

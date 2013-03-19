@@ -9,6 +9,7 @@ import utils.CurrencyUtils;
 import utils.DateUtils;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -40,7 +41,7 @@ public class AccountingRow extends Model {
         }
 
         if (form.totalAmount != null && form.personalWithdrawal != null) {
-            this.amount = CurrencyUtils.eurosToCents(form.totalAmount - form.personalWithdrawal);
+            this.amount = CurrencyUtils.eurosToCents(form.totalAmount.subtract(form.personalWithdrawal));
         } else if (form.totalAmount != null) {
             this.amount = CurrencyUtils.eurosToCents(form.totalAmount);
         }
@@ -52,6 +53,7 @@ public class AccountingRow extends Model {
         Treasury treasury = new Treasury();
         treasury.id = form.treasuryId;
         this.treasury = treasury;
+        System.out.println("Amount-----"+this.amount);
     }
 
     public static Page<AccountingRow> page(int page, int pageSize, String sortBy, String order, String filter) {
@@ -113,19 +115,19 @@ public class AccountingRow extends Model {
 
 
 
-    public Float getTotalAmount() {
+    public BigDecimal getTotalAmount() {
         return CurrencyUtils.centsToEuros(amount + personalWithdrawal);
     }
 	
-    public Integer getTotalAmountIntValue() {
+    public int getTotalAmountIntValue() {
             return amount + personalWithdrawal;
     }
 	
-    public Float getAmount() {
+    public BigDecimal getAmount() {
         return CurrencyUtils.centsToEuros(amount);
     }
 
-    public Float getPersonalWithdrawal() {
+    public BigDecimal getPersonalWithdrawal() {
         return CurrencyUtils.centsToEuros(personalWithdrawal);
     }
 

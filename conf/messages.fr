@@ -62,8 +62,8 @@ accounting.fromJanuarySum=Totaux depuis Janvier
 accounting.summary=Récapitulatif
 accountingSummary.month=Mois
 
-alert.accounting.save.success = La ligne suivante a été ajoutée : {0} - {1} : {2}€.
-alert.accounting.update.success = La ligne suivante a été modifiée : {0} - {1} : {2}€.
+alert.accounting.save.success = La ligne suivante a été ajoutée : {0} - {1} : {2}.
+alert.accounting.update.success = La ligne suivante a été modifiée : {0} - {1} : {2}.
 
 # --- RowType
 rowType.recipe = Recette

@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Id;
+import java.math.BigDecimal;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,7 +41,7 @@ public class Treasury extends Model {
         return options;
     }
 
-    public float monthSum(int year, int month) {
+    public BigDecimal monthSum(int year, int month) {
         List<AccountingRow> accountingRows = AccountingRow.month(this.rowType, year, month, this);
         int sum = 0;
         for (AccountingRow accountingRow : accountingRows) {
@@ -49,7 +50,7 @@ public class Treasury extends Model {
         return CurrencyUtils.centsToEuros(sum);
     }
 
-    public float fromJanuarySum(int year, int month) {
+    public BigDecimal fromJanuarySum(int year, int month) {
         List<AccountingRow> accountingRows = AccountingRow.fromJanuary(this.rowType, year, month, this);
         int sum = 0;
         for (AccountingRow accountingRow : accountingRows) {

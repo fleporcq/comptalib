@@ -7,6 +7,7 @@ import play.data.validation.ValidationError;
 import play.i18n.Messages;
 import utils.DateUtils;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,8 +23,8 @@ public class AccountingRowFormData {
     @Constraints.Required
     public Long treasuryId;
     @Constraints.Required
-    public Float totalAmount;
-    public Float personalWithdrawal;
+    public BigDecimal totalAmount;
+    public BigDecimal personalWithdrawal;
     public Long categoryId;
 
     public AccountingRowFormData() {
@@ -43,7 +44,7 @@ public class AccountingRowFormData {
             }
             this.totalAmount = accountingRow.getTotalAmount();
             this.personalWithdrawal = accountingRow.getPersonalWithdrawal();
-            if (this.personalWithdrawal == 0) {
+            if (BigDecimal.ZERO.compareTo(this.personalWithdrawal) == 0) {
                 this.personalWithdrawal = null;
             }
             if (accountingRow.category != null) {
@@ -59,13 +60,13 @@ public class AccountingRowFormData {
             errors.add(new ValidationError("day", Messages.get("error.invalid")));
         }
         if (rowType == ERowType.EXPENSE) {
-            if (personalWithdrawal != null && personalWithdrawal <= 0) {
+            if (personalWithdrawal != null && personalWithdrawal.compareTo(BigDecimal.ZERO) <= 0) {
                 errors.add(new ValidationError("personalWithdrawal", Messages.get("error.accountingRow.personalWithdrawal.mustBeGreaterThanZero")));
             }
-            if (personalWithdrawal != null && totalAmount != null && personalWithdrawal > totalAmount) {
+            if (personalWithdrawal != null && totalAmount != null && personalWithdrawal.compareTo(totalAmount) > 0) {
                 errors.add(new ValidationError("personalWithdrawal", Messages.get("error.accountingRow.personalWithdrawal.mustBeLowerThanAmount")));
             }
-            if (personalWithdrawal == null || (totalAmount != null && personalWithdrawal < totalAmount)) {
+            if (personalWithdrawal == null || (totalAmount != null && personalWithdrawal.compareTo(totalAmount) < 0)) {
                 if (categoryId == null) {
                     errors.add(new ValidationError("categoryId", Messages.get("error.required")));
                 }

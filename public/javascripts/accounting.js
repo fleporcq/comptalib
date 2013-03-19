@@ -203,15 +203,15 @@ $(function(){
         toggleCategories();
     });
 
-    $('#accountingRow-modal').on('keypress', 'input#totalAmount, input#personalWithdrawal',function(e){
-        var code = (e.keyCode ? e.keyCode : e.which);
-        var char = String.fromCharCode(code);
-        var value =   $(this).val() + char;
-        if(!validateDecimal(value)){
-            e.preventDefault();
-        }
-
-    });
+//    $('#accountingRow-modal').on('keypress', 'input#totalAmount, input#personalWithdrawal',function(e){
+//        var code = (e.keyCode ? e.keyCode : e.which);
+//        var char = String.fromCharCode(code);
+//        var value =   $(this).val() + char;
+//        if(!validateDecimal(value)){
+//            e.preventDefault();
+//        }
+//
+//    });
 
     $('table.accounting').on('click', 'tr.accounting-row',function(e){
         if(e.target.nodeName != "A"){

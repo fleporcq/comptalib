@@ -8,6 +8,7 @@ import com.avaje.ebean.annotation.Sql;
 import utils.CurrencyUtils;
 
 import javax.persistence.Entity;
+import java.math.BigDecimal;
 import java.util.List;
 
 @Entity
@@ -24,7 +25,7 @@ public class Accounting {
     }
 
 
-    public static float personalWithdrawalMonthSum(int year, int month) {
+    public static BigDecimal personalWithdrawalMonthSum(int year, int month) {
         List<AccountingRow> accountingRows = AccountingRow.month(ERowType.EXPENSE, year, month);
         int sum = 0;
         for (AccountingRow accountingRow : accountingRows) {
@@ -33,7 +34,7 @@ public class Accounting {
         return CurrencyUtils.centsToEuros(sum);
     }
 
-    public static float personalWithdrawalFromJanuarySum(int year, int month) {
+    public static BigDecimal personalWithdrawalFromJanuarySum(int year, int month) {
         List<AccountingRow> accountingRows = AccountingRow.fromJanuary(ERowType.EXPENSE, year, month);
         int sum = 0;
         for (AccountingRow accountingRow : accountingRows) {

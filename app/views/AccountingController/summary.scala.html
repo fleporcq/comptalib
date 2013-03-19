@@ -50,21 +50,21 @@
                     @for(treasury <- treasuries) {
                         <td class="numeric">
                             @defining(treasury.monthSum(year, month)) { monthSum =>
-                                @if(monthSum>0){@CurrencyUtils.format(monthSum)}
+                               @CurrencyUtils.format(monthSum)
                             }
                         </td>
                     }
                     @if(ERowType.value(rowType) == ERowType.EXPENSE){
                         <td class="numeric">
                             @defining(Accounting.personalWithdrawalMonthSum(year, month)) { monthSum =>
-                                @if(monthSum>0){@CurrencyUtils.format(monthSum)}
+                               @CurrencyUtils.format(monthSum)
                             }
                         </td>
                     }
                     @for(leafCategory <- leafCategories) {
                         <td class="numeric">
                             @defining(leafCategory.monthSum(year, month)) { monthSum =>
-                                @if(monthSum>0){@CurrencyUtils.format(monthSum)}
+                                @CurrencyUtils.format(monthSum)
                             }
                         </td>
                     }

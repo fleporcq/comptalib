@@ -39,8 +39,7 @@
         )
 
         @inputText(accountingRowForm("totalAmount"),
-            '_label -> Messages.get("accountingRowForm.amount"),
-            'maxlength -> 7
+            '_label -> Messages.get("accountingRowForm.amount")
         )
 
         @if(ERowType.value(rowType) == ERowType.EXPENSE){

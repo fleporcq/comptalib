@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -68,7 +69,7 @@ public class Category extends Model {
         return this.parent != null;
     }
 
-    public float monthSum(int year, int month) {
+    public BigDecimal monthSum(int year, int month) {
         List<AccountingRow> accountingRows = AccountingRow.month(this.rowType, year, month, this);
         int sum = 0;
         for (AccountingRow accountingRow : accountingRows) {
@@ -77,7 +78,7 @@ public class Category extends Model {
         return CurrencyUtils.centsToEuros(sum);
     }
 
-    public float fromJanuarySum(int year, int month) {
+    public BigDecimal fromJanuarySum(int year, int month) {
         List<AccountingRow> accountingRows = AccountingRow.fromJanuary(this.rowType, year, month, this);
         int sum = 0;
         for (AccountingRow accountingRow : accountingRows) {
