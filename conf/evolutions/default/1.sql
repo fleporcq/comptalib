@@ -6,8 +6,8 @@
 create table accounting_row (
   id                        bigint not null,
   label                     varchar(255),
-  amount                    integer,
-  personal_withdrawal       integer,
+  amount                    bigint,
+  personal_withdrawal       bigint,
   row_type                  varchar(7),
   category_id               bigint,
   treasury_id               bigint,

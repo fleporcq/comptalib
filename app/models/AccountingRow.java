@@ -10,6 +10,7 @@ import utils.DateUtils;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -22,8 +23,8 @@ public class AccountingRow extends Model {
     @Id
     public Long id;
     public String label;
-    public int amount;
-    public int personalWithdrawal;
+    public BigInteger amount;
+    public BigInteger personalWithdrawal;
     @Enumerated(EnumType.STRING)
     public ERowType rowType;
     @ManyToOne
@@ -38,12 +39,16 @@ public class AccountingRow extends Model {
 
         if (form.personalWithdrawal != null) {
             this.personalWithdrawal = CurrencyUtils.eurosToCents(form.personalWithdrawal);
+        }else {
+            this.personalWithdrawal = BigInteger.ZERO;
         }
 
         if (form.totalAmount != null && form.personalWithdrawal != null) {
             this.amount = CurrencyUtils.eurosToCents(form.totalAmount.subtract(form.personalWithdrawal));
         } else if (form.totalAmount != null) {
             this.amount = CurrencyUtils.eurosToCents(form.totalAmount);
+        } else {
+            amount = BigInteger.ZERO;
         }
         this.rowType = form.rowType;
         this.date = DateUtils.createDate(form.year, form.month, form.day).getTime();
@@ -53,7 +58,6 @@ public class AccountingRow extends Model {
         Treasury treasury = new Treasury();
         treasury.id = form.treasuryId;
         this.treasury = treasury;
-        System.out.println("Amount-----"+this.amount);
     }
 
     public static Page<AccountingRow> page(int page, int pageSize, String sortBy, String order, String filter) {
@@ -116,11 +120,19 @@ public class AccountingRow extends Model {
 
 
     public BigDecimal getTotalAmount() {
-        return CurrencyUtils.centsToEuros(amount + personalWithdrawal);
+        return CurrencyUtils.centsToEuros(getTotalAmountIntValue());
     }
 	
-    public int getTotalAmountIntValue() {
-            return amount + personalWithdrawal;
+    public BigInteger getTotalAmountIntValue() {
+        BigInteger totalAmount = null;
+        if(amount != null && personalWithdrawal!=null){
+            totalAmount = amount.add(personalWithdrawal);
+        }else if(amount != null){
+            totalAmount = amount;
+        }else if(personalWithdrawal != null){
+            totalAmount = personalWithdrawal;
+        }
+        return totalAmount;
     }
 	
     public BigDecimal getAmount() {

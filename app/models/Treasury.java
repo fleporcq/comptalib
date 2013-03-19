@@ -9,6 +9,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,18 +44,25 @@ public class Treasury extends Model {
 
     public BigDecimal monthSum(int year, int month) {
         List<AccountingRow> accountingRows = AccountingRow.month(this.rowType, year, month, this);
-        int sum = 0;
+        BigInteger sum = BigInteger.ZERO;
         for (AccountingRow accountingRow : accountingRows) {
-            sum += accountingRow.getTotalAmountIntValue();
+            BigInteger totalAmountIntValue = accountingRow.getTotalAmountIntValue();
+
+            if(totalAmountIntValue != null){
+                sum = sum.add(totalAmountIntValue);
+            }
         }
         return CurrencyUtils.centsToEuros(sum);
     }
 
     public BigDecimal fromJanuarySum(int year, int month) {
         List<AccountingRow> accountingRows = AccountingRow.fromJanuary(this.rowType, year, month, this);
-        int sum = 0;
+        BigInteger sum = BigInteger.ZERO;
         for (AccountingRow accountingRow : accountingRows) {
-            sum += accountingRow.getTotalAmountIntValue();
+            BigInteger totalAmountIntValue = accountingRow.getTotalAmountIntValue();
+            if(totalAmountIntValue != null){
+                sum = sum.add(totalAmountIntValue);
+            }
         }
         return CurrencyUtils.centsToEuros(sum);
     }

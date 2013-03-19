@@ -86,7 +86,7 @@
                         <td class="numeric">@if(accountingRow.treasury==treasury){@CurrencyUtils.format(accountingRow.getTotalAmount())}</td>
                     }
                     @if(ERowType.value(rowType) == ERowType.EXPENSE){
-                        <td class="numeric">@if(accountingRow.personalWithdrawal > 0){@CurrencyUtils.format(accountingRow.getPersonalWithdrawal())}</td>
+                        <td class="numeric">@if(accountingRow.personalWithdrawal.intValue() > 0){@CurrencyUtils.format(accountingRow.getPersonalWithdrawal())}</td>
                     }
                     @for(leafCategory <- leafCategories) {
                         <td class="numeric">@if(accountingRow.category==leafCategory){@CurrencyUtils.format(accountingRow.getAmount())}</td>

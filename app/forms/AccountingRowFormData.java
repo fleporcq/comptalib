@@ -23,6 +23,8 @@ public class AccountingRowFormData {
     @Constraints.Required
     public Long treasuryId;
     @Constraints.Required
+    @Constraints.Max(999999999)
+    @Constraints.Min(-999999999)
     public BigDecimal totalAmount;
     public BigDecimal personalWithdrawal;
     public Long categoryId;
@@ -44,7 +46,7 @@ public class AccountingRowFormData {
             }
             this.totalAmount = accountingRow.getTotalAmount();
             this.personalWithdrawal = accountingRow.getPersonalWithdrawal();
-            if (BigDecimal.ZERO.compareTo(this.personalWithdrawal) == 0) {
+            if(BigDecimal.ZERO.compareTo(this.personalWithdrawal) == 0){
                 this.personalWithdrawal = null;
             }
             if (accountingRow.category != null) {

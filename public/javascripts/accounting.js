@@ -22,15 +22,6 @@ $(function(){
         }
     }
 
-    var validateDecimal = function (value)    {
-        var RE = /^\d*\.?\d{0,2}$/
-        if(RE.test(value)){
-           return true;
-        }else{
-           return false;
-        }
-    };
-
     var computePercentage = function(){
         var amount = $('#accountingRow-modal').find('input#totalAmount').val();
         var personalWithdrawal = $('#accountingRow-modal').find('input#personalWithdrawal').val();
@@ -203,15 +194,6 @@ $(function(){
         toggleCategories();
     });
 
-//    $('#accountingRow-modal').on('keypress', 'input#totalAmount, input#personalWithdrawal',function(e){
-//        var code = (e.keyCode ? e.keyCode : e.which);
-//        var char = String.fromCharCode(code);
-//        var value =   $(this).val() + char;
-//        if(!validateDecimal(value)){
-//            e.preventDefault();
-//        }
-//
-//    });
 
     $('table.accounting').on('click', 'tr.accounting-row',function(e){
         if(e.target.nodeName != "A"){

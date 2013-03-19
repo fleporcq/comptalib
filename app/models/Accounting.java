@@ -9,6 +9,7 @@ import utils.CurrencyUtils;
 
 import javax.persistence.Entity;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.List;
 
 @Entity
@@ -27,18 +28,22 @@ public class Accounting {
 
     public static BigDecimal personalWithdrawalMonthSum(int year, int month) {
         List<AccountingRow> accountingRows = AccountingRow.month(ERowType.EXPENSE, year, month);
-        int sum = 0;
+        BigInteger sum = BigInteger.ZERO;
         for (AccountingRow accountingRow : accountingRows) {
-            sum += accountingRow.personalWithdrawal;
+            if(accountingRow.personalWithdrawal != null){
+                sum = sum.add(accountingRow.personalWithdrawal);
+            }
         }
         return CurrencyUtils.centsToEuros(sum);
     }
 
     public static BigDecimal personalWithdrawalFromJanuarySum(int year, int month) {
         List<AccountingRow> accountingRows = AccountingRow.fromJanuary(ERowType.EXPENSE, year, month);
-        int sum = 0;
+        BigInteger sum = BigInteger.ZERO;
         for (AccountingRow accountingRow : accountingRows) {
-            sum += accountingRow.personalWithdrawal;
+            if(accountingRow.personalWithdrawal != null){
+                sum = sum.add(accountingRow.personalWithdrawal);
+            }
         }
         return CurrencyUtils.centsToEuros(sum);
     }

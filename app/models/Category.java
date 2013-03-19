@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -71,18 +72,22 @@ public class Category extends Model {
 
     public BigDecimal monthSum(int year, int month) {
         List<AccountingRow> accountingRows = AccountingRow.month(this.rowType, year, month, this);
-        int sum = 0;
+        BigInteger sum = BigInteger.ZERO;
         for (AccountingRow accountingRow : accountingRows) {
-            sum += accountingRow.amount;
+            if(accountingRow.amount != null){
+                sum = sum.add(accountingRow.amount);
+            }
         }
         return CurrencyUtils.centsToEuros(sum);
     }
 
     public BigDecimal fromJanuarySum(int year, int month) {
         List<AccountingRow> accountingRows = AccountingRow.fromJanuary(this.rowType, year, month, this);
-        int sum = 0;
+        BigInteger sum = BigInteger.ZERO;
         for (AccountingRow accountingRow : accountingRows) {
-            sum += accountingRow.amount;
+            if(accountingRow.amount != null){
+                sum = sum.add(accountingRow.amount);
+            }
         }
         return CurrencyUtils.centsToEuros(sum);
     }

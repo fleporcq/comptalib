@@ -39,7 +39,8 @@
         )
 
         @inputText(accountingRowForm("totalAmount"),
-            '_label -> Messages.get("accountingRowForm.amount")
+            '_label -> Messages.get("accountingRowForm.amount"),
+            '_help -> Messages.get("constraint.required")
         )
 
         @if(ERowType.value(rowType) == ERowType.EXPENSE){
