@@ -10,7 +10,7 @@ import utils.DateUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AccountingRowForm {
+public class AccountingRowFormData {
     public Long id;
     public ERowType rowType;
     public int year;
@@ -26,11 +26,11 @@ public class AccountingRowForm {
     public Float personalWithdrawal;
     public Long categoryId;
 
-    public AccountingRowForm() {
+    public AccountingRowFormData() {
 
     }
 
-    public AccountingRowForm(AccountingRow accountingRow) {
+    public AccountingRowFormData(AccountingRow accountingRow) {
         if (accountingRow != null) {
             this.id = accountingRow.id;
             this.rowType = accountingRow.rowType;

@@ -52,6 +52,7 @@ table.accounting tr.reports td{
 
 table.accounting tr td.numeric{
     text-align: right;
+    white-space:nowrap;
 }
 table.accounting tr.selected td{
     background-color:#0088cc;

@@ -2,6 +2,7 @@ package models;
 
 import com.avaje.ebean.ExpressionList;
 import play.db.ebean.Model;
+import utils.CurrencyUtils;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -45,7 +46,7 @@ public class Treasury extends Model {
         for (AccountingRow accountingRow : accountingRows) {
             sum += accountingRow.getTotalAmountIntValue();
         }
-        return sum / 100F;
+        return CurrencyUtils.centsToEuros(sum);
     }
 
     public float fromJanuarySum(int year, int month) {
@@ -54,6 +55,6 @@ public class Treasury extends Model {
         for (AccountingRow accountingRow : accountingRows) {
             sum += accountingRow.getTotalAmountIntValue();
         }
-        return sum / 100F;
+        return CurrencyUtils.centsToEuros(sum);
     }
 }

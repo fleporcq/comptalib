@@ -5,6 +5,7 @@ import com.avaje.ebean.Query;
 import com.avaje.ebean.RawSql;
 import com.avaje.ebean.RawSqlBuilder;
 import com.avaje.ebean.annotation.Sql;
+import utils.CurrencyUtils;
 
 import javax.persistence.Entity;
 import java.util.List;
@@ -29,7 +30,7 @@ public class Accounting {
         for (AccountingRow accountingRow : accountingRows) {
             sum += accountingRow.personalWithdrawal;
         }
-        return sum / 100F;
+        return CurrencyUtils.centsToEuros(sum);
     }
 
     public static float personalWithdrawalFromJanuarySum(int year, int month) {
@@ -38,6 +39,6 @@ public class Accounting {
         for (AccountingRow accountingRow : accountingRows) {
             sum += accountingRow.personalWithdrawal;
         }
-        return sum / 100F;
+        return CurrencyUtils.centsToEuros(sum);
     }
 }

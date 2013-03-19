@@ -1,6 +1,6 @@
 package controllers;
 
-import forms.AccountingRowForm;
+import forms.AccountingRowFormData;
 import models.AccountingRow;
 import models.Category;
 import models.ERowType;
@@ -66,7 +66,7 @@ public class AccountingController extends Controller {
         if (!DateUtils.checkYear(year) || !DateUtils.checkMonth(month)) {
             return notFound();
         }
-        Form<AccountingRowForm> accountingRowForm = Form.form(AccountingRowForm.class);
+        Form<AccountingRowFormData> accountingRowForm = Form.form(AccountingRowFormData.class);
         return ok(edit.render(rowType, year, month, accountingRowForm));
 
     }
@@ -79,7 +79,7 @@ public class AccountingController extends Controller {
             return notFound();
         }
 
-        Form<AccountingRowForm> accountingRowForm = Form.form(AccountingRowForm.class).bindFromRequest();
+        Form<AccountingRowFormData> accountingRowForm = Form.form(AccountingRowFormData.class).bindFromRequest();
 
         if (accountingRowForm.hasErrors()) {
             accountingRowForm.reject(Messages.get("alert.save.error"));
@@ -122,8 +122,8 @@ public class AccountingController extends Controller {
             notFound();
         }
 
-        AccountingRowForm form = new AccountingRowForm(accountingRow);
-        Form<AccountingRowForm> accountingRowForm = Form.form(AccountingRowForm.class).fill(form);
+        AccountingRowFormData form = new AccountingRowFormData(accountingRow);
+        Form<AccountingRowFormData> accountingRowForm = Form.form(AccountingRowFormData.class).fill(form);
         String rowType = accountingRow.rowType.lower();
         int year = accountingRow.getYear();
         int month = accountingRow.getMonth();

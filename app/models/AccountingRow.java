@@ -2,9 +2,10 @@ package models;
 
 import com.avaje.ebean.ExpressionList;
 import com.avaje.ebean.Page;
-import forms.AccountingRowForm;
+import forms.AccountingRowFormData;
 import org.joda.time.DateTime;
 import play.db.ebean.Model;
+import utils.CurrencyUtils;
 import utils.DateUtils;
 
 import javax.persistence.*;
@@ -30,18 +31,18 @@ public class AccountingRow extends Model {
     public Treasury treasury;
     public Date date;
 
-    public AccountingRow(AccountingRowForm form) {
+    public AccountingRow(AccountingRowFormData form) {
         this.id = form.id;
         this.label = form.label;
 
         if (form.personalWithdrawal != null) {
-            this.personalWithdrawal = Math.round(form.personalWithdrawal * 100);
+            this.personalWithdrawal = CurrencyUtils.eurosToCents(form.personalWithdrawal);
         }
 
         if (form.totalAmount != null && form.personalWithdrawal != null) {
-            this.amount = Math.round((form.totalAmount - form.personalWithdrawal) * 100);
+            this.amount = CurrencyUtils.eurosToCents(form.totalAmount - form.personalWithdrawal);
         } else if (form.totalAmount != null) {
-            this.amount = Math.round(form.totalAmount * 100);
+            this.amount = CurrencyUtils.eurosToCents(form.totalAmount);
         }
         this.rowType = form.rowType;
         this.date = DateUtils.createDate(form.year, form.month, form.day).getTime();
@@ -113,7 +114,7 @@ public class AccountingRow extends Model {
 
 
     public Float getTotalAmount() {
-        return (amount + personalWithdrawal) / 100F;
+        return CurrencyUtils.centsToEuros(amount + personalWithdrawal);
     }
 	
     public Integer getTotalAmountIntValue() {
@@ -121,11 +122,11 @@ public class AccountingRow extends Model {
     }
 	
     public Float getAmount() {
-        return amount / 100F;
+        return CurrencyUtils.centsToEuros(amount);
     }
 
     public Float getPersonalWithdrawal() {
-        return personalWithdrawal / 100F;
+        return CurrencyUtils.centsToEuros(personalWithdrawal);
     }
 
     public Integer getYear(){
