@@ -31,16 +31,24 @@ public class DateUtils {
         return calendar;
     }
 
-    public static String month(int month) throws ParseException {
+    public static String month(int month)  {
         if(month > 0 && month < 13){
-            return WordUtils.capitalize(new SimpleDateFormat("MMMM").format(new SimpleDateFormat("MM").parse(String.valueOf(month))));
+            try {
+                return WordUtils.capitalize(new SimpleDateFormat("MMMM").format(new SimpleDateFormat("MM").parse(String.valueOf(month))));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
         }
         return "";
     }
 
-    public static String shortMonth(int month) throws ParseException {
+    public static String shortMonth(int month) {
         if(month > 0 && month < 13){
-            return WordUtils.capitalize(new SimpleDateFormat("MMM").format(new SimpleDateFormat("MM").parse(String.valueOf(month))));
+            try {
+                return WordUtils.capitalize(new SimpleDateFormat("MMM").format(new SimpleDateFormat("MM").parse(String.valueOf(month))));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
         }
         return "";
     }

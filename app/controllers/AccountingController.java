@@ -12,6 +12,7 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import utils.CurrencyUtils;
 import utils.DateUtils;
+import utils.PdfUtils;
 import views.html.AccountingController.byMonth;
 import views.html.AccountingController.edit;
 import views.html.AccountingController.summary;
@@ -19,7 +20,6 @@ import views.html.AccountingController.summary;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
-
 public class AccountingController extends Controller {
 
     public static Result january(int year) {
@@ -41,6 +41,22 @@ public class AccountingController extends Controller {
         List<Treasury> treasuries = Treasury.findByType(eRowType);
 
         return ok(byMonth.render(rowType, year, month, accountingRows, parentCategories, childCategories, leafCategories, treasuries));
+    }
+
+    public static Result print(String rowType, int year, int month) {
+        ERowType eRowType = ERowType.value(rowType);
+        if (eRowType == null) {
+            return notFound();
+        }
+        if (!DateUtils.checkYear(year)) {
+            return notFound();
+        }
+        List<Category> parentCategories = Category.findParents(eRowType);
+        List<Category> childCategories = Category.findChildren(eRowType);
+        List<Category> leafCategories = Category.findLeafs(eRowType);
+        List<Treasury> treasuries = Treasury.findByType(eRowType);
+        byte[] pdf = PdfUtils.generateSummary(eRowType, year, parentCategories, childCategories, leafCategories, treasuries);
+        return ok(pdf).as("application/pdf");
     }
 
     public static Result summary(String rowType, int year) {
