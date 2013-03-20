@@ -43,7 +43,7 @@ public class AccountingController extends Controller {
         return ok(byMonth.render(rowType, year, month, accountingRows, parentCategories, childCategories, leafCategories, treasuries));
     }
 
-    public static Result print(String rowType, int year, int month) {
+    public static Result printSummary(String rowType, int year) {
         ERowType eRowType = ERowType.value(rowType);
         if (eRowType == null) {
             return notFound();

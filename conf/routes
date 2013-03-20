@@ -5,7 +5,7 @@
 # Home page
 GET      /                                          controllers.ApplicationController.index
 GET      /accounting/:year/:month/:rowType            controllers.AccountingController.byMonth(rowType, year:Int, month:Int)
-GET      /print/:year/:month/:rowType            controllers.AccountingController.print(rowType, year:Int, month:Int)
+GET      /summary/:year/:rowType/print                controllers.AccountingController.printSummary(rowType, year:Int)
 GET      /summary/:year/:rowType                     controllers.AccountingController.summary(rowType, year:Int)
 GET      /accounting/:year                           controllers.AccountingController.january(year:Int)
 
