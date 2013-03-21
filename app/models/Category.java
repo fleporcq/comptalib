@@ -10,7 +10,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -43,31 +42,8 @@ public class Category extends Model {
         return expressionList.orderBy("ordering").findList();
     }
 
-    public static List<Category> findChildren(ERowType type) {
-        ExpressionList expressionList = find.where().isNotNull("parent");
-        if (type != null) {
-            expressionList = expressionList.eq("rowType", type);
-        }
-        return expressionList.orderBy("ordering").findList();
-    }
-
-    public static List<Category> findLeafs(ERowType type) {
-        List<Category> categories = find(type);
-        List<Category> leafs = new ArrayList<Category>();
-        for (Category category : categories) {
-            if (!category.hasChildren()) {
-                leafs.add(category);
-            }
-        }
-        return leafs;
-    }
-
     public boolean hasChildren() {
         return this.children.size() > 0;
-    }
-
-    public boolean hasParent() {
-        return this.parent != null;
     }
 
     public BigDecimal monthSum(int year, int month) {

@@ -1,10 +1,7 @@
 package controllers;
 
 import forms.AccountingRowFormData;
-import models.AccountingRow;
-import models.Category;
-import models.ERowType;
-import models.Treasury;
+import models.*;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.i18n.Messages;
@@ -35,12 +32,10 @@ public class AccountingController extends Controller {
             return notFound();
         }
         List<AccountingRow> accountingRows = AccountingRow.month(eRowType, year, month);
-        List<Category> parentCategories = Category.findParents(eRowType);
-        List<Category> childCategories = Category.findChildren(eRowType);
-        List<Category> leafCategories = Category.findLeafs(eRowType);
+        ParentCategoryList parentCategories = new ParentCategoryList(Category.findParents(eRowType));
         List<Treasury> treasuries = Treasury.findByType(eRowType);
 
-        return ok(byMonth.render(rowType, year, month, accountingRows, parentCategories, childCategories, leafCategories, treasuries));
+        return ok(byMonth.render(rowType, year, month, accountingRows, parentCategories, treasuries));
     }
 
     public static Result printSummary(String rowType, int year) {
@@ -51,11 +46,9 @@ public class AccountingController extends Controller {
         if (!DateUtils.checkYear(year)) {
             return notFound();
         }
-        List<Category> parentCategories = Category.findParents(eRowType);
-        List<Category> childCategories = Category.findChildren(eRowType);
-        List<Category> leafCategories = Category.findLeafs(eRowType);
+        ParentCategoryList parentCategories = new ParentCategoryList(Category.findParents(eRowType));
         List<Treasury> treasuries = Treasury.findByType(eRowType);
-        byte[] pdf = PdfUtils.generateSummary(eRowType, year, parentCategories, childCategories, leafCategories, treasuries);
+        byte[] pdf = PdfUtils.generateSummary(eRowType, year, parentCategories, treasuries);
         return ok(pdf).as("application/pdf");
     }
 
@@ -67,12 +60,10 @@ public class AccountingController extends Controller {
         if (!DateUtils.checkYear(year)) {
             return notFound();
         }
-        List<Category> parentCategories = Category.findParents(eRowType);
-        List<Category> childCategories = Category.findChildren(eRowType);
-        List<Category> leafCategories = Category.findLeafs(eRowType);
+        ParentCategoryList parentCategories = new ParentCategoryList(Category.findParents(eRowType));
         List<Treasury> treasuries = Treasury.findByType(eRowType);
 
-        return ok(summary.render(rowType, year, parentCategories, childCategories, leafCategories, treasuries));
+        return ok(summary.render(rowType, year, parentCategories, treasuries));
     }
 
     public static Result add(String rowType, int year, int month) {

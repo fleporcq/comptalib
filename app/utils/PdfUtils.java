@@ -3,10 +3,7 @@ package utils;
 
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
-import models.Accounting;
-import models.Category;
-import models.ERowType;
-import models.Treasury;
+import models.*;
 import play.i18n.Messages;
 
 import java.io.ByteArrayOutputStream;
@@ -15,26 +12,21 @@ import java.util.List;
 
 public class PdfUtils {
 
-    public static byte[] generateSummary(ERowType rowType, int year, List<Category> parentCategories, List<Category> childCategories, List<Category> leafCategories, List<Treasury> treasuries) {
+    public static byte[] generateSummary(ERowType rowType, int year, ParentCategoryList parentCategories, List<Treasury> treasuries) {
         try {
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            Document document = new Document(PageSize.A1.rotate());
+            Document document = new Document(PageSize.A3.rotate());
             PdfWriter writer = PdfWriter.getInstance(document, baos);
             document.open();
-
+            List<Category> leafCategories = parentCategories.getLeafs();
             int cellCount = (ERowType.EXPENSE.equals(rowType) ? 2 : 1) + treasuries.size() + leafCategories.size();
             PdfPTable table = new PdfPTable(cellCount);
 
-            addTableHeader(table, rowType, parentCategories, childCategories, treasuries);
+            addTableHeader(table, rowType, parentCategories, treasuries);
             addSummaryTableBody(table, year, rowType, leafCategories, treasuries);
             addSummaryTableFooter(table, year, rowType, leafCategories, treasuries);
             table.setWidthPercentage(100);
             document.add(table);
-//            table.setTotalWidth(2500);
-//            PdfContentByte canvas = writer.getDirectContent();
-//            table.writeSelectedRows(0, 10, 0, -1, 36, PageSize.A4_LANDSCAPE.getWidth()-36, canvas);
-//            document.newPage();
-//            table.writeSelectedRows(10, 20, 0, -1, 36, PageSize.A4_LANDSCAPE.getWidth()-36, canvas);
 
             document.close();
 
@@ -84,7 +76,7 @@ public class PdfUtils {
         }
     }
 
-    private static void addTableHeader(PdfPTable table, ERowType rowType, List<Category> parentCategories, List<Category> childCategories, List<Treasury> treasuries) {
+    private static void addTableHeader(PdfPTable table, ERowType rowType, ParentCategoryList parentCategories,  List<Treasury> treasuries) {
         PdfPCell monthCell = new PdfPCell(new Phrase(Messages.get("accountingSummary.month")));
         monthCell.setRowspan(2);
         table.addCell(monthCell);
@@ -114,7 +106,7 @@ public class PdfUtils {
             table.addCell(treasury.name);
         }
 
-        for (Category childCategory : childCategories) {
+        for (Category childCategory : parentCategories.getChildren()) {
             table.addCell(childCategory.name);
         }
     }
