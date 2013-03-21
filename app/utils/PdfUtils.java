@@ -19,6 +19,8 @@ public class PdfUtils {
             PdfWriter writer = PdfWriter.getInstance(document, baos);
             document.open();
             List<Category> leafCategories = parentCategories.getLeafs();
+
+            List<ParentCategoryList> pages = parentCategories.paginate(10);
             int cellCount = (ERowType.EXPENSE.equals(rowType) ? 2 : 1) + treasuries.size() + leafCategories.size();
             PdfPTable table = new PdfPTable(cellCount);
 
