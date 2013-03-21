@@ -13,7 +13,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 public class PdfUtils {
-    public static final int COLS_FIRST_PAGE = 7;
+
     public static final int COLS_PER_PAGE = 10;
 
     public static byte[] generateSummary(ERowType rowType, int year, ParentCategoryList parentCategories, List<Treasury> treasuries) {
@@ -24,7 +24,7 @@ public class PdfUtils {
             document.open();
 
 
-            List<ParentCategoryList> pages = parentCategories.paginate(COLS_PER_PAGE, COLS_FIRST_PAGE);
+            List<ParentCategoryList> pages = parentCategories.paginate(COLS_PER_PAGE, COLS_PER_PAGE - 3);
 
             boolean firstPage = true;
             for (ParentCategoryList page : pages) {
@@ -41,7 +41,6 @@ public class PdfUtils {
                 }
 
                 PdfPTable table = new PdfPTable(cellCount);
-
                 table.setWidthPercentage(100);
 
                 addTableHeader(table, rowType, page, treasuries, firstPage);
@@ -67,15 +66,20 @@ public class PdfUtils {
 
     private static void addTableHeader(PdfPTable table, ERowType rowType, ParentCategoryList parentCategories, List<Treasury> treasuries, boolean firstPage) {
         PdfPCell monthCell = new PdfPCell(new Phrase(Messages.get("accountingSummary.month")));
+        monthCell.setVerticalAlignment(Element.ALIGN_BOTTOM);
         monthCell.setRowspan(2);
         table.addCell(monthCell);
-
+        table.getDefaultCell().setHorizontalAlignment(Element.ALIGN_CENTER);
+        table.getDefaultCell().setVerticalAlignment(Element.ALIGN_BOTTOM);
         if (firstPage) {
             PdfPCell treasuriesCell = new PdfPCell(new Phrase(Messages.get("accountingRow.treasury")));
+            treasuriesCell.setHorizontalAlignment(Element.ALIGN_CENTER);
             treasuriesCell.setColspan(treasuries.size());
             table.addCell(treasuriesCell);
             if (ERowType.EXPENSE.equals(rowType)) {
                 PdfPCell personalWithdrawalsCell = new PdfPCell(new Phrase(Messages.get("accountingRow.personalWithdrawals")));
+                personalWithdrawalsCell.setHorizontalAlignment(Element.ALIGN_CENTER);
+                personalWithdrawalsCell.setVerticalAlignment(Element.ALIGN_BOTTOM);
                 personalWithdrawalsCell.setRowspan(2);
                 table.addCell(personalWithdrawalsCell);
             }
@@ -83,6 +87,8 @@ public class PdfUtils {
         for (Category parentCategory : parentCategories) {
             PdfPCell catCell;
             catCell = new PdfPCell(new Phrase(parentCategory.name));
+            catCell.setHorizontalAlignment(Element.ALIGN_CENTER);
+            catCell.setVerticalAlignment(Element.ALIGN_BOTTOM);
             if (parentCategory.hasChildren()) {
                 catCell.setColspan(parentCategory.children.size());
             } else {
@@ -100,10 +106,13 @@ public class PdfUtils {
         for (Category childCategory : parentCategories.getChildren()) {
             table.addCell(childCategory.name);
         }
+        table.getDefaultCell().setHorizontalAlignment(Element.ALIGN_LEFT);
     }
 
     private static void addSummaryTableBody(PdfPTable table, int year, ERowType rowType, List<Category> leafCategories, List<Treasury> treasuries, boolean firstPage) {
+        table.getDefaultCell().setVerticalAlignment(Element.ALIGN_MIDDLE);
         for (int month = 1; month <= 12; month++) {
+            table.getDefaultCell().setHorizontalAlignment(Element.ALIGN_LEFT);
             table.addCell(DateUtils.month(month));
             table.getDefaultCell().setHorizontalAlignment(Element.ALIGN_RIGHT);
             if (firstPage) {
@@ -120,8 +129,8 @@ public class PdfUtils {
                 BigDecimal monthSum = leafCategory.monthSum(year, month);
                 table.addCell((BigDecimal.ZERO.compareTo(monthSum) != 0) ? CurrencyUtils.format(monthSum) : "");
             }
-            table.getDefaultCell().setHorizontalAlignment(Element.ALIGN_LEFT);
         }
+        table.getDefaultCell().setHorizontalAlignment(Element.ALIGN_LEFT);
     }
 
     private static void addSummaryTableFooter(PdfPTable table, int year, ERowType rowType, List<Category> leafCategories, List<Treasury> treasuries, boolean firstPage) {
