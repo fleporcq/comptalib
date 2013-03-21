@@ -46,16 +46,21 @@ public class ParentCategoryList extends ArrayList<Category> {
         return children;
     }
 
-    public List<ParentCategoryList> paginate(int perPage){
+    public List<ParentCategoryList> paginate(int colsPerPage, int colsFirstPage){
+
+        if(colsFirstPage == 0){
+            colsFirstPage = colsPerPage;
+        }
 
         List<ParentCategoryList> pages = new ArrayList<ParentCategoryList>();
         ParentCategoryList page = new ParentCategoryList();
-
+        boolean firstPage = true;
         for (Category category : this) {
             int leafCount = category.hasChildren() ? category.children.size() : 1;
-            if(page.countLeafs() + leafCount  > perPage){
+            if(page.countLeafs() + leafCount  > (firstPage ? colsFirstPage : colsPerPage)){
                 pages.add(page);
                 page = new ParentCategoryList();
+                firstPage = false;
             }
             page.add(category);
         }
