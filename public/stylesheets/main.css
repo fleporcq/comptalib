@@ -2,6 +2,11 @@ body{
     padding:40px 0 40px 0;
 }
 
+.navbar-fixed-top .container,
+.navbar-fixed-bottom .container{
+    width:100%;
+}
+
 table.accounting.table-bordered{
     border: none;
 }
