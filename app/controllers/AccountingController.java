@@ -7,12 +7,13 @@ import play.data.Form;
 import play.i18n.Messages;
 import play.mvc.Controller;
 import play.mvc.Result;
+import util.pdf.PDF;
 import utils.CurrencyUtils;
 import utils.DateUtils;
-import utils.PdfUtils;
 import views.html.AccountingController.byMonth;
 import views.html.AccountingController.edit;
 import views.html.AccountingController.summary;
+import views.html.AccountingController.printSummary;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -46,10 +47,9 @@ public class AccountingController extends Controller {
         if (!DateUtils.checkYear(year)) {
             return notFound();
         }
-        ParentCategoryList parentCategories = new ParentCategoryList(Category.findParents(eRowType));
         List<Treasury> treasuries = Treasury.findByType(eRowType);
-        byte[] pdf = PdfUtils.generateSummary(eRowType, year, parentCategories, treasuries);
-        return ok(pdf).as("application/pdf");
+        List<ParentCategoryList> pages = new ParentCategoryList(Category.findParents(eRowType)).paginate(10, 7);
+        return PDF.ok(printSummary.render(rowType, year, pages, treasuries));
     }
 
     public static Result summary(String rowType, int year) {

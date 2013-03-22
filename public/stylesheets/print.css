@@ -1,0 +1,92 @@
+@page{
+    margin:10mm;
+}
+@page land{
+    size:landscape;
+}
+@page port{
+    size:portrait;
+}
+.page-landscape{
+    page:land;
+}
+.page-portrait {
+    page:port;
+}
+.page-break{
+    page-break-after: always;
+    background:red;
+    height:0;
+    font-size:0;
+}
+
+body {
+  margin: 0;
+  padding:0;
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 12pt;
+}
+
+table{
+    width:277mm;
+    border-collapse:collapse;
+}
+table th,
+table td{
+    border:1px solid #dddddd;
+}
+table th{
+    vertical-align:bottom;
+}
+table td{
+    padding:2mm;
+    font-size: 10pt;
+}
+table thead th{
+    text-align: center;
+    font-size: 8pt;
+    padding:2pt 4pt;
+}
+
+table.recipe thead th{
+    background-color: #dff0d8;
+    color:#468847;
+    border-color:#A7D1A7;
+}
+
+table.expense thead th{
+    background-color: #f2dede;
+    color:#b94a48;
+    border-color:#DCA5A5;
+}
+
+
+table thead th.day-column{
+    /*min-width: 30px;*/
+}
+table thead th.label-column{
+    /*min-width: 300px;*/
+}
+table thead th.month-column{
+    width: 50mm;
+}
+table thead th.category-column,
+table thead th.treasury-column{
+   width: 20mm;
+}
+
+
+table tr.important{
+    font-weight:bold;
+    background-color: #d9edf7;
+}
+
+table tr.reports td{
+    background-color:#fcf8e3;
+    color:#c09853;
+}
+
+table tr td.numeric{
+    text-align: right;
+    white-space:nowrap;
+}
