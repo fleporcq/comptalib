@@ -30,7 +30,10 @@ body {
 table{
     width:277mm;
     border-collapse:collapse;
+    -fs-table-paginate: paginate;
+    page-break-inside: avoid;
 }
+
 table th,
 table td{
     border:1px solid #dddddd;
