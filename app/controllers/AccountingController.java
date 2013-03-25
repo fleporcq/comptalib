@@ -13,7 +13,8 @@ import utils.DateUtils;
 import views.html.AccountingController.byMonth;
 import views.html.AccountingController.edit;
 import views.html.AccountingController.summary;
-import views.html.AccountingController.printSummary;
+import views.html.AccountingController.summaryPDF;
+import views.html.AccountingController.exportSummary;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -39,8 +40,7 @@ public class AccountingController extends Controller {
         return ok(byMonth.render(rowType, year, month, accountingRows, parentCategories, treasuries));
     }
 
-    public static Result printSummary(int year) {
-
+    public static Result summaryPDF(int year) {
         if (!DateUtils.checkYear(year)) {
             return notFound();
         }
@@ -48,7 +48,11 @@ public class AccountingController extends Controller {
         List<ParentCategoryList> expensePages = new ParentCategoryList(Category.findParents(ERowType.EXPENSE)).paginate(12, 9);
         List<Treasury> recipeTreasuries = Treasury.findByType(ERowType.RECIPE);
         List<ParentCategoryList> recipePages = new ParentCategoryList(Category.findParents(ERowType.RECIPE)).paginate(12, 9);
-        return PDF.ok(printSummary.render(year, recipePages, recipeTreasuries, expensePages, expenseTreasuries));
+        return PDF.ok(summaryPDF.render(year, recipePages, recipeTreasuries, expensePages, expenseTreasuries));
+    }
+
+    public static Result exportSummary(int year) {
+        return ok(exportSummary.render(year));
     }
 
     public static Result summary(String rowType, int year) {

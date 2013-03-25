@@ -1,0 +1,44 @@
+@(year: Int)
+@import play.i18n._
+@styles = {
+    <style type="text/css">
+        canvas{
+            display: block;
+            margin:30px auto;
+            box-shadow: 1px 1px 12px #999;
+        }
+    </style>
+}
+
+@scripts = {
+    <script src="@routes.Assets.at("javascripts/pdf.js")" type="text/javascript"></script>
+    <script src="@routes.Assets.at("javascripts/pdf-viewer.js")" type="text/javascript"></script>
+    <script type="text/javascript">
+        PDFJS.disableWorker = true;
+        $(function(){
+            pdfViewer.render("@routes.AccountingController.summaryPDF(year)", 1);
+        });
+    </script>
+}
+
+@main(year.toString, styles, scripts) {
+
+    <div class="navbar navbar-fixed-top">
+        <div class="navbar-inner">
+            <div class="container">
+                <div class="nav-collapse collapse">
+                    <ul class="nav">
+                        <li><a href="@routes.AccountingController.summary(ERowType.RECIPE.lower(), year)"><i class="icon-arrow-left"></i></a></li>
+                    </ul>
+                    <span class="brand">@year</span>
+                    <ul class="nav">
+                        <li><a href="@routes.AccountingController.summaryPDF(year)"><i class="icon-download-alt"></i>&nbsp;@Messages.get("action.saveAs")</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="viewer"></div>
+
+}

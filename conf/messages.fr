@@ -31,7 +31,8 @@ error.accountingRow.category.mustBeEmpty = Ne doit pas être renseigné
 # --- Actions
 action.home=Accueil
 action.save=Enregistrer
-action.print=Imprimer
+action.saveAs=Enregistrer sous
+action.export=Exporter
 action.cancel=Annuler
 action.confirm=Confirmer
 action.close=Fermer
