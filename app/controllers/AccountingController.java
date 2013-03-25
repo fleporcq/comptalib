@@ -39,17 +39,16 @@ public class AccountingController extends Controller {
         return ok(byMonth.render(rowType, year, month, accountingRows, parentCategories, treasuries));
     }
 
-    public static Result printSummary(String rowType, int year) {
-        ERowType eRowType = ERowType.value(rowType);
-        if (eRowType == null) {
-            return notFound();
-        }
+    public static Result printSummary(int year) {
+
         if (!DateUtils.checkYear(year)) {
             return notFound();
         }
-        List<Treasury> treasuries = Treasury.findByType(eRowType);
-        List<ParentCategoryList> pages = new ParentCategoryList(Category.findParents(eRowType)).paginate(10, 7);
-        return PDF.ok(printSummary.render(rowType, year, pages, treasuries));
+        List<Treasury> expenseTreasuries = Treasury.findByType(ERowType.EXPENSE);
+        List<ParentCategoryList> expensePages = new ParentCategoryList(Category.findParents(ERowType.EXPENSE)).paginate(12, 9);
+        List<Treasury> recipeTreasuries = Treasury.findByType(ERowType.RECIPE);
+        List<ParentCategoryList> recipePages = new ParentCategoryList(Category.findParents(ERowType.RECIPE)).paginate(12, 9);
+        return PDF.ok(printSummary.render(year, recipePages, recipeTreasuries, expensePages, expenseTreasuries));
     }
 
     public static Result summary(String rowType, int year) {

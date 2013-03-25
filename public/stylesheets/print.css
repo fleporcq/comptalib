@@ -70,13 +70,13 @@ table th{
     vertical-align:bottom;
 }
 table td{
-    padding:2mm;
-    font-size: 10pt;
+    padding:1mm;
+    font-size: 8pt;
 }
 table thead th{
     text-align: center;
-    font-size: 8pt;
-    padding:2pt 4pt;
+    font-size: 7pt;
+    padding:1pt;
 }
 
 table.recipe thead th{
@@ -103,7 +103,7 @@ table thead th.month-column{
 }
 table thead th.category-column,
 table thead th.treasury-column{
-   width: 20mm;
+    width: 20mm;
 }
 
 
