@@ -69,6 +69,8 @@ alert.accounting.update.success = La ligne suivante a été modifiée : {0} - {1
 # --- RowType
 rowType.recipe = Recette
 rowType.expense = Dépense
+rowType.recipe.plural = Recettes
+rowType.expense.plural = Dépenses
 
 alert.save.error = Veuillez corriger les erreurs.
 
