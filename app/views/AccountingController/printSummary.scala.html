@@ -7,40 +7,12 @@
     <head>
         <title></title>
         <link rel="stylesheet" type="text/css" media="print" href="@routes.Assets.at("stylesheets/print.css")">
-        <style type="text/css" media="print">
-            .page-start { -fs-page-sequence: start; page-break-before: always;}
-            @@page{
-                @@bottom-center {
-                    content: element(footer);
-                }
-                @@top-center {
-                    content: element(header);
-                }
-            }
-            .page-header{
-                font-size:8pt;
-                text-align:center;
-                position: running(header);
-            }
-            .page-footer{
-                font-size:8pt;
-                text-align:right;
-                position: running(footer);
-            }
-            .page-current:before { content: counter(page); }
-            .page-count:after { content: counter(pages); }
-
-
-
-        </style>
     </head>
     <body class="page-landscape">
-
+        <div class="page-header">@year @rowType</div>
+        <div class="page-footer"><span class="page-current">&nbsp;</span>/<span class="page-count">&nbsp;</span></div>
 
         @for((page,i) <- pages.zipWithIndex){
-
-            <div class="page-header">@year @rowType</div>
-
             <table class="@rowType">
                 <thead>
                     <tr>
@@ -117,11 +89,7 @@
                     }
                 </tbody>
             </table>
-
-            <div class="page-footer"><span class="page-current">&nbsp;</span>/<span class="page-count">&nbsp;</span></div>
-
             <div class="page-break">&nbsp;</div>
-
         }
     </body>
 </html>

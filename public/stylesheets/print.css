@@ -19,6 +19,34 @@
     height:0;
     font-size:0;
 }
+@page{
+    @bottom-center{
+        content: element(footer);
+    }
+    @top-center{
+        content: element(header);
+    }
+}
+/*@page:first{
+@bottom-center {
+                    content: none;
+                }
+@top-center {
+                    content: none;
+                }
+    }*/
+.page-header{
+    font-size:8pt;
+    text-align:center;
+    position: running(header);
+}
+.page-footer{
+    font-size:8pt;
+    text-align:right;
+    position: running(footer);
+}
+.page-current:before { content: counter(page); }
+.page-count:after { content: counter(pages); }
 
 body {
   margin: 0;
