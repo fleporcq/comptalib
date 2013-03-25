@@ -30,14 +30,8 @@
                         </li>
                     </ul>
                     <ul class="nav">
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle brand" data-toggle="dropdown">@Messages.get("rowType." + rowType + ".plural")&nbsp;<b class="caret"></b></a>
-                            <ul class="dropdown-menu">
-                                <li><a id="recipe-button" href="@if(month > 0){@routes.AccountingController.byMonth(ERowType.RECIPE.lower(), year, month)}else{@routes.AccountingController.summary(ERowType.RECIPE.lower(),year)}">@Messages.get("rowType.recipe.plural")</a></li>
-                                <li><a id="expense-button" href="@if(month > 0){@routes.AccountingController.byMonth(ERowType.EXPENSE.lower(), year, month)}else{@routes.AccountingController.summary(ERowType.EXPENSE.lower(),year)}">@Messages.get("rowType.expense.plural")</a></li>
-                            </ul>
-                        </li>
-                        <li class="divider-vertical"></li>
+                        <li @if(rowType==ERowType.RECIPE.lower()){class="active"}><a id="recipe-button" href="@if(month > 0){@routes.AccountingController.byMonth(ERowType.RECIPE.lower(), year, month)}else{@routes.AccountingController.summary(ERowType.RECIPE.lower(),year)}">@Messages.get("rowType.recipe")</a></li>
+                        <li @if(rowType==ERowType.EXPENSE.lower()){class="active"}><a id="expense-button" href="@if(month > 0){@routes.AccountingController.byMonth(ERowType.EXPENSE.lower(), year, month)}else{@routes.AccountingController.summary(ERowType.EXPENSE.lower(),year)}">@Messages.get("rowType.expense")</a></li>
                     </ul>
                     @if(month > 0){
                         <ul class="nav">
@@ -47,7 +41,7 @@
                         </ul>
                     }else{
                         <ul class="nav">
-                            <li><a href="@routes.AccountingController.exportSummary(year)"><i class="icon-file"></i>&nbsp;@Messages.get("action.export")</a></li>
+                            <li><a href="@routes.ExportController.export(year)"><i class="icon-file"></i>&nbsp;@Messages.get("action.export")</a></li>
                         </ul>
                     }
                 </div>

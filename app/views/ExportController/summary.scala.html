@@ -1,0 +1,84 @@
+@(rowType: ERowType, year: Int, pages: List[ParentCategoryList], treasuries: List[Treasury])
+@import utils.DateUtils
+@import utils.CurrencyUtils
+@import play.i18n._
+
+@for((page,i) <- pages.zipWithIndex){
+    <table class="@rowType.lower()">
+        <thead>
+            <tr>
+                <th rowspan="2" class="month-column">@Messages.get("accountingSummary.month")</th>
+                @if(i == 0){
+                    <th colspan="@{treasuries.size}" class="rowTreasury">@Messages.get("accountingRow.treasury")</th>
+                    @if(rowType == ERowType.EXPENSE){
+                        <th rowspan="2" class="category-column">@Messages.get("accountingRow.personalWithdrawals")</th>
+                    }
+                }
+                @for(parentCategory:Category <- page) {
+                    @if(parentCategory.hasChildren){
+                        <th colspan="@parentCategory.children.size()" class="rowCategory">@{parentCategory.name}</th>
+                    }else{
+                        <th rowspan="2" class="category-column">@{parentCategory.name}</th>
+                    }
+                }
+            </tr>
+            <tr>
+                @if(i == 0){
+                    @for(treasury <- treasuries) {
+                        <th class="treasury-column">@{treasury.name}</th>
+                    }
+                }
+                @for(childrenCategory:Category <- page.getChildren) {
+                    <th class="category-column">@{childrenCategory.name}</th>
+                }
+            </tr>
+        </thead>
+        <tfoot>
+            <tr class="important">
+                <td>@Messages.get("accounting.fromJanuarySum")</td>
+                @if(i == 0){
+                    @for(treasury <- treasuries) {
+                        <td class="numeric">@CurrencyUtils.format(treasury.fromJanuarySum(year, 12))</td>
+                    }
+                    @if(rowType == ERowType.EXPENSE){
+                        <td class="numeric">@CurrencyUtils.format(Accounting.personalWithdrawalFromJanuarySum(year, 12))</td>
+                    }
+                }
+                @for(leafCategory:Category <- page.getLeafs()) {
+                    <td class="numeric">@CurrencyUtils.format(leafCategory.fromJanuarySum(year, 12))</td>
+                }
+            </tr>
+        </tfoot>
+        <tbody>
+        @for(month <- 1 to 12) {
+            <tr class="accounting-row">
+                <td class="capitalize">@DateUtils.month(month)</td>
+                @if(i == 0){
+                    @for(treasury <- treasuries) {
+                        <td class="numeric">
+                        @defining(treasury.monthSum(year, month)) { monthSum =>
+                            @if(monthSum.doubleValue() != 0){@CurrencyUtils.format(monthSum)}
+                        }
+                        </td>
+                    }
+                    @if(rowType == ERowType.EXPENSE){
+                        <td class="numeric">
+                        @defining(Accounting.personalWithdrawalMonthSum(year, month)) { monthSum =>
+                            @if(monthSum.doubleValue() != 0){@CurrencyUtils.format(monthSum)}
+                        }
+                        </td>
+                    }
+                }
+                @for(leafCategory:Category <- page.getLeafs()) {
+                    <td class="numeric">
+                    @defining(leafCategory.monthSum(year, month)) { monthSum =>
+                        @if(monthSum.doubleValue() != 0){@CurrencyUtils.format(monthSum)}
+                    }
+                    </td>
+                }
+            </tr>
+        }
+        </tbody>
+    </table>
+    <div class="page-break">&nbsp;</div>
+}

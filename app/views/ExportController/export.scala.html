@@ -16,7 +16,7 @@
     <script type="text/javascript">
         PDFJS.disableWorker = true;
         $(function(){
-            pdfViewer.render("@routes.AccountingController.summaryPDF(year)", 1);
+            pdfViewer.render("@routes.ExportController.pdf(year)", 1);
         });
     </script>
 }
@@ -32,7 +32,7 @@
                     </ul>
                     <span class="brand">@year</span>
                     <ul class="nav">
-                        <li><a href="@routes.AccountingController.summaryPDF(year)"><i class="icon-download-alt"></i>&nbsp;@Messages.get("action.saveAs")</a></li>
+                        <li><a href="@routes.ExportController.pdf(year)"><i class="icon-download-alt"></i>&nbsp;@Messages.get("action.saveAs")</a></li>
                     </ul>
                 </div>
             </div>

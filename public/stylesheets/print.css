@@ -93,10 +93,10 @@ table.expense thead th{
 
 
 table thead th.day-column{
-    /*min-width: 30px;*/
+    width: 5mm;
 }
 table thead th.label-column{
-    /*min-width: 300px;*/
+    width: 70mm;
 }
 table thead th.month-column{
     width: 50mm;

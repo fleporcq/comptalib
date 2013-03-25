@@ -1,7 +1,6 @@
 package models;
 
 import com.avaje.ebean.ExpressionList;
-import com.avaje.ebean.Page;
 import forms.AccountingRowFormData;
 import org.joda.time.DateTime;
 import play.db.ebean.Model;
@@ -58,14 +57,6 @@ public class AccountingRow extends Model {
         Treasury treasury = new Treasury();
         treasury.id = form.treasuryId;
         this.treasury = treasury;
-    }
-
-    public static Page<AccountingRow> page(int page, int pageSize, String sortBy, String order, String filter) {
-        return find.where()
-                .ilike("label", "%" + filter + "%")
-                .orderBy(sortBy + " " + order)
-                .findPagingList(pageSize)
-                .getPage(page);
     }
 
     public static List<AccountingRow> month(ERowType rowType, int year, int month) {
