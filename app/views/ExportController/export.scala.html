@@ -2,21 +2,32 @@
 @import play.i18n._
 @styles = {
     <style type="text/css">
-        canvas{
+        body{
+            background:#CCC;
+        }
+        #viewer{
+            width:80%;
+            margin:0 auto;
+        }
+        #viewer canvas{
+            background:#FFF;
             display: block;
-            margin:30px auto;
-            box-shadow: 1px 1px 12px #999;
+            margin:30px 0;
+            box-shadow: 1px 1px 12px #555;
         }
     </style>
 }
 
 @scripts = {
+    <script src="@routes.Assets.at("javascripts/canvasloader-min-0.9.1.js")" type="text/javascript"></script>
+    <script src="@routes.Assets.at("javascripts/loader.js")" type="text/javascript"></script>
     <script src="@routes.Assets.at("javascripts/pdf.js")" type="text/javascript"></script>
     <script src="@routes.Assets.at("javascripts/pdf-viewer.js")" type="text/javascript"></script>
+
     <script type="text/javascript">
         PDFJS.disableWorker = true;
         $(function(){
-            pdfViewer.render("@routes.ExportController.pdf(year)", 1);
+            pdfViewer.render("@routes.ExportController.pdf(year)");
         });
     </script>
 }
