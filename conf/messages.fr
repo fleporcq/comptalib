@@ -28,11 +28,16 @@ error.pattern=Doit satisfaire {0}
 error.accountingRow.personalWithdrawal.mustBeLowerThanAmount = Représente plus de 100% du montant
 error.accountingRow.personalWithdrawal.mustBeGreaterThanZero = Doit être supérieure à 0
 error.accountingRow.category.mustBeEmpty = Ne doit pas être renseigné
+
+# --- Menu
+menu.accountingBook = Livre des recettes/dépenses
+menu.export = Export
+menu.bankMerges = Rapprochements bancaires
+
 # --- Actions
 action.home=Accueil
 action.save=Enregistrer
 action.saveAs=Enregistrer sous
-action.export=Exporter
 action.cancel=Annuler
 action.confirm=Confirmer
 action.close=Fermer
