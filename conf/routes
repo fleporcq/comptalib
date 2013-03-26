@@ -8,8 +8,9 @@ GET      /:year/pdf                                  controllers.ExportControlle
 GET      /:year/export                               controllers.ExportController.export(year:Int)
 
 GET      /accounting/:year/:month/:rowType            controllers.AccountingController.byMonth(rowType, year:Int, month:Int)
-GET      /summary/:year/:rowType                     controllers.AccountingController.summary(rowType, year:Int)
 GET      /accounting/:year                           controllers.AccountingController.january(year:Int)
+GET      /summary/:year/:rowType                     controllers.AccountingController.summary(rowType, year:Int)
+GET      /summary/:year                              controllers.AccountingController.recipeSummary(year:Int)
 
 
 

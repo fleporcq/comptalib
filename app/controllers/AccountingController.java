@@ -19,7 +19,7 @@ import java.util.Map;
 public class AccountingController extends Controller {
 
     public static Result january(int year) {
-        return byMonth(ERowType.RECIPE.name().toLowerCase(), year, 1);
+        return byMonth(ERowType.RECIPE.lower(), year, 1);
     }
 
     public static Result byMonth(String rowType, int year, int month) {
@@ -33,11 +33,12 @@ public class AccountingController extends Controller {
         List<AccountingRow> accountingRows = AccountingRow.month(eRowType, year, month);
         ParentCategoryList parentCategories = new ParentCategoryList(Category.findParents(eRowType));
         List<Treasury> treasuries = Treasury.findByType(eRowType);
-
         return ok(byMonth.render(rowType, year, month, accountingRows, parentCategories, treasuries));
     }
 
-
+    public static Result recipeSummary(int year) {
+        return summary(ERowType.RECIPE.lower(), year);
+    }
 
     public static Result summary(String rowType, int year) {
         ERowType eRowType = ERowType.value(rowType);

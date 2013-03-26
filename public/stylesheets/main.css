@@ -1,10 +1,48 @@
 body{
-    padding:40px 0 40px 0;
+    padding:80px 0 40px 0;
 }
 
 .navbar-fixed-top .container,
 .navbar-fixed-bottom .container{
     width:100%;
+    padding: 0 20px;
+}
+
+.navbar-fixed-top .container-sub .nav-pills li.active a{
+    color:#fff;
+    background-color: #08c;
+    text-shadow: none;
+
+}
+.navbar-fixed-top .container-sub{
+    background-color: #f0f0f0;
+}
+.navbar-fixed-top .nav > .active > a,
+.navbar-fixed-top .nav > .active > a:hover{
+    background-color: #f0f0f0;
+    box-shadow: none;
+    -webkit-box-shadow:none;
+    -moz-box-shadow:none;
+
+}
+.navbar-fixed-top .nav-pills > li > a{
+    padding:7px 15px;
+    margin:6px 0;
+}
+.navbar-fixed-top .nav-pills > li.active > a{
+    -webkit-box-shadow: inset 0 3px 8px rgba(0,0,0,0.125);
+    -moz-box-shadow:inset 0 3px 8px rgba(0,0,0,0.125);
+    box-shadow:inset 0 3px 8px rgba(0,0,0,0.125);
+}
+.navbar-fixed-top .nav > .active > a:hover{
+    box-shadow: none;
+    -webkit-box-shadow:none;
+    -moz-box-shadow:none;
+}
+
+.navbar-fixed-top .container-main .nav > li > a{
+    padding:5px 15px 10px 15px;
+    margin:5px 0 0 0;
 }
 
 table.accounting.table-bordered{

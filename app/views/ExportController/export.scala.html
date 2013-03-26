@@ -32,24 +32,12 @@
     </script>
 }
 
-@main(year.toString, styles, scripts) {
+@toolbar = {
+    <ul class="nav">
+        <li><a href="@routes.ExportController.pdf(year)"><i class="icon-download-alt"></i>&nbsp;@Messages.get("action.saveAs")</a></li>
+    </ul>
+}
 
-    <div class="navbar navbar-fixed-top">
-        <div class="navbar-inner">
-            <div class="container">
-                <div class="nav-collapse collapse">
-                    <ul class="nav">
-                        <li><a href="@routes.AccountingController.summary(ERowType.RECIPE.lower(), year)"><i class="icon-arrow-left"></i></a></li>
-                    </ul>
-                    <span class="brand">@year</span>
-                    <ul class="nav">
-                        <li><a href="@routes.ExportController.pdf(year)"><i class="icon-download-alt"></i>&nbsp;@Messages.get("action.saveAs")</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-
+@views.html.AccountingController.accounting(year, toolbar, null, styles, scripts){
     <div id="viewer"></div>
-
 }

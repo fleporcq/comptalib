@@ -1,65 +1,32 @@
-@(rowType: String, year: Int, month: Int)(content: Html)
+@(year: Int, toolbar: Html = Html(""), footer: Html = Html(""), styles: Html = Html(""), scripts: Html = Html(""))(content: Html)
 @import utils.DateUtils
 @import play.i18n._
-@styles = {
-    <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/bootstrap-slider.css")">
-}
-@scripts = {
-    <script src="@routes.Assets.at("javascripts/bootstrap-slider.js")" type="text/javascript"></script>
-    <script src="@routes.Assets.at("javascripts/accounting.js")" type="text/javascript"></script>
-    <script src="@routes.Assets.at("javascripts/table-fixed-header.js")" type="text/javascript"></script>
-}
-@main(DateUtils.month(month)+" "+year, styles, scripts) {
+
+
+
+@main(year.toString, styles, scripts) {
 
     <div class="navbar navbar-fixed-top">
         <div class="navbar-inner">
-            <div class="container">
+            <div class="container container-main">
                 <div class="nav-collapse collapse">
                     <ul class="nav">
                         <li><a href="@routes.ApplicationController.index()"><i class="icon-home"></i></a></li>
                     </ul>
                     <span class="brand">@year </span>
                     <ul class="nav">
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle brand" data-toggle="dropdown">@if(month > 0){@DateUtils.month(month)}else{@Messages.get("accounting.summary")}&nbsp;<b class="caret"></b></a>
-                            <ul class="dropdown-menu">
-                                @for(m <- 1 to 12) {
-                                    <li><a href="@routes.AccountingController.byMonth(rowType,year,m)">@{DateUtils.month(m)}</a></li>
-                                }
-                                <li><a href="@routes.AccountingController.summary(rowType,year)">@Messages.get("accounting.summary")</a></li>
-                            </ul>
-                        </li>
+                        <li @if(request.uri.startsWith(routes.AccountingController.january(year).url) || request.uri.startsWith(routes.AccountingController.recipeSummary(year).url)){class="active"}><a href="@routes.AccountingController.january(year)">Journal Recettes/Dépenses</a></li>
+                        <li @if(request.uri == routes.ExportController.export(year).url){class="active"}><a href="@routes.ExportController.export(year)">@Messages.get("action.export")</a></li>
                     </ul>
-                    <ul class="nav">
-                        <li @if(rowType==ERowType.RECIPE.lower()){class="active"}><a id="recipe-button" href="@if(month > 0){@routes.AccountingController.byMonth(ERowType.RECIPE.lower(), year, month)}else{@routes.AccountingController.summary(ERowType.RECIPE.lower(),year)}">@Messages.get("rowType.recipe")</a></li>
-                        <li @if(rowType==ERowType.EXPENSE.lower()){class="active"}><a id="expense-button" href="@if(month > 0){@routes.AccountingController.byMonth(ERowType.EXPENSE.lower(), year, month)}else{@routes.AccountingController.summary(ERowType.EXPENSE.lower(),year)}">@Messages.get("rowType.expense")</a></li>
-                    </ul>
-                    @if(month > 0){
-                        <ul class="nav">
-                            <li><a id="delete-row-button" class="disabled" href="#" data-message="@Messages.get("confirm.accountingRows.delete")" data-cancel="@Messages.get("action.cancel")" data-confirm="@Messages.get("action.confirm")"><i class="icon-trash"></i>&nbsp;@Messages.get("action.delete")</a></li>
-                            <li><a id="edit-row-button" class="disabled" href="#"><i class="icon-edit"></i>&nbsp;@Messages.get("action.edit")</a></li>
-                            <li><a id="add-row-button" class="outline-none" href="@routes.AccountingController.add(rowType, year, month)" data-modal-title="@{DateUtils.month(month) + " " + year + " - " + Messages.get("action.accounting." + rowType + ".add")}"><i class="icon-plus"></i>&nbsp;@Messages.get("action.add")</a></li>
-                        </ul>
-                    }else{
-                        <ul class="nav">
-                            <li><a href="@routes.ExportController.export(year)"><i class="icon-file"></i>&nbsp;@Messages.get("action.export")</a></li>
-                        </ul>
-                    }
+                </div>
+            </div>
+            <div class="container container-sub">
+                <div class="nav-collapse collapse">
+                    @toolbar
                 </div>
             </div>
         </div>
     </div>
     @content
-    <div class="navbar navbar-fixed-bottom">
-        <div class="navbar-inner">
-            <div class="container">
-                <ul class="nav">
-                    @for(m <- 1 to 12) {
-                    <li @if(m == month){class="active"}><a href="@routes.AccountingController.byMonth(rowType,year,m)" class="capitalize">@{DateUtils.shortMonth(m)}</a></li>
-                    }
-                    <li @if(month == 0){class="active"}><a href="@routes.AccountingController.summary(rowType,year)">@Messages.get("accounting.summary")</a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
+    @footer
 }
