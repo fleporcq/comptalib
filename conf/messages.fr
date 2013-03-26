@@ -30,18 +30,21 @@ error.accountingRow.personalWithdrawal.mustBeGreaterThanZero = Doit être supér
 error.accountingRow.category.mustBeEmpty = Ne doit pas être renseigné
 
 # --- Menu
+menu.accountings = Comptes
+menu.settings = Paramètres
 menu.accountingBook = Livre des recettes/dépenses
-menu.export = Export
+menu.exports = Exports
 menu.bankMerges = Rapprochements bancaires
-
 # --- Actions
-action.home=Accueil
 action.save=Enregistrer
 action.saveAs=Enregistrer sous
 action.cancel=Annuler
 action.confirm=Confirmer
 action.close=Fermer
+action.new=Nouveau
+action.lock=Vérouiller
 action.add=Ajouter
+action.scmShare=Quote-part SCM
 action.delete=Supprimer
 action.edit=Modifier
 action.accounting.recipe.add=Ajouter une recette

@@ -1,15 +1,35 @@
 @(accountings: List[models.Accounting])
 @import play.i18n._
 @main("Home") {
+
+
+
     <div class="navbar navbar-fixed-top">
         <div class="navbar-inner">
-            <div class="container">
+            <div class="container container-main">
                 <div class="nav-collapse collapse">
-                    <span class="brand">@{Messages.get("action.home")}</span>
+                    <ul class="nav">
+                        <li class="divider-vertical"></li>
+                        <li class="active"><a href="#">@Messages.get("menu.accountings")</a></li>
+                        <li class="divider-vertical"></li>
+                        <li><a href="#">@Messages.get("menu.settings")</a></li>
+                        <li class="divider-vertical"></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="container container-sub">
+                <div class="nav-collapse collapse">
+                    <ul class="nav">
+                        <li><a class="disabled" href="#"><i class="icon-trash"></i>&nbsp;@Messages.get("action.delete")</a></li>
+                        <li><a class="disabled" href="#"><i class="icon-lock"></i>&nbsp;@Messages.get("action.lock")</a></li>
+                        <li><a href="#"><i class="icon-asterisk"></i>&nbsp;@Messages.get("action.new")</a></li>
+                    </ul>
                 </div>
             </div>
         </div>
     </div>
+
+
     <ul class="accounting-books">
     @for(accounting <- accountings){
         <li><a href="@routes.AccountingController.january(accounting.year)"><span>@{accounting.year}</span></a></li>

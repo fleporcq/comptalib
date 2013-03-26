@@ -8,6 +8,12 @@ body{
     padding: 0 20px;
 }
 
+.navbar-fixed-bottom .container .nav{
+    float:none;
+    margin:auto;
+    width:820px;
+}
+
 .navbar-fixed-top .container-sub .nav-pills li.active a{
     color:#fff;
     background-color: #08c;

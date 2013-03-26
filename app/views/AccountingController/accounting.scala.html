@@ -12,12 +12,14 @@
                 <div class="nav-collapse collapse">
                     <ul class="nav">
                         <li><a href="@routes.ApplicationController.index()"><i class="icon-home"></i></a></li>
-                    </ul>
-                    <span class="brand">@year </span>
-                    <ul class="nav">
+                        <li><span class="brand">@year </span></li>
+                        <li class="divider-vertical"></li>
                         <li @if(request.uri.startsWith(routes.AccountingController.january(year).url) || request.uri.startsWith(routes.AccountingController.recipeSummary(year).url)){class="active"}><a href="@routes.AccountingController.january(year)">@Messages.get("menu.accountingBook")</a></li>
+                        <li class="divider-vertical"></li>
                         <li><a href="#">@Messages.get("menu.bankMerges")</a></li>
-                        <li @if(request.uri == routes.ExportController.export(year).url){class="active"}><a href="@routes.ExportController.export(year)">@Messages.get("menu.export")</a></li>
+                        <li class="divider-vertical"></li>
+                        <li @if(request.uri == routes.ExportController.export(year).url){class="active"}><a href="@routes.ExportController.export(year)">@Messages.get("menu.exports")</a></li>
+                        <li class="divider-vertical"></li>
                     </ul>
                 </div>
             </div>
