@@ -9,6 +9,7 @@
         <link rel="stylesheet" type="text/css" media="print" href="/public/stylesheets/print.css">
     </head>
     <body class="page-landscape">
+
         <div class="page-footer"><span class="page-current">&nbsp;</span>/<span class="page-count">&nbsp;</span></div>
 
         @for(month <- 1 to 12) {
@@ -19,11 +20,9 @@
         }
 
         <div class="page-header">@Messages.get("summary.header.recipe") @year</div>
-
         @views.html.ExportController.summary(ERowType.RECIPE, year, recipePages, recipeTreasuries)
 
         <div class="page-header">@Messages.get("summary.header.expense") @year</div>
-
         @views.html.ExportController.summary(ERowType.EXPENSE, year, expensePages, expenseTreasuries)
 
     </body>

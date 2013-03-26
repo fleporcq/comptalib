@@ -5,7 +5,7 @@
 @import helper._
 @views.html.AccountingController.accounting(rowType, year, month) {
     <form method="POST" action="@routes.AccountingController.delete(rowType, year, month)" id="accountingRows-form">
-        <table class="table table-bordered table-striped table-hover accounting @rowType">
+        <table class="table table-bordered table-striped table-hover table-fixed-header accounting @rowType">
             <thead>
                 <tr>
                     <th rowspan="2" class="check-column">&nbsp;</th>

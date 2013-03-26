@@ -1,7 +1,11 @@
 var pdfViewer = {
+    scale : null,
     addPage: function(viewer, pdf, pageNumber, callback){
         pdf.getPage(pageNumber).then(function(page) {
-            var viewport = page.getViewport($(viewer).width() / page.getViewport(1.0).width);
+            if(this.scale == null){
+                this.scale = $(viewer).width() / page.getViewport(1.0).width;
+            }
+            var viewport = page.getViewport(this.scale);
             var pageDisplayWidth = viewport.width;
             var pageDisplayHeight = viewport.height;
             var canvas = $('<canvas></canvas>').get(0);
