@@ -145,6 +145,8 @@ $(function(){
                 if($form.find('.alert-success').length > 0){
                     $('table.accounting').load(location.href + ' table.accounting');
                     $('#accountingRow-modal').find('#accountingRow-form').find(':input[type!=hidden]').first().focus();
+                    $('#delete-row-button').addClass("disabled");
+                    $('#edit-row-button').addClass("disabled");
                 }else{
                     $('#accountingRow-modal').find('#accountingRow-form').find('.control-group.error').first().find(':input').focus();
                 }
@@ -184,6 +186,8 @@ $(function(){
                 var $holder = $('<div></div>').html(data);
                 var $table = $holder.find('table.accounting');
                 $('table.accounting').html($table.html());
+                $('#delete-row-button').addClass("disabled");
+                $('#edit-row-button').addClass("disabled");
             }
         });
     });
