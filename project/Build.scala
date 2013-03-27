@@ -1,5 +1,5 @@
 import sbt._
-import Keys._
+import sbt.Keys._
 import play.Project._
 
 object ApplicationBuild extends Build {
@@ -12,12 +12,18 @@ object ApplicationBuild extends Build {
     javaCore,
     javaJdbc,
     javaEbean,
-    "pdf" % "pdf_2.10" % "0.4.1"
+    //pdf
+    "pdf" % "pdf_2.10" % "0.4.1",
+    //jsmessages
+    "com.github.julienrf" %% "play-jsmessages" % "1.4.1"
   )
 
   val main = play.Project(appName, appVersion, appDependencies).settings(
     // Add your own project settings here
-    resolvers += Resolver.url("Violas Play Modules", url("http://www.joergviola.de/releases/"))(Resolver.ivyStylePatterns)
+    //pdf
+    resolvers += Resolver.url("Violas Play Modules", url("http://www.joergviola.de/releases/"))(Resolver.ivyStylePatterns),
+    //jsmessages
+    resolvers += "julienrf.github.com" at "http://julienrf.github.com/repo/"
   )
 
 }

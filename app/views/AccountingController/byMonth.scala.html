@@ -21,9 +21,9 @@
         <li @if(rowType==ERowType.EXPENSE.lower()){class="active"}><a id="expense-button" href="@routes.AccountingController.byMonth(ERowType.EXPENSE.lower(), year, month)">@Messages.get("rowType.expense")</a></li>
     </ul>
     <ul class="nav">
-        <li><a id="delete-row-button" class="disabled" href="#" data-message="@Messages.get("confirm.accountingRows.delete")" data-cancel="@Messages.get("action.cancel")" data-confirm="@Messages.get("action.confirm")"><i class="icon-trash"></i>&nbsp;@Messages.get("action.delete")</a></li>
+        <li><a id="delete-row-button" class="disabled" href="#"><i class="icon-trash"></i>&nbsp;@Messages.get("action.delete")</a></li>
         <li><a id="edit-row-button" class="disabled" href="#"><i class="icon-edit"></i>&nbsp;@Messages.get("action.edit")</a></li>
-        <li><a id="add-row-button" class="outline-none" href="@routes.AccountingController.add(rowType, year, month)" data-modal-title="@{DateUtils.month(month) + " " + year + " - " + Messages.get("action.accounting." + rowType + ".add")}"><i class="icon-plus"></i>&nbsp;@Messages.get("action.add")</a></li>
+        <li><a id="add-row-button" class="outline-none" href="@routes.AccountingController.add(rowType, year, month)"><i class="icon-plus"></i>&nbsp;@Messages.get("action.add")</a></li>
     </ul>
 }
 
@@ -50,6 +50,10 @@
     <script src="@routes.Assets.at("javascripts/bootstrap-slider.js")" type="text/javascript"></script>
     <script src="@routes.Assets.at("javascripts/accounting.js")" type="text/javascript"></script>
     <script src="@routes.Assets.at("javascripts/table-fixed-header.js")" type="text/javascript"></script>
+    <script type="text/javascript">
+        accounting.year = "@year";
+        accounting.month = "@DateUtils.month(month)";
+    </script>
 }
 
 @views.html.AccountingController.accounting(year, toolbar, footer, styles, scripts) {
@@ -130,7 +134,7 @@
                 <tr class="accounting-row">
                     <td><input name="accountingRowIds[]" type="checkbox" value="@accountingRow.id"> </td>
                     <td>@if(accountingRow.date != null){@accountingRow.date.format("dd")}</td>
-                    <td class="capitalize"><a class="edit-row-link" href="@routes.AccountingController.edit(accountingRow.id)" data-modal-title="@{DateUtils.month(month) + " " + year + " - " + Messages.get("action.accounting." + rowType + ".edit")}">@accountingRow.label</a></td>
+                    <td class="capitalize"><a class="edit-row-link" href="@routes.AccountingController.edit(accountingRow.id)">@accountingRow.label</a></td>
                     @for(treasury <- treasuries) {
                         <td class="numeric">@if(accountingRow.treasury==treasury){@CurrencyUtils.format(accountingRow.getTotalAmount())}</td>
                     }

@@ -1,6 +1,5 @@
+var accounting = {};
 $(function(){
-
-
 
     var toggleCategories = function(){
         var amount = $('#accountingRow-modal').find('input#totalAmount').val();
@@ -70,7 +69,8 @@ $(function(){
 
    $('#add-row-button').on('click', function(e){
        e.preventDefault();
-       $('#accountingRow-modal').find('.modal-header').find('h3').text($(this).attr('data-modal-title'));
+       var $title = $('#accountingRow-modal').find('.modal-header').find('h3');
+       $('#accountingRow-modal').find('.modal-header').find('h3').text(accounting.month + " " + accounting.year + " - " + Messages("action.accounting.recipe.add"));
        $('#accountingRow-modal').find('.modal-body').load($(this).attr('href') + ' #accountingRow-form',function(){
            $('#accountingRow-modal').find('#accountingRow-form').find('.form-actions').remove();
            $('#accountingRow-modal').modal();
@@ -79,7 +79,7 @@ $(function(){
 
     $('table.accounting').on('click', '.edit-row-link', function(e){
         e.preventDefault();
-        $('#accountingRow-modal').find('.modal-header').find('h3').text($(this).attr('data-modal-title'));
+        $('#accountingRow-modal').find('.modal-header').find('h3').text(accounting.month + " " + accounting.year + " - " + Messages("action.accounting.recipe.edit"));
         $('#accountingRow-modal').find('.modal-body').load($(this).attr('href') + ' #accountingRow-form',function(){
             $('#accountingRow-modal').find('#accountingRow-form').find('.form-actions').remove();
             toggleCategories();
@@ -157,7 +157,7 @@ $(function(){
     $('#delete-row-button').on('click', function(e){
         e.preventDefault();
         if(!$(this).hasClass('disabled')){
-            bootbox.confirm($(this).attr("data-message"), $(this).attr("data-cancel"), $(this).attr("data-confirm"), function(yes) {
+            bootbox.confirm(Messages("confirm.accountingRows.delete"), Messages("action.cancel"), Messages("action.confirm"), function(yes) {
               if(yes){
                 $('#accountingRows-form').submit();
               }
