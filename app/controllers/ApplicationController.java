@@ -23,7 +23,7 @@ public class ApplicationController extends Controller {
             return badRequest(login.render(loginForm));
         } else {
             session("username", loginForm.get().username);
-            return redirect(routes.HomeController.index());
+            return redirect(routes.AccountingController.index());
         }
     }
 

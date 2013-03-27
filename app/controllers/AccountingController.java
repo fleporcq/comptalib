@@ -4,11 +4,11 @@ import models.Accounting;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
-import views.html.HomeController.index;
+import views.html.AccountingController.index;
 import java.util.List;
 
 @Security.Authenticated(Secured.class)
-public class HomeController extends Controller {
+public class AccountingController extends Controller {
 
     public static Result index() {
         List<Accounting> accountings = Accounting.all();

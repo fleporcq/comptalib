@@ -4,6 +4,7 @@
 @scripts = {
     <script src="@routes.Assets.at("javascripts/table-fixed-header.js")" type="text/javascript"></script>
     <script src="@routes.Assets.at("javascripts/table-selectable.js")" type="text/javascript"></script>
+    <script src="@routes.Assets.at("javascripts/accounting.js")" type="text/javascript"></script>
 }
 
 @main("Home", null, scripts) {
@@ -35,6 +36,7 @@
                     <ul class="nav">
                         <li><a class="on-select-multiple disabled" href="#"><i class="icon-trash"></i>&nbsp;@Messages.get("action.delete")</a></li>
                         <li><a class="on-select-multiple disabled" href="#"><i class="icon-lock"></i>&nbsp;@Messages.get("action.lock")</a></li>
+                        <li><a id="open-row-button" class="on-select-single disabled" href="#"><i class="icon-folder-open"></i>&nbsp;@Messages.get("action.open")</a></li>
                         <li><a href="#"><i class="icon-asterisk"></i>&nbsp;@Messages.get("action.new")</a></li>
                     </ul>
                 </div>
@@ -53,7 +55,7 @@
             @for(accounting <- accountings){
                 <tr class="selectable">
                     <td><input name="accountingIds[]" type="checkbox" value="@accounting.id"></td>
-                    <td><a href="@routes.AccountingRowController.january(accounting.year)">@{accounting.year}</a></td>
+                    <td><a class="open-row-link" href="@routes.AccountingRowController.january(accounting.year)">@{accounting.year}</a></td>
                 </tr>
             }
         </tbody>

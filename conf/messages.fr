@@ -47,6 +47,7 @@ action.confirm=Confirmer
 action.close=Fermer
 action.new=Nouveau
 action.lock=Verrouiller
+action.open=Ouvrir
 action.add=Ajouter
 action.scmShare=Quote-part SCM
 action.delete=Supprimer
