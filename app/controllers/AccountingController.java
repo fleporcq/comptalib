@@ -7,6 +7,7 @@ import play.data.Form;
 import play.i18n.Messages;
 import play.mvc.Controller;
 import play.mvc.Result;
+import play.mvc.Security;
 import utils.CurrencyUtils;
 import utils.DateUtils;
 import views.html.AccountingController.byMonth;
@@ -16,6 +17,7 @@ import views.html.AccountingController.summary;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
+@Security.Authenticated(Secured.class)
 public class AccountingController extends Controller {
 
     public static Result january(int year) {

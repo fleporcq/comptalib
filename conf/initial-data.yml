@@ -1,3 +1,8 @@
+users:
+
+    - !!models.User
+        username: test
+        password: 9c62dcb807cfbf7b36d30891b6fb7d016096f3af
 
 categories:
 

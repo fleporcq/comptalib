@@ -17,20 +17,27 @@ import java.util.List;
 @Entity
 public class AccountingRow extends Model {
 
-
-    public static Finder<Long, AccountingRow> find = new Finder<Long, AccountingRow>(Long.class, AccountingRow.class);
     @Id
     public Long id;
+
     public String label;
+
     public BigInteger amount;
+
     public BigInteger personalWithdrawal;
+
     @Enumerated(EnumType.STRING)
     public ERowType rowType;
+
     @ManyToOne
     public Category category;
+
     @ManyToOne
     public Treasury treasury;
+
     public Date date;
+
+    public static Finder<Long, AccountingRow> find = new Finder<Long, AccountingRow>(Long.class, AccountingRow.class);
 
     public AccountingRow(AccountingRowFormData form) {
         this.id = form.id;

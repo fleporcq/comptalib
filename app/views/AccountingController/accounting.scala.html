@@ -11,7 +11,7 @@
             <div class="container container-main">
                 <div class="nav-collapse collapse">
                     <ul class="nav">
-                        <li><a href="@routes.ApplicationController.index()"><i class="icon-home"></i></a></li>
+                        <li><a href="@routes.HomeController.index()"><i class="icon-home"></i></a></li>
                         <li><span class="brand">@year </span></li>
                         <li class="divider-vertical"></li>
                         <li @if(request.uri.startsWith(routes.AccountingController.january(year).url) || request.uri.startsWith(routes.AccountingController.recipeSummary(year).url)){class="active"}><a href="@routes.AccountingController.january(year)">@Messages.get("menu.accountingBook")</a></li>

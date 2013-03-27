@@ -93,3 +93,11 @@ summary.header.expense = Récapitulatif des dépenses
 month.header.recipe = Recettes
 month.header.expense = Dépenses
 
+# --- Identification
+alert.logout.success = Vous avez été déconnecté.
+alert.login.error = Nom d''utilisateur ou mot de passe incorrect.
+# --- Login Form
+loginForm.title = Identification
+loginForm.username = Nom d''utilisateur
+loginForm.password = Mot de passe
+loginForm.login = Connexion

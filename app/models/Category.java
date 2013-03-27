@@ -15,16 +15,22 @@ import java.util.List;
 @Entity
 public class Category extends Model {
 
-    public static Model.Finder<Long, Category> find = new Model.Finder<Long, Category>(Long.class, Category.class);
     @Id
     public Long id;
+
     public String name;
+
     public ERowType rowType;
+
     public Long ordering;
+
     @ManyToOne
     public Category parent;
+
     @OneToMany(mappedBy = "parent")
     public List<Category> children;
+
+    public static Model.Finder<Long, Category> find = new Model.Finder<Long, Category>(Long.class, Category.class);
 
     public static List<Category> find(ERowType type) {
         ExpressionList expressionList = find.where();
@@ -50,7 +56,7 @@ public class Category extends Model {
         List<AccountingRow> accountingRows = AccountingRow.month(this.rowType, year, month, this);
         BigInteger sum = BigInteger.ZERO;
         for (AccountingRow accountingRow : accountingRows) {
-            if(accountingRow.amount != null){
+            if (accountingRow.amount != null) {
                 sum = sum.add(accountingRow.amount);
             }
         }
@@ -61,7 +67,7 @@ public class Category extends Model {
         List<AccountingRow> accountingRows = AccountingRow.fromJanuary(this.rowType, year, month, this);
         BigInteger sum = BigInteger.ZERO;
         for (AccountingRow accountingRow : accountingRows) {
-            if(accountingRow.amount != null){
+            if (accountingRow.amount != null) {
                 sum = sum.add(accountingRow.amount);
             }
         }

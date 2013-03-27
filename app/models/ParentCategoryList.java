@@ -6,8 +6,6 @@ import java.util.List;
 
 public class ParentCategoryList extends ArrayList<Category> {
 
-
-
     public ParentCategoryList() {
 
     }

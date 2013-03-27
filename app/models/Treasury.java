@@ -17,13 +17,17 @@ import java.util.Map;
 @Entity
 public class Treasury extends Model {
 
-    public static Finder<Long, Treasury> find = new Finder<Long, Treasury>(Long.class, Treasury.class);
     @Id
     public Long id;
+
     public String name;
+
     public Long ordering;
+
     @Enumerated(EnumType.STRING)
     public ERowType rowType;
+
+    public static Finder<Long, Treasury> find = new Finder<Long, Treasury>(Long.class, Treasury.class);
 
     public static List<Treasury> findByType(ERowType type) {
         ExpressionList expressionList = find.where();
