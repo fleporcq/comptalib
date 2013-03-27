@@ -35,6 +35,8 @@ menu.settings = Paramètres
 menu.accountingBook = Livre des recettes/dépenses
 menu.exports = Exports
 menu.bankMerges = Rapprochements bancaires
+menu.fixedAssets = Immobilisations
+
 # --- Actions
 action.save=Enregistrer
 action.saveAs=Enregistrer sous
