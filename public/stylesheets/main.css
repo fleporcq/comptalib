@@ -2,7 +2,10 @@ body{
     padding:80px 0 40px 0;
 }
 
-.navbar-fixed-top .container,
+.navbar-fixed-top .container{
+    width:auto;
+    padding: 0 10px 0 20px;
+}
 .navbar-fixed-bottom .container{
     width:auto;
     padding: 0 20px;
