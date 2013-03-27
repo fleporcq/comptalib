@@ -77,7 +77,7 @@ $(function(){
        });
    });
 
-    $('table.accounting').on('click', '.edit-row-link', function(e){
+    $('body').on('click', '.edit-row-link', function(e){
         e.preventDefault();
         $('#accountingRow-modal').find('.modal-header').find('h3').text(accounting.month + " " + accounting.year + " - " + Messages("action.accounting.recipe.edit"));
         $('#accountingRow-modal').find('.modal-body').load($(this).attr('href') + ' #accountingRow-form',function(){
@@ -143,10 +143,12 @@ $(function(){
                 initSlider();
                 toggleCategories();
                 if($form.find('.alert-success').length > 0){
-                    $('table.accounting').load(location.href + ' table.accounting');
+                    $('table.accounting').load(location.href + ' table.accounting >',function(){
+                        $('table.accounting').fixeHeader();
+                    });
+
                     $('#accountingRow-modal').find('#accountingRow-form').find(':input[type!=hidden]').first().focus();
-                    $('#delete-row-button').addClass("disabled");
-                    $('#edit-row-button').addClass("disabled");
+                    $('.on-select-multiple,.on-select-single').addClass("disabled");
                 }else{
                     $('#accountingRow-modal').find('#accountingRow-form').find('.control-group.error').first().find(':input').focus();
                 }
@@ -185,9 +187,8 @@ $(function(){
             success: function(data) {
                 var $holder = $('<div></div>').html(data);
                 var $table = $holder.find('table.accounting');
-                $('table.accounting').html($table.html());
-                $('#delete-row-button').addClass("disabled");
-                $('#edit-row-button').addClass("disabled");
+                $('table.accounting').html($table.html()).fixeHeader();
+                $('.on-select-multiple,.on-select-single').addClass("disabled");
             }
         });
     });
@@ -197,33 +198,6 @@ $(function(){
         computePercentage();
         toggleCategories();
     });
-
-
-    $('table.accounting').on('click', 'tr.accounting-row',function(e){
-        if(e.target.nodeName != "A"){
-            if(e.target.nodeName != "INPUT"){
-                var $checkbox = $(this).find('td').first().find('input[type=checkbox]');
-                $checkbox.prop("checked", !$checkbox.prop("checked"));
-            }
-            $(this).toggleClass("selected");
-             var $checked = $('table.accounting').find('input[type=checkbox]:checked');
-             var $deleteButton = $('#delete-row-button');
-             var $editButton = $('#edit-row-button');
-
-             if($checked.length > 0){
-                $deleteButton.removeClass("disabled");
-             }else if(!$deleteButton.hasClass('disabled')){
-                $deleteButton.addClass("disabled");
-             }
-
-             if($checked.length == 1){
-                 $editButton.removeClass("disabled");
-              }else if(!$editButton.hasClass('disabled')){
-                 $editButton.addClass("disabled");
-              }
-        }
-    });
-
 
 
 });

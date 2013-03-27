@@ -58,8 +58,12 @@ body{
     padding:10px 15px;
 }
 
-table.accounting.table-bordered{
+table.table-bordered{
     border: none;
+    border-bottom:1px solid #ddd;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
 }
 
 table.accounting thead th{
@@ -67,20 +71,26 @@ table.accounting thead th{
     font-size: 12px;
     padding:2px 4px;
 }
-
+table thead.green th,
 table.accounting.recipe thead th{
     background-color: #dff0d8;
     color:#468847;
     border-color:#A7D1A7;
 }
-
+table thead.red th,
 table.accounting.expense thead th{
     background-color: #f2dede;
     color:#b94a48;
     border-color:#DCA5A5;
 }
-
-
+table thead.blue th{
+    background-color: #d9edf7;
+    color:#3a87ad;
+    border-color:#bce8f1;
+}
+table thead th.check-column{
+    width: 20px;
+}
 table.accounting thead th.day-column{
     min-width: 30px;
 }
@@ -96,58 +106,31 @@ table.accounting thead th.treasury-column{
 }
 
 
-table.accounting tr.important{
+table tr.important td{
     font-weight:bold;
     background-color: #d9edf7;
+    color:#3a87ad;
+    border-color:#bce8f1 !important;
 }
 
-table.accounting tr.reports td{
-    background-color:#fcf8e3;
-    color:#c09853;
+table tr.reports td{
+    background-color:#fcf8e3 !important;
+    color:#c09853 !important;
 }
 
-table.accounting tr td.numeric{
+table tr td.numeric{
     text-align: right;
     white-space:nowrap;
 }
-table.accounting tr.selected td{
-    background-color:#0088cc;
-    color:#FFF;
+table tr.selected td{
+    background-color:#0088cc !important;
+    color:#FFF !important;
 }
-table.accounting tr.selected td a{
+table tr.selected td a{
     color:#FFF;
 }
 .capitalize:first-letter{
     text-transform: uppercase;
-}
-
-ul.accounting-books{
-    list-style: none;
-}
-
-ul.accounting-books li{
-    display: inline-block;
-    margin:20px;
-}
-
-ul.accounting-books li a{
-    display: block;
-    background: url('../images/book.png') no-repeat;
-    width:128px;
-    height:128px;
-}
-
-ul.accounting-books li a span{
-    display: block;
-    color:#FFF;
-    font-weight: bold;
-    font-size: 18px;
-    line-height:128px;
-    text-align: center;
-}
-
-ul.accounting-books li a:hover{
-    text-decoration: none;
 }
 
 .modal.large{

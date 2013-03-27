@@ -85,7 +85,7 @@
             </tr>
         }
         @for(accountingRow <- accountingRows) {
-            <tr class="accounting-row">
+            <tr>
                 <td>@if(accountingRow.date != null){@accountingRow.date.format("dd")}</td>
                 <td class="capitalize">@accountingRow.label</td>
                 @if(i == 0){
