@@ -14,8 +14,15 @@
                         <li class="divider-vertical"></li>
                         <li><a href="#">@Messages.get("menu.fixedAssets")</a></li>
                         <li class="divider-vertical"></li>
-                        <li><a href="#">@Messages.get("menu.settings")</a></li>
+                    </ul>
+                    <ul class="nav pull-right">
+                        <li class="welcome"><i class="icon-user"></i>&nbsp;@Messages.get("menu.welcome", Secured.getConnectedUser.username)</li>
                         <li class="divider-vertical"></li>
+                        <li><a href="#"><i class="icon-cog"></i>&nbsp;@Messages.get("menu.settings")</a></li>
+                        <li class="divider-vertical"></li>
+                        <li><a href="#"><i class="icon-hdd"></i>&nbsp;@Messages.get("menu.backups")</a></li>
+                        <li class="divider-vertical"></li>
+                        <li><a href="@routes.ApplicationController.logout()"><i class="icon-off"></i></a></li>
                     </ul>
                 </div>
             </div>

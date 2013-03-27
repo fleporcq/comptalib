@@ -32,10 +32,12 @@ error.accountingRow.category.mustBeEmpty = Ne doit pas être renseigné
 # --- Menu
 menu.accountings = Comptes
 menu.settings = Paramètres
+menu.backups = Sauvegardes
 menu.accountingBook = Livre des recettes/dépenses
 menu.exports = Exports
 menu.bankMerges = Rapprochements bancaires
 menu.fixedAssets = Immobilisations
+menu.welcome = Bienvenue {0}
 
 # --- Actions
 action.save=Enregistrer

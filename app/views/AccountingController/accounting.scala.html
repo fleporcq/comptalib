@@ -21,6 +21,11 @@
                         <li @if(request.uri == routes.ExportController.export(year).url){class="active"}><a href="@routes.ExportController.export(year)">@Messages.get("menu.exports")</a></li>
                         <li class="divider-vertical"></li>
                     </ul>
+                    <ul class="nav pull-right">
+                        <li class="welcome"><i class="icon-user"></i>&nbsp;@Messages.get("menu.welcome", Secured.getConnectedUser.username)</li>
+                        <li class="divider-vertical"></li>
+                        <li><a href="@routes.ApplicationController.logout()"><i class="icon-off"></i></a></li>
+                    </ul>
                 </div>
             </div>
             <div class="container container-sub">
