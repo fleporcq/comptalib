@@ -9,15 +9,15 @@
             <a href="#" class="dropdown-toggle brand" data-toggle="dropdown">@Messages.get("accounting.summary")&nbsp;<b class="caret"></b></a>
             <ul class="dropdown-menu">
                 @for(m <- 1 to 12) {
-                    <li><a href="@routes.AccountingController.byMonth(rowType,year,m)">@{DateUtils.month(m)}</a></li>
+                    <li><a href="@routes.AccountingRowController.byMonth(rowType,year,m)">@{DateUtils.month(m)}</a></li>
                 }
-                <li><a href="@routes.AccountingController.summary(rowType,year)">@Messages.get("accounting.summary")</a></li>
+                <li><a href="@routes.AccountingRowController.summary(rowType,year)">@Messages.get("accounting.summary")</a></li>
             </ul>
         </li>
     </ul>
     <ul class="nav nav-pills">
-        <li @if(rowType==ERowType.RECIPE.lower()){class="active"}><a id="recipe-button" href="@routes.AccountingController.summary(ERowType.RECIPE.lower(),year)">@Messages.get("rowType.recipe")</a></li>
-        <li @if(rowType==ERowType.EXPENSE.lower()){class="active"}><a id="expense-button" href="@routes.AccountingController.summary(ERowType.EXPENSE.lower(),year)">@Messages.get("rowType.expense")</a></li>
+        <li @if(rowType==ERowType.RECIPE.lower()){class="active"}><a id="recipe-button" href="@routes.AccountingRowController.summary(ERowType.RECIPE.lower(),year)">@Messages.get("rowType.recipe")</a></li>
+        <li @if(rowType==ERowType.EXPENSE.lower()){class="active"}><a id="expense-button" href="@routes.AccountingRowController.summary(ERowType.EXPENSE.lower(),year)">@Messages.get("rowType.expense")</a></li>
     </ul>
     <ul class="nav">
         @if(rowType==ERowType.EXPENSE.lower()){
@@ -32,9 +32,9 @@
             <div class="container">
                 <ul class="nav">
                     @for(m <- 1 to 12) {
-                        <li><a href="@routes.AccountingController.byMonth(rowType,year,m)" class="capitalize">@{DateUtils.shortMonth(m)}</a></li>
+                        <li><a href="@routes.AccountingRowController.byMonth(rowType,year,m)" class="capitalize">@{DateUtils.shortMonth(m)}</a></li>
                     }
-                    <li class="active"><a href="@routes.AccountingController.summary(rowType,year)">@Messages.get("accounting.summary")</a></li>
+                    <li class="active"><a href="@routes.AccountingRowController.summary(rowType,year)">@Messages.get("accounting.summary")</a></li>
                 </ul>
             </div>
         </div>
@@ -50,7 +50,7 @@
 }
 
 
-@views.html.AccountingController.accounting(year, toolbar, footer, styles, scripts) {
+@views.html.AccountingRowController.accounting(year, toolbar, footer, styles, scripts) {
     <table class="table table-bordered table-striped table-hover table-fixed-header accounting @rowType">
         <thead>
             <tr>
@@ -93,7 +93,7 @@
         <tbody>
             @for(month <- 1 to 12) {
                 <tr class="accounting-row">
-                    <td class="capitalize"><a href="@routes.AccountingController.byMonth(rowType, year, month)">@DateUtils.month(month)</a></td>
+                    <td class="capitalize"><a href="@routes.AccountingRowController.byMonth(rowType, year, month)">@DateUtils.month(month)</a></td>
                     @for(treasury <- treasuries) {
                         <td class="numeric">
                             @defining(treasury.monthSum(year, month)) { monthSum =>

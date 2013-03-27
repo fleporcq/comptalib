@@ -10,15 +10,15 @@ import play.mvc.Result;
 import play.mvc.Security;
 import utils.CurrencyUtils;
 import utils.DateUtils;
-import views.html.AccountingController.byMonth;
-import views.html.AccountingController.edit;
-import views.html.AccountingController.summary;
+import views.html.AccountingRowController.byMonth;
+import views.html.AccountingRowController.edit;
+import views.html.AccountingRowController.summary;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
 @Security.Authenticated(Secured.class)
-public class AccountingController extends Controller {
+public class AccountingRowController extends Controller {
 
     public static Result january(int year) {
         return byMonth(ERowType.RECIPE.lower(), year, 1);
@@ -98,11 +98,11 @@ public class AccountingController extends Controller {
             if(accountingRow.id == null){
                 accountingRow.save();
                 flash("success", Messages.get("alert.accounting.save.success", new SimpleDateFormat("dd/MM/yyyy").format(accountingRow.date), accountingRow.label, CurrencyUtils.format(accountingRow.getTotalAmount())));
-                return redirect(routes.AccountingController.add(rowType, year, month));
+                return redirect(routes.AccountingRowController.add(rowType, year, month));
             }else{
                 accountingRow.update();
                 flash("success", Messages.get("alert.accounting.update.success", new SimpleDateFormat("dd/MM/yyyy").format(accountingRow.date), accountingRow.label, CurrencyUtils.format(accountingRow.getTotalAmount())));
-                return redirect(routes.AccountingController.edit(accountingRow.id));
+                return redirect(routes.AccountingRowController.edit(accountingRow.id));
             }
 
         }
@@ -119,7 +119,7 @@ public class AccountingController extends Controller {
             }
         }
 
-        return redirect(routes.AccountingController.byMonth(rowType, year, month));
+        return redirect(routes.AccountingRowController.byMonth(rowType, year, month));
     }
 
     public static Result edit(Long accountingRowId) {

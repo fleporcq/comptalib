@@ -53,7 +53,7 @@
             @for(accounting <- accountings){
                 <tr class="selectable">
                     <td><input name="accountingIds[]" type="checkbox" value="@accounting.id"></td>
-                    <td><a href="@routes.AccountingController.january(accounting.year)">@{accounting.year}</a></td>
+                    <td><a href="@routes.AccountingRowController.january(accounting.year)">@{accounting.year}</a></td>
                 </tr>
             }
         </tbody>

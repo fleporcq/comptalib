@@ -9,7 +9,7 @@
 
     <h1>@Messages.get("rowType." + rowType)</h1>
 
-    @form(routes.AccountingController.save(rowType, year, month),'class -> "form-horizontal", 'id -> "accountingRow-form") {
+    @form(routes.AccountingRowController.save(rowType, year, month),'class -> "form-horizontal", 'id -> "accountingRow-form") {
 
         @twitterBootstrap.alerts()
         @if(accountingRowForm.hasGlobalErrors){<div class="alert alert-error">@accountingRowForm.globalError.message</div>}

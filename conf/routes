@@ -12,17 +12,17 @@ GET     /logout                                     controllers.ApplicationContr
 GET      /:year/pdf                                  controllers.ExportController.pdf(year:Int)
 GET      /:year/export                               controllers.ExportController.export(year:Int)
 
-GET      /accounting/:year/:month/:rowType            controllers.AccountingController.byMonth(rowType, year:Int, month:Int)
-GET      /accounting/:year                           controllers.AccountingController.january(year:Int)
-GET      /summary/:year/:rowType                     controllers.AccountingController.summary(rowType, year:Int)
-GET      /summary/:year                              controllers.AccountingController.recipeSummary(year:Int)
+GET      /accounting/:year/:month/:rowType            controllers.AccountingRowController.byMonth(rowType, year:Int, month:Int)
+GET      /accounting/:year                           controllers.AccountingRowController.january(year:Int)
+GET      /summary/:year/:rowType                     controllers.AccountingRowController.summary(rowType, year:Int)
+GET      /summary/:year                              controllers.AccountingRowController.recipeSummary(year:Int)
 
 
 
-GET      /accounting/:year/:month/:rowType/add        controllers.AccountingController.add(rowType, year:Int, month:Int)
-POST     /accounting/:year/:month/:rowType/save       controllers.AccountingController.save(rowType, year:Int, month:Int)
-POST     /accounting/:year/:month/:rowType/delete     controllers.AccountingController.delete(rowType, year:Int, month:Int)
-GET      /accounting/:accountingRowId/edit           controllers.AccountingController.edit(accountingRowId:Long)
+GET      /accounting/:year/:month/:rowType/add        controllers.AccountingRowController.add(rowType, year:Int, month:Int)
+POST     /accounting/:year/:month/:rowType/save       controllers.AccountingRowController.save(rowType, year:Int, month:Int)
+POST     /accounting/:year/:month/:rowType/delete     controllers.AccountingRowController.delete(rowType, year:Int, month:Int)
+GET      /accounting/:accountingRowId/edit           controllers.AccountingRowController.edit(accountingRowId:Long)
 
 GET      /messages.js                               controllers.ApplicationController.jsMessages
 # Map static resources from the /public folder to the /assets URL path
