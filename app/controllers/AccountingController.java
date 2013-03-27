@@ -32,6 +32,9 @@ public class AccountingController extends Controller {
         if (!DateUtils.checkYear(year) || !DateUtils.checkMonth(month)) {
             return notFound();
         }
+        if(Accounting.findByYear(year) == null){
+            return notFound();
+        }
         List<AccountingRow> accountingRows = AccountingRow.month(eRowType, year, month);
         ParentCategoryList parentCategories = new ParentCategoryList(Category.findParents(eRowType));
         List<Treasury> treasuries = Treasury.findByType(eRowType);
@@ -50,6 +53,9 @@ public class AccountingController extends Controller {
         if (!DateUtils.checkYear(year)) {
             return notFound();
         }
+        if(Accounting.findByYear(year) == null){
+            return notFound();
+        }
         ParentCategoryList parentCategories = new ParentCategoryList(Category.findParents(eRowType));
         List<Treasury> treasuries = Treasury.findByType(eRowType);
 
@@ -64,6 +70,9 @@ public class AccountingController extends Controller {
         if (!DateUtils.checkYear(year) || !DateUtils.checkMonth(month)) {
             return notFound();
         }
+        if(Accounting.findByYear(year) == null){
+            return notFound();
+        }
         Form<AccountingRowFormData> accountingRowForm = Form.form(AccountingRowFormData.class);
         return ok(edit.render(rowType, year, month, accountingRowForm));
 
@@ -76,7 +85,9 @@ public class AccountingController extends Controller {
         if (!DateUtils.checkYear(year) || !DateUtils.checkMonth(month)) {
             return notFound();
         }
-
+        if(Accounting.findByYear(year) == null){
+            return notFound();
+        }
         Form<AccountingRowFormData> accountingRowForm = Form.form(AccountingRowFormData.class).bindFromRequest();
 
         if (accountingRowForm.hasErrors()) {
@@ -103,7 +114,7 @@ public class AccountingController extends Controller {
         for (Map.Entry<String, String> entry : form.data().entrySet()){
             String key = entry.getKey();
             if(key != null && key.startsWith("accountingRowIds[")){
-                AccountingRow accountingRow = AccountingRow.find.byId(Long.valueOf(entry.getValue()));
+                AccountingRow accountingRow = AccountingRow.findById(Long.valueOf(entry.getValue()));
                 accountingRow.delete();
             }
         }
@@ -115,7 +126,7 @@ public class AccountingController extends Controller {
         if(accountingRowId == null){
             notFound();
         }
-        AccountingRow accountingRow = AccountingRow.find.byId(accountingRowId);
+        AccountingRow accountingRow = AccountingRow.findById(accountingRowId);
         if(accountingRow == null){
             notFound();
         }

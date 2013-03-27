@@ -1,6 +1,7 @@
 package models;
 
 import com.avaje.ebean.ExpressionList;
+import controllers.Secured;
 import forms.AccountingRowFormData;
 import org.joda.time.DateTime;
 import play.db.ebean.Model;
@@ -19,6 +20,9 @@ public class AccountingRow extends Model {
 
     @Id
     public Long id;
+
+    @ManyToOne
+    public Accounting accounting;
 
     public String label;
 
@@ -41,6 +45,9 @@ public class AccountingRow extends Model {
 
     public AccountingRow(AccountingRowFormData form) {
         this.id = form.id;
+
+        this.accounting = Accounting.findByYear(form.year);
+
         this.label = form.label;
 
         if (form.personalWithdrawal != null) {
@@ -64,6 +71,10 @@ public class AccountingRow extends Model {
         Treasury treasury = new Treasury();
         treasury.id = form.treasuryId;
         this.treasury = treasury;
+    }
+
+    public static AccountingRow findById(Long id) {
+        return find.where().eq("id", id).eq("accounting.user", Secured.getConnectedUser()).findUnique();
     }
 
     public static List<AccountingRow> month(ERowType rowType, int year, int month) {
@@ -100,7 +111,7 @@ public class AccountingRow extends Model {
         DateTime firstDayOfMonth = new DateTime(year, startMonth, 1, 0, 0);
         DateTime lastDayOfMonth = new DateTime((endMonth < 12) ? year : year + 1, (endMonth < 12) ? endMonth + 1 : 1, 1, 0, 0);
 
-        ExpressionList expressionList = find.where().eq("rowType", rowType).between("date", firstDayOfMonth, lastDayOfMonth);
+        ExpressionList expressionList = find.where().eq("accounting.user", Secured.getConnectedUser()).eq("rowType", rowType).between("date", firstDayOfMonth, lastDayOfMonth);
 
         if (category != null) {
             expressionList = expressionList.eq("category", category);

@@ -1,30 +1,38 @@
 package models;
 
-import com.avaje.ebean.Ebean;
-import com.avaje.ebean.Query;
-import com.avaje.ebean.RawSql;
-import com.avaje.ebean.RawSqlBuilder;
-import com.avaje.ebean.annotation.Sql;
+import controllers.Secured;
+import play.db.ebean.Model;
 import utils.CurrencyUtils;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.List;
 
 @Entity
-@Sql
-public class Accounting {
+public class Accounting extends Model {
 
+    @Id
+    public Long id;
+
+    @Column(length = 4)
     public int year;
 
+    @ManyToOne
+    public User user;
+
+    public static Finder<Long, Accounting> find = new Finder<Long, Accounting>(Long.class, Accounting.class);
+
     public static List<Accounting> all() {
-        String sql = "SELECT YEAR(date) AS year FROM accounting_row GROUP BY year ORDER BY year ASC";
-        RawSql rawSql = RawSqlBuilder.parse(sql).create();
-        Query<Accounting> query = Ebean.find(Accounting.class);
-        return query.setRawSql(rawSql).findList();
+        return find.where().eq("user", Secured.getConnectedUser()).findList();
     }
 
+    public static Accounting findByYear(int year) {
+        return find.where().eq("year", year).eq("user", Secured.getConnectedUser()).findUnique();
+    }
 
     public static BigDecimal personalWithdrawalMonthSum(int year, int month) {
         List<AccountingRow> accountingRows = AccountingRow.month(ERowType.EXPENSE, year, month);

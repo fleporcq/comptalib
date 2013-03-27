@@ -3,8 +3,16 @@
 
 # --- !Ups
 
+create table accounting (
+  id                        bigint not null,
+  year                      integer(4),
+  user_id                   bigint,
+  constraint pk_accounting primary key (id))
+;
+
 create table accounting_row (
   id                        bigint not null,
+  accounting_id             bigint,
   label                     varchar(255),
   amount                    bigint,
   personal_withdrawal       bigint,
@@ -42,6 +50,8 @@ create table user (
   constraint pk_user primary key (id))
 ;
 
+create sequence accounting_seq;
+
 create sequence accounting_row_seq;
 
 create sequence category_seq;
@@ -50,18 +60,24 @@ create sequence treasury_seq;
 
 create sequence user_seq;
 
-alter table accounting_row add constraint fk_accounting_row_category_1 foreign key (category_id) references category (id) on delete restrict on update restrict;
-create index ix_accounting_row_category_1 on accounting_row (category_id);
-alter table accounting_row add constraint fk_accounting_row_treasury_2 foreign key (treasury_id) references treasury (id) on delete restrict on update restrict;
-create index ix_accounting_row_treasury_2 on accounting_row (treasury_id);
-alter table category add constraint fk_category_parent_3 foreign key (parent_id) references category (id) on delete restrict on update restrict;
-create index ix_category_parent_3 on category (parent_id);
+alter table accounting add constraint fk_accounting_user_1 foreign key (user_id) references user (id) on delete restrict on update restrict;
+create index ix_accounting_user_1 on accounting (user_id);
+alter table accounting_row add constraint fk_accounting_row_accounting_2 foreign key (accounting_id) references accounting (id) on delete restrict on update restrict;
+create index ix_accounting_row_accounting_2 on accounting_row (accounting_id);
+alter table accounting_row add constraint fk_accounting_row_category_3 foreign key (category_id) references category (id) on delete restrict on update restrict;
+create index ix_accounting_row_category_3 on accounting_row (category_id);
+alter table accounting_row add constraint fk_accounting_row_treasury_4 foreign key (treasury_id) references treasury (id) on delete restrict on update restrict;
+create index ix_accounting_row_treasury_4 on accounting_row (treasury_id);
+alter table category add constraint fk_category_parent_5 foreign key (parent_id) references category (id) on delete restrict on update restrict;
+create index ix_category_parent_5 on category (parent_id);
 
 
 
 # --- !Downs
 
 SET REFERENTIAL_INTEGRITY FALSE;
+
+drop table if exists accounting;
 
 drop table if exists accounting_row;
 
@@ -72,6 +88,8 @@ drop table if exists treasury;
 drop table if exists user;
 
 SET REFERENTIAL_INTEGRITY TRUE;
+
+drop sequence if exists accounting_seq;
 
 drop sequence if exists accounting_row_seq;
 

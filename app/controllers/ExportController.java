@@ -1,9 +1,6 @@
 package controllers;
 
-import models.Category;
-import models.ERowType;
-import models.ParentCategoryList;
-import models.Treasury;
+import models.*;
 import play.mvc.Controller;
 import play.mvc.Result;
 import util.pdf.PDF;
@@ -16,6 +13,9 @@ import java.util.List;
 public class ExportController extends Controller {
     public static Result pdf(int year) {
         if (!DateUtils.checkYear(year)) {
+            return notFound();
+        }
+        if(Accounting.findByYear(year) == null){
             return notFound();
         }
         List<Treasury> expenseTreasuries = Treasury.findByType(ERowType.EXPENSE);

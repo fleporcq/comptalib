@@ -12,8 +12,8 @@ public class Secured extends Security.Authenticator {
         return ctx.session().get("username");
     }
 
-    public User getConnectedUser(){
-        String username = getUsername(Context.current());
+    public static User getConnectedUser(){
+        String username = Context.current().session().get("username");
         User user = null;
         if(username != null){
             user = User.findByUsername(username);

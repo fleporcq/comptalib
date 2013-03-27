@@ -1,8 +1,36 @@
 users:
 
     - !!models.User
+        id: 1
         username: test
         password: 9c62dcb807cfbf7b36d30891b6fb7d016096f3af
+
+    - !!models.User
+        id: 2
+        username: test2
+        password: 9c62dcb807cfbf7b36d30891b6fb7d016096f3af
+
+accountings:
+
+    - !!models.Accounting
+        year: 2011
+        user: !!models.User
+          id: 1
+
+    - !!models.Accounting
+        year: 2012
+        user: !!models.User
+          id: 1
+
+    - !!models.Accounting
+        year: 2011
+        user: !!models.User
+          id: 2
+
+    - !!models.Accounting
+        year: 2012
+        user: !!models.User
+          id: 2
 
 categories:
 
@@ -281,6 +309,7 @@ categories:
         name: Apport SCM ou compte commun
         rowType: EXPENSE
         ordering: 40
+
 
 treasuries:
 
