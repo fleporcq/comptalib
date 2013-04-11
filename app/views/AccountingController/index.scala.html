@@ -1,6 +1,6 @@
 @(accountings: List[models.Accounting])
 @import play.i18n._
-
+@import helper._
 @scripts = {
     <script src="@routes.Assets.at("javascripts/table-fixed-header.js")" type="text/javascript"></script>
     <script src="@routes.Assets.at("javascripts/table-selectable.js")" type="text/javascript"></script>
@@ -34,31 +34,32 @@
             <div class="container container-sub">
                 <div class="nav-collapse collapse">
                     <ul class="nav">
-                        <li><a class="on-select-multiple disabled" href="#"><i class="icon-trash"></i>&nbsp;@Messages.get("action.delete")</a></li>
-                        <li><a class="on-select-multiple disabled" href="#"><i class="icon-lock"></i>&nbsp;@Messages.get("action.lock")</a></li>
+                        <li><a id="delete-row-button" class="on-select-multiple disabled" href="#"><i class="icon-trash"></i>&nbsp;@Messages.get("action.delete")</a></li>
+                        <li><a id="lock-row-button" class="on-select-multiple disabled" href="#"><i class="icon-lock"></i>&nbsp;@Messages.get("action.lock")</a></li>
                         <li><a id="open-row-button" class="on-select-single disabled" href="#"><i class="icon-folder-open"></i>&nbsp;@Messages.get("action.open")</a></li>
-                        <li><a href="#"><i class="icon-asterisk"></i>&nbsp;@Messages.get("action.new")</a></li>
+                        <li><a id="add-row-button" href="@routes.AccountingController.add()"><i class="icon-asterisk"></i>&nbsp;@Messages.get("action.new")</a></li>
                     </ul>
                 </div>
             </div>
         </div>
     </div>
-
-    <table class="table table-bordered table-striped table-hover table-selectable table-fixed-header">
-        <thead class="blue">
-            <tr>
-                <th class="check-column">&nbsp;</th>
-                <th>Année</th>
-            </tr>
-        </thead>
-        <tbody>
-            @for(accounting <- accountings){
-                <tr class="selectable">
-                    <td><input name="accountingIds[]" type="checkbox" value="@accounting.id"></td>
-                    <td><a class="open-row-link" href="@routes.AccountingRowController.january(accounting.year)">@{accounting.year}</a></td>
+    <form method="POST" action="@routes.AccountingController.delete" id="accountings-form">
+        <table class="table table-bordered table-striped table-hover table-selectable table-fixed-header accountings">
+            <thead class="blue">
+                <tr>
+                    <th class="check-column">&nbsp;</th>
+                    <th>Année</th>
                 </tr>
-            }
-        </tbody>
-    </table>
-
+            </thead>
+            <tbody>
+                @for(accounting <- accountings){
+                    <tr class="selectable">
+                        <td><input name="accountingYears[]" type="checkbox" value="@accounting.year"></td>
+                        <td><a class="open-row-link" href="@routes.AccountingRowController.january(accounting.year)">@{accounting.year}</a></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </form>
+    @twitterBootstrap.modal("accounting-modal", Messages.get("title.accounting.add"))
 }

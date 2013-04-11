@@ -1,0 +1,29 @@
+@(accountingForm: Form[forms.AccountingFormData])
+@import java.text.SimpleDateFormat
+@import helper._
+@import play.i18n._
+@implicitFieldConstructor = @{ FieldConstructor(twitterBootstrap.fieldConstructor.render) }
+
+@main("") {
+
+    <h1>@Messages.get("title.accounting.add")</h1>
+
+    @form(routes.AccountingController.save(),'class -> "form-horizontal", 'id -> "accounting-form") {
+
+        @twitterBootstrap.alerts()
+        @if(accountingForm.hasGlobalErrors){<div class="alert alert-error">@accountingForm.globalError.message</div>}
+
+
+
+        @inputText(accountingForm("year"),
+            '_label -> Messages.get("accountingForm.year"),
+            '_help -> Messages.get("constraint.required"),
+            'maxlength -> 4
+        )
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">@Messages.get("action.save")</button>
+        </div>
+
+    }
+}

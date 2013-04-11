@@ -30,7 +30,7 @@ error.accountingRow.personalWithdrawal.mustBeGreaterThanZero = Doit être supér
 error.accountingRow.category.mustBeEmpty = Ne doit pas être renseigné
 
 # --- Menu
-menu.accountings = Comptes
+menu.accountings = Comptabilité
 menu.settings = Paramètres
 menu.backups = Sauvegardes
 menu.accountingBook = Livre des recettes/dépenses
@@ -54,8 +54,11 @@ action.delete=Supprimer
 action.edit=Modifier
 action.accounting.recipe.add=Ajouter une recette
 action.accounting.expense.add=Ajouter une dépense
-action.accounting.recipe.edit=Modifier une recette
-action.accounting.expense.edit=Modifier une dépense
+
+# --- Titles
+title.accounting.recipe.edit=Modifier une recette
+title.accounting.expense.edit=Modifier une dépense
+title.accounting.add=Ajouter une année comptable
 
 # --- Accounting Row
 accountingRow.label=Libellé
@@ -72,14 +75,18 @@ accountingRowForm.category.expense=Poste de dépense
 accountingRowForm.category.recipe=Type de recette
 accountingRowForm.personalWithdrawal=Prélèvement personnel
 
+
+# --- Accounting Form
+accountingForm.year=Année
+
 accounting.monthSum=Totaux du mois
 accounting.fromJanuarySum=Totaux depuis Janvier
 accounting.summary=Récapitulatif
 accountingSummary.month=Mois
 
-alert.accounting.save.success = La ligne suivante a été ajoutée : {0} - {1} : {2}.
-alert.accounting.update.success = La ligne suivante a été modifiée : {0} - {1} : {2}.
-
+alert.accountingRow.save.success = La ligne suivante a été ajoutée : {0} - {1} : {2}.
+alert.accountingRow.update.success = La ligne suivante a été modifiée : {0} - {1} : {2}.
+alert.accounting.save.success = L''année comptable {0} a été créée.
 # --- RowType
 rowType.recipe = Recette
 rowType.expense = Dépense
@@ -89,6 +96,7 @@ rowType.expense.plural = Dépenses
 alert.save.error = Veuillez corriger les erreurs.
 
 confirm.accountingRows.delete = Êtes-vous sûr de vouloir supprimer les lignes sélectionnées ?<br> Attention, cette action est irréversible.
+confirm.accounting.delete = Êtes-vous sûr de vouloir supprimer les années comptables sélectionnées ?<br> Attention, cette action est irréversible.
 
 # --- Impression
 summary.header.recipe = Récapitulatif des recettes

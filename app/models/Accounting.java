@@ -1,13 +1,11 @@
 package models;
 
 import controllers.Secured;
+import forms.AccountingFormData;
 import play.db.ebean.Model;
 import utils.CurrencyUtils;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.List;
@@ -24,10 +22,18 @@ public class Accounting extends Model {
     @ManyToOne
     public User user;
 
+    @OneToMany(mappedBy = "accounting", cascade = CascadeType.ALL)
+    public List<AccountingRow> accountingRows;
+
     public static Finder<Long, Accounting> find = new Finder<Long, Accounting>(Long.class, Accounting.class);
 
+    public Accounting(AccountingFormData form) {
+        this.year = form.year;
+        this.user = Secured.getConnectedUser();
+    }
+
     public static List<Accounting> all() {
-        return find.where().eq("user", Secured.getConnectedUser()).findList();
+        return find.where().eq("user", Secured.getConnectedUser()).orderBy("year DESC").findList();
     }
 
     public static Accounting findByYear(int year) {

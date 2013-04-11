@@ -3,6 +3,9 @@
 # ~~~~
 
 GET      /                                          controllers.AccountingController.index
+POST     /accounting/delete                         controllers.AccountingController.delete
+POST     /accounting/save                           controllers.AccountingController.save
+GET      /accounting/add                           controllers.AccountingController.add
 
 # Authentication
 GET     /login                                      controllers.ApplicationController.login

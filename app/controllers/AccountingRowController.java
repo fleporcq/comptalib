@@ -97,11 +97,11 @@ public class AccountingRowController extends Controller {
             AccountingRow accountingRow = new AccountingRow(accountingRowForm.get());
             if(accountingRow.id == null){
                 accountingRow.save();
-                flash("success", Messages.get("alert.accounting.save.success", new SimpleDateFormat("dd/MM/yyyy").format(accountingRow.date), accountingRow.label, CurrencyUtils.format(accountingRow.getTotalAmount())));
+                flash("success", Messages.get("alert.accountingRow.save.success", new SimpleDateFormat("dd/MM/yyyy").format(accountingRow.date), accountingRow.label, CurrencyUtils.format(accountingRow.getTotalAmount())));
                 return redirect(routes.AccountingRowController.add(rowType, year, month));
             }else{
                 accountingRow.update();
-                flash("success", Messages.get("alert.accounting.update.success", new SimpleDateFormat("dd/MM/yyyy").format(accountingRow.date), accountingRow.label, CurrencyUtils.format(accountingRow.getTotalAmount())));
+                flash("success", Messages.get("alert.accountingRow.update.success", new SimpleDateFormat("dd/MM/yyyy").format(accountingRow.date), accountingRow.label, CurrencyUtils.format(accountingRow.getTotalAmount())));
                 return redirect(routes.AccountingRowController.edit(accountingRow.id));
             }
 
