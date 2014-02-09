@@ -28,6 +28,8 @@ error.pattern=Doit satisfaire {0}
 error.accountingRow.personalWithdrawal.mustBeLowerThanAmount = Représente plus de 100% du montant
 error.accountingRow.personalWithdrawal.mustBeGreaterThanZero = Doit être supérieure à 0
 error.accountingRow.category.mustBeEmpty = Ne doit pas être renseigné
+error.accounting.year.alreadyExist = Cette année comptable existe déjà
+error.accounting.year.invalid = L''année doit être comprise entre 1000 et 3000
 
 # --- Menu
 menu.accountings = Comptabilité
@@ -56,7 +58,9 @@ action.accounting.recipe.add=Ajouter une recette
 action.accounting.expense.add=Ajouter une dépense
 
 # --- Titles
+title.accounting.recipe.add=Ajouter une recette
 title.accounting.recipe.edit=Modifier une recette
+title.accounting.expense.add=Ajouter une dépense
 title.accounting.expense.edit=Modifier une dépense
 title.accounting.add=Ajouter une année comptable
 
