@@ -103,23 +103,6 @@ $(function(){
         $('#accountingRow-form').submit();
     });
 
-    $('body').on('keypress', function(e){
-        if(!$(e.target).is(':input')){
-            var code = (e.keyCode ? e.keyCode : e.which);
-            if(code == 43) {
-                $('#add-row-button').trigger('click');
-            }
-            if(code == 114) {
-                location.href = $('#recipe-button').attr("href");
-            }
-            if(code == 101) {
-                location.href = $('#expense-button').attr("href");
-            }
-
-        }
-
-    });
-
     $('#accountingRow-modal').on('keypress', '#accountingRow-form',function(e){
 
         var code = (e.keyCode ? e.keyCode : e.which);
