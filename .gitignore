@@ -9,6 +9,7 @@ dist
 .idea_modules
 .settings
 atlassian-ide-plugin.xml
-playdb.lock.db
-playdb.h2.db
-playdb.trace.db
+data/comptalib.lock.db
+data/comptalib.h2.db
+data/comptalib.trace.db
+conf/evolutions
