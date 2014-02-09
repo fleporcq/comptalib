@@ -1,5 +1,6 @@
-@(year: Int)
+@(year: Int, month: Int, onlySummary: Boolean)
 @import play.i18n._
+@import utils.DateUtils
 @styles = {
     <style type="text/css">
         body{
@@ -27,14 +28,36 @@
     <script type="text/javascript">
         PDFJS.disableWorker = true;
         $(function(){
-            pdfViewer.render("@routes.ExportController.pdf(year)");
+            pdfViewer.render("@routes.ExportController.pdf(year, month, onlySummary)");
         });
     </script>
 }
 
 @toolbar = {
     <ul class="nav">
-        <li><a href="@routes.ExportController.pdf(year)"><i class="icon-download-alt"></i>&nbsp;@Messages.get("action.saveAs")</a></li>
+        <li class="dropdown">
+            @if(month > 0){
+                <a href="#" class="dropdown-toggle brand" data-toggle="dropdown">@DateUtils.month(month)&nbsp;<b class="caret"></b></a>
+            }
+            @if(month == 0 && !onlySummary){
+                <a href="#" class="dropdown-toggle brand" data-toggle="dropdown">@Messages.get("accounting.all")&nbsp;<b class="caret"></b></a>
+            }
+            @if(month == 0 && onlySummary){
+                <a href="#" class="dropdown-toggle brand" data-toggle="dropdown">@Messages.get("accounting.summary")&nbsp;<b class="caret"></b></a>
+            }
+
+            <ul class="dropdown-menu">
+                <li><a href="@routes.ExportController.exportYear(year)">@Messages.get("accounting.all")</a></li>
+                @for(m <- 1 to 12) {
+                    <li><a href="@routes.ExportController.exportMonth(year, m)">@{DateUtils.month(m)}</a></li>
+                }
+                <li><a href="@routes.ExportController.exportSummary(year)">@Messages.get("accounting.summary")</a></li>
+            </ul>
+
+        </li>
+    </ul>
+    <ul class="nav">
+        <li><a href="@routes.ExportController.saveAsPdf(year, month, onlySummary)"><i class="icon-download-alt"></i>&nbsp;@Messages.get("action.saveAs")</a></li>
     </ul>
 }
 

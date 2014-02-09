@@ -1,4 +1,4 @@
-@(year: Int, recipePages: List[ParentCategoryList], recipeTreasuries: List[Treasury], expensePages: List[ParentCategoryList], expenseTreasuries: List[Treasury])
+@(year: Int, month: Int, onlySummary: Boolean,  recipePages: List[ParentCategoryList], recipeTreasuries: List[Treasury], expensePages: List[ParentCategoryList], expenseTreasuries: List[Treasury])
 @import utils.DateUtils
 @import utils.CurrencyUtils
 @import play.i18n._
@@ -12,18 +12,28 @@
 
         <div class="page-footer"><span class="page-current">&nbsp;</span>/<span class="page-count">&nbsp;</span></div>
 
-        @for(month <- 1 to 12) {
+        @if(month == 0 && !onlySummary){
+            @for(month <- 1 to 12) {
+                <div class="page-header">@Messages.get("month.header.recipe") @DateUtils.month(month) @year</div>
+                @views.html.ExportController.byMonth(ERowType.RECIPE, year, month, AccountingRow.month(ERowType.RECIPE,year, month) ,recipePages, recipeTreasuries)
+                <div class="page-header">@Messages.get("month.header.expense") @DateUtils.month(month) @year</div>
+                @views.html.ExportController.byMonth(ERowType.EXPENSE, year, month, AccountingRow.month(ERowType.EXPENSE,year, month) ,expensePages, expenseTreasuries)
+            }
+        }
+
+        @if(month > 0){
             <div class="page-header">@Messages.get("month.header.recipe") @DateUtils.month(month) @year</div>
             @views.html.ExportController.byMonth(ERowType.RECIPE, year, month, AccountingRow.month(ERowType.RECIPE,year, month) ,recipePages, recipeTreasuries)
             <div class="page-header">@Messages.get("month.header.expense") @DateUtils.month(month) @year</div>
             @views.html.ExportController.byMonth(ERowType.EXPENSE, year, month, AccountingRow.month(ERowType.EXPENSE,year, month) ,expensePages, expenseTreasuries)
         }
+        @if(month == 0){
+            <div class="page-header">@Messages.get("summary.header.recipe") @year</div>
+            @views.html.ExportController.summary(ERowType.RECIPE, year, recipePages, recipeTreasuries)
 
-        <div class="page-header">@Messages.get("summary.header.recipe") @year</div>
-        @views.html.ExportController.summary(ERowType.RECIPE, year, recipePages, recipeTreasuries)
-
-        <div class="page-header">@Messages.get("summary.header.expense") @year</div>
-        @views.html.ExportController.summary(ERowType.EXPENSE, year, expensePages, expenseTreasuries)
+            <div class="page-header">@Messages.get("summary.header.expense") @year</div>
+            @views.html.ExportController.summary(ERowType.EXPENSE, year, expensePages, expenseTreasuries)
+        }
 
     </body>
 </html>

@@ -18,7 +18,7 @@
                         <li class="divider-vertical"></li>
                         @*<li><a href="#">@Messages.get("menu.bankMerges")</a></li>
                         <li class="divider-vertical"></li>*@
-                        <li @if(request.uri == routes.ExportController.export(year).url){class="active"}><a href="@routes.ExportController.export(year)">@Messages.get("menu.exports")</a></li>
+                        <li @if(request.uri.substring(request.uri.lastIndexOf("/")+1) == "export"){class="active"}><a href="@routes.ExportController.exportYear(year)">@Messages.get("menu.exports")</a></li>
                         <li class="divider-vertical"></li>
                     </ul>
                     <ul class="nav pull-right">

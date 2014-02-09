@@ -2,31 +2,36 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
-GET      /                                          controllers.AccountingController.index
-POST     /accounting/delete                         controllers.AccountingController.delete
-POST     /accounting/save                           controllers.AccountingController.save
-GET      /accounting/add                           controllers.AccountingController.add
+GET         /                                               controllers.AccountingController.index
+POST        /accounting/delete                              controllers.AccountingController.delete
+POST        /accounting/save                                controllers.AccountingController.save
+GET         /accounting/add                                 controllers.AccountingController.add
 
 # Authentication
-GET     /login                                      controllers.ApplicationController.login
-POST    /login                                      controllers.ApplicationController.authenticate
-GET     /logout                                     controllers.ApplicationController.logout
+GET         /login                                          controllers.ApplicationController.login
+POST        /login                                          controllers.ApplicationController.authenticate
+GET         /logout                                         controllers.ApplicationController.logout
 
-GET      /:year/pdf                                  controllers.ExportController.pdf(year:Int)
-GET      /:year/export                               controllers.ExportController.export(year:Int)
+GET         /:year/:month/:onlySummary/pdf                  controllers.ExportController.pdf(year:Int, month:Int, onlySummary:Boolean)
 
-GET      /accounting/:year/:month/:rowType            controllers.AccountingRowController.byMonth(rowType, year:Int, month:Int)
-GET      /accounting/:year                           controllers.AccountingRowController.january(year:Int)
-GET      /summary/:year/:rowType                     controllers.AccountingRowController.summary(rowType, year:Int)
-GET      /summary/:year                              controllers.AccountingRowController.recipeSummary(year:Int)
-
+GET         /:year/:month/saveAsPdf                         controllers.ExportController.saveAsPdf(year:Int, month:Int, onlySummary:Boolean)
+GET         /:year/summary/export                           controllers.ExportController.exportSummary(year:Int)
+GET         /:year/:month/export                            controllers.ExportController.exportMonth(year:Int, month:Int)
+GET         /:year/export                                   controllers.ExportController.exportYear(year:Int)
 
 
-GET      /accounting/:year/:month/:rowType/add        controllers.AccountingRowController.add(rowType, year:Int, month:Int)
-POST     /accounting/:year/:month/:rowType/save       controllers.AccountingRowController.save(rowType, year:Int, month:Int)
-POST     /accounting/:year/:month/:rowType/delete     controllers.AccountingRowController.delete(rowType, year:Int, month:Int)
-GET      /accounting/:accountingRowId/edit           controllers.AccountingRowController.edit(accountingRowId:Long)
+GET         /accounting/:year/:month/:rowType               controllers.AccountingRowController.byMonth(rowType, year:Int, month:Int)
+GET         /accounting/:year                               controllers.AccountingRowController.january(year:Int)
+GET         /summary/:year/:rowType                         controllers.AccountingRowController.summary(rowType, year:Int)
+GET         /summary/:year                                  controllers.AccountingRowController.recipeSummary(year:Int)
 
-GET      /messages.js                               controllers.ApplicationController.jsMessages
+
+
+GET         /accounting/:year/:month/:rowType/add           controllers.AccountingRowController.add(rowType, year:Int, month:Int)
+POST        /accounting/:year/:month/:rowType/save          controllers.AccountingRowController.save(rowType, year:Int, month:Int)
+POST        /accounting/:year/:month/:rowType/delete        controllers.AccountingRowController.delete(rowType, year:Int, month:Int)
+GET         /accounting/:accountingRowId/edit               controllers.AccountingRowController.edit(accountingRowId:Long)
+
+GET         /messages.js                                    controllers.ApplicationController.jsMessages
 # Map static resources from the /public folder to the /assets URL path
-GET     /assets/*file                               controllers.Assets.at(path="/public", file)
+GET         /assets/*file                                   controllers.Assets.at(path="/public", file)
