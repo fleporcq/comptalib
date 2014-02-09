@@ -86,11 +86,13 @@ accountingForm.year=Année
 accounting.monthSum=Totaux du mois
 accounting.fromJanuarySum=Totaux depuis Janvier
 accounting.summary=Récapitulatif
+accounting.all=Année complète
 accountingSummary.month=Mois
 
 alert.accountingRow.save.success = La ligne suivante a été ajoutée : {0} - {1} : {2}.
 alert.accountingRow.update.success = La ligne suivante a été modifiée : {0} - {1} : {2}.
 alert.accounting.save.success = L''année comptable {0} a été créée.
+
 # --- RowType
 rowType.recipe = Recette
 rowType.expense = Dépense
@@ -111,8 +113,13 @@ month.header.expense = Dépenses
 # --- Identification
 alert.logout.success = Vous avez été déconnecté.
 alert.login.error = Nom d''utilisateur ou mot de passe incorrect.
+
 # --- Login Form
 loginForm.title = Identification
 loginForm.username = Nom d''utilisateur
 loginForm.password = Mot de passe
 loginForm.login = Connexion
+
+# --- Exports
+pdf.filename.prefix = Comptabilite
+pdf.filename.summary = recapitulatif
