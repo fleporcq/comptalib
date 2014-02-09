@@ -16,8 +16,8 @@
         </li>
     </ul>
     <ul class="nav nav-pills">
-        <li @if(rowType==ERowType.RECIPE.lower()){class="active"}><a id="recipe-button" href="@routes.AccountingRowController.summary(ERowType.RECIPE.lower(),year)">@Messages.get("rowType.recipe")</a></li>
-        <li @if(rowType==ERowType.EXPENSE.lower()){class="active"}><a id="expense-button" href="@routes.AccountingRowController.summary(ERowType.EXPENSE.lower(),year)">@Messages.get("rowType.expense")</a></li>
+        <li @if(rowType==ERowType.RECIPE.lower()){class="active"}><a id="recipe-button" href="@routes.AccountingRowController.summary(ERowType.RECIPE.lower(),year)">@Messages.get("rowType.recipe.plural")</a></li>
+        <li @if(rowType==ERowType.EXPENSE.lower()){class="active"}><a id="expense-button" href="@routes.AccountingRowController.summary(ERowType.EXPENSE.lower(),year)">@Messages.get("rowType.expense.plural")</a></li>
     </ul>
 
     @*<ul class="nav">
