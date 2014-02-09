@@ -7,30 +7,20 @@ users:
 
     - !!models.User
         id: 2
-        username: test2
-        password: 9c62dcb807cfbf7b36d30891b6fb7d016096f3af
+        username: lvittecoq
+        password: 4d901e5b5b130d5a3c0f75b6c5b7873c04d1bc61
+
+    - !!models.User
+        id: 3
+        username: jmleporcq
+        password: 7aff97738c31d7636fc814dd3f62119882268b28
 
 accountings:
 
     - !!models.Accounting
-        year: 2011
+        year: 2013
         user: !!models.User
           id: 1
-
-    - !!models.Accounting
-        year: 2012
-        user: !!models.User
-          id: 1
-
-    - !!models.Accounting
-        year: 2011
-        user: !!models.User
-          id: 2
-
-    - !!models.Accounting
-        year: 2012
-        user: !!models.User
-          id: 2
 
 categories:
 
