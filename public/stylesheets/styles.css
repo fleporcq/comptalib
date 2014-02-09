@@ -177,3 +177,8 @@ a.outline-none:focus {
 .nav li a.disabled:hover{
     color:#777;
 }
+
+#accountingRow-modal #accountingRow-form input[type=text]:focus,
+#accountingRow-modal #accountingRow-form select:focus{
+    background:#d9edf7;
+}
