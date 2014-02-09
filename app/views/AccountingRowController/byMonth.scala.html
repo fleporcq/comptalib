@@ -17,8 +17,8 @@
         </li>
     </ul>
     <ul class="nav nav-pills">
-        <li @if(rowType==ERowType.RECIPE.lower()){class="active"}><a id="recipe-button" href="@routes.AccountingRowController.byMonth(ERowType.RECIPE.lower(), year, month)">@Messages.get("rowType.recipe")</a></li>
-        <li @if(rowType==ERowType.EXPENSE.lower()){class="active"}><a id="expense-button" href="@routes.AccountingRowController.byMonth(ERowType.EXPENSE.lower(), year, month)">@Messages.get("rowType.expense")</a></li>
+        <li @if(rowType==ERowType.RECIPE.lower()){class="active"}><a id="recipe-button" href="@routes.AccountingRowController.byMonth(ERowType.RECIPE.lower(), year, month)">@Messages.get("rowType.recipe.plural")</a></li>
+        <li @if(rowType==ERowType.EXPENSE.lower()){class="active"}><a id="expense-button" href="@routes.AccountingRowController.byMonth(ERowType.EXPENSE.lower(), year, month)">@Messages.get("rowType.expense.plural")</a></li>
     </ul>
     <ul class="nav">
         <li><a id="delete-row-button" class="on-select-multiple disabled" href="#"><i class="icon-trash"></i>&nbsp;@Messages.get("action.delete")</a></li>
@@ -54,6 +54,7 @@
     <script type="text/javascript">
         accounting.year = "@year";
         accounting.month = "@DateUtils.month(month)";
+        accounting.type = "@rowType";
     </script>
 }
 

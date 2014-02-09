@@ -70,7 +70,7 @@ $(function(){
    $('#add-row-button').on('click', function(e){
        e.preventDefault();
        var $title = $('#accountingRow-modal').find('.modal-header').find('h3');
-       $('#accountingRow-modal').find('.modal-header').find('h3').text(accounting.month + " " + accounting.year + " - " + Messages("title.accounting.recipe.add"));
+       $('#accountingRow-modal').find('.modal-header').find('h3').text(accounting.month + " " + accounting.year + " - " + Messages("title.accounting." + accounting.type + ".add"));
        $('#accountingRow-modal').find('.modal-body').load($(this).attr('href') + ' #accountingRow-form',function(){
            $('#accountingRow-modal').find('#accountingRow-form').find('.form-actions').remove();
            $('#accountingRow-modal').modal();
@@ -79,7 +79,7 @@ $(function(){
 
     $('body').on('click', '.edit-row-link', function(e){
         e.preventDefault();
-        $('#accountingRow-modal').find('.modal-header').find('h3').text(accounting.month + " " + accounting.year + " - " + Messages("title.accounting.recipe.edit"));
+        $('#accountingRow-modal').find('.modal-header').find('h3').text(accounting.month + " " + accounting.year + " - " + Messages("title.accounting." + accounting.type + ".edit"));
         $('#accountingRow-modal').find('.modal-body').load($(this).attr('href') + ' #accountingRow-form',function(){
             $('#accountingRow-modal').find('#accountingRow-form').find('.form-actions').remove();
             toggleCategories();
@@ -91,9 +91,11 @@ $(function(){
     $('#accountingRow-modal').on('shown', function () {
         $('#accountingRow-modal').find('#accountingRow-form').find(':input[type!=hidden]').first().focus();
     });
+
     $('#accountingRow-modal').on('show', function () {
         initSlider();
     });
+
     $('#accountingRow-modal').on('hidden', function () {
         $('#add-row-button').focus();
     });
