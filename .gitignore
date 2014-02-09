@@ -12,4 +12,4 @@ atlassian-ide-plugin.xml
 data/comptalib.lock.db
 data/comptalib.h2.db
 data/comptalib.trace.db
-conf/evolutions/*
+conf/evolutions/default
