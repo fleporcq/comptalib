@@ -30,16 +30,16 @@
             'maxlength -> 255
         )
 
+        @inputText(accountingRowForm("totalAmount"),
+            '_label -> Messages.get("accountingRowForm.amount"),
+            '_help -> Messages.get("constraint.required")
+        )
+
         @select(
             accountingRowForm("treasuryId"),
             options(Treasury.options(ERowType.value(rowType))),
             '_label -> Messages.get("accountingRowForm.treasury"),
             '_default -> "",
-            '_help -> Messages.get("constraint.required")
-        )
-
-        @inputText(accountingRowForm("totalAmount"),
-            '_label -> Messages.get("accountingRowForm.amount"),
             '_help -> Messages.get("constraint.required")
         )
 
