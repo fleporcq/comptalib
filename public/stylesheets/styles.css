@@ -173,6 +173,7 @@ a.outline-none:focus {
   opacity: 0.4;
   cursor:default;
 }
+
 .nav li a.disabled:hover{
     color:#777;
 }
