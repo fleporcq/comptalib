@@ -27,14 +27,7 @@
         content: element(header);
     }
 }
-/*@page:first{
-@bottom-center {
-                    content: none;
-                }
-@top-center {
-                    content: none;
-                }
-    }*/
+
 .page-header{
     font-size:8pt;
     text-align:center;
@@ -70,12 +63,12 @@ table th{
     vertical-align:bottom;
 }
 table td{
-    padding:1mm;
-    font-size: 8pt;
+    padding:0 1mm 0 1mm;
+    font-size: 6pt;
 }
 table thead th{
     text-align: center;
-    font-size: 7pt;
+    font-size: 6pt;
     padding:1pt;
 }
 
