@@ -12,21 +12,31 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AccountingRowFormData {
+
     public Long id;
+
     public ERowType rowType;
+
     public int year;
+
     public int month;
+
     @Constraints.Required
     public int day;
+
     @Constraints.Required
     public String label;
+
     @Constraints.Required
     public Long treasuryId;
+
     @Constraints.Required
     @Constraints.Max(999999999)
     @Constraints.Min(-999999999)
     public BigDecimal totalAmount;
+
     public BigDecimal personalWithdrawal;
+
     public Long categoryId;
 
     public AccountingRowFormData() {
