@@ -16,8 +16,8 @@
                         <li class="divider-vertical"></li>
                         <li @if(request.uri.startsWith(routes.AccountingRowController.january(year).url) || request.uri.startsWith(routes.AccountingRowController.recipeSummary(year).url)){class="active"}><a href="@routes.AccountingRowController.january(year)">@Messages.get("menu.accountingBook")</a></li>
                         <li class="divider-vertical"></li>
-                        <li><a href="#">@Messages.get("menu.bankMerges")</a></li>
-                        <li class="divider-vertical"></li>
+                        @*<li><a href="#">@Messages.get("menu.bankMerges")</a></li>
+                        <li class="divider-vertical"></li>*@
                         <li @if(request.uri == routes.ExportController.export(year).url){class="active"}><a href="@routes.ExportController.export(year)">@Messages.get("menu.exports")</a></li>
                         <li class="divider-vertical"></li>
                     </ul>

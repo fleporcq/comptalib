@@ -19,11 +19,12 @@
         <li @if(rowType==ERowType.RECIPE.lower()){class="active"}><a id="recipe-button" href="@routes.AccountingRowController.summary(ERowType.RECIPE.lower(),year)">@Messages.get("rowType.recipe")</a></li>
         <li @if(rowType==ERowType.EXPENSE.lower()){class="active"}><a id="expense-button" href="@routes.AccountingRowController.summary(ERowType.EXPENSE.lower(),year)">@Messages.get("rowType.expense")</a></li>
     </ul>
-    <ul class="nav">
+
+    @*<ul class="nav">
         @if(rowType==ERowType.EXPENSE.lower()){
             <li><a href="#"><i class="icon-plus"></i>&nbsp;@Messages.get("action.scmShare")</a></li>
         }
-    </ul>
+    </ul>*@
 }
 
 @footer = {
