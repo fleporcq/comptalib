@@ -1,6 +1,6 @@
 package models;
 
-import com.avaje.ebean.ExpressionList;
+import com.avaje.ebean.*;
 import controllers.Secured;
 import forms.AccountingRowFormData;
 import org.joda.time.DateTime;
@@ -12,6 +12,7 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -71,6 +72,28 @@ public class AccountingRow extends Model {
         Treasury treasury = new Treasury();
         treasury.id = form.treasuryId;
         this.treasury = treasury;
+    }
+
+    public static AccountingRow findByRowTypeAndLabel(ERowType rowType, String label) {
+        return find.where().eq("accounting.user", Secured.getConnectedUser()).eq("rowType", rowType).eq("label", label).orderBy("id DESC").setMaxRows(1).findUnique();
+    }
+
+    public static List<String> findDistinctLabelByRowTypeAndStartWith(ERowType rowType, String startWith) {
+        String sql = "SELECT DISTINCT ar.label " +
+                "FROM accounting_row ar " +
+                "LEFT JOIN accounting a ON ar.accounting_id = a.id AND a.id = :userId " +
+                "WHERE ar.row_type = :rowType AND UPPER(ar.label) LIKE UPPER(:startWith) " +
+                "ORDER BY ar.label ASC";
+        SqlQuery query = Ebean.createSqlQuery(sql);
+        query.setParameter("rowType", rowType)
+        .setParameter("startWith", startWith + "%")
+        .setParameter("userId", Secured.getConnectedUser().id);
+
+        List<String> labels = new ArrayList<String>();
+        for (SqlRow row: query.findList()){
+            labels.add(row.getString("label"));
+        }
+        return labels;
     }
 
     public static AccountingRow findById(Long id) {

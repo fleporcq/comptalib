@@ -1,0 +1,8 @@
+@(accountingRow: AccountingRow)
+{
+    "label": "@accountingRow.label",
+    @if(accountingRow.category != null){
+    "categoryId": "@accountingRow.category.id",
+    }
+    "treasuryId": "@accountingRow.treasury.id"
+}

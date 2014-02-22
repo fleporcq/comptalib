@@ -67,6 +67,46 @@ $(function(){
 
     }
 
+    var initTypeahead = function(){
+
+        $('#accountingRow-modal').find('input#label').typeahead({
+            "source": function(query, process){
+                var start = $.trim(query);
+                if(start != ""){
+                    jsRoutes.controllers.AccountingRowController.autocomplete(accounting.type, start).ajax({
+                        "type": "GET",
+                        "success": function(data) {
+                            process(data);
+                        }
+                    });
+                }
+            },
+            "matcher": function (id) {
+                return true;
+            },
+            "items": 10,
+            "minLength": 1,
+            "updater": function(label){
+                var $modal = $('#accountingRow-modal');
+                jsRoutes.controllers.AccountingRowController.select(accounting.type, label).ajax({
+                    "type": "GET",
+                    "success": function(item) {
+                        $modal.find('select#categoryId').find('option[value=' + item.categoryId + ']').attr("selected", "selected");
+                        $modal.find('select#treasuryId').find('option[value=' + item.treasuryId + ']').attr("selected", "selected");
+                    }
+                });
+                $modal.find('input#totalAmount').focus();
+                return label;
+            }
+        });
+    }
+
+    var initTips = function(){
+        $('.tip').tooltip({
+            "placement": "right"
+        });
+    }
+    initTips();
    $('#add-row-button').on('click', function(e){
        e.preventDefault();
        var $title = $('#accountingRow-modal').find('.modal-header').find('h3');
@@ -94,6 +134,7 @@ $(function(){
 
     $('#accountingRow-modal').on('show', function () {
         initSlider();
+        initTypeahead();
     });
 
     $('#accountingRow-modal').on('hidden', function () {
@@ -126,10 +167,12 @@ $(function(){
                 $form.find('.form-actions').remove();
                 $('#accountingRow-modal').find('.modal-body').html($form);
                 initSlider();
+                initTypeahead();
                 toggleCategories();
                 if($form.find('.alert-success').length > 0){
                     $('table.accounting').load(location.href + ' table.accounting >',function(){
                         $('table.accounting').fixeHeader();
+                        initTips();
                     });
 
                     $('#accountingRow-modal').find('#accountingRow-form').find(':input[type!=hidden]').first().focus();
@@ -173,6 +216,7 @@ $(function(){
                 var $holder = $('<div></div>').html(data);
                 var $table = $holder.find('table.accounting');
                 $('table.accounting').html($table.html()).fixeHeader();
+                initTips();
                 $('.on-select-multiple,.on-select-single').addClass("disabled");
             }
         });
@@ -183,6 +227,7 @@ $(function(){
         computePercentage();
         toggleCategories();
     });
+
 
 
 });

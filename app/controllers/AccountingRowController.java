@@ -12,6 +12,8 @@ import utils.CurrencyUtils;
 import utils.DateUtils;
 import views.html.AccountingRowController.byMonth;
 import views.html.AccountingRowController.edit;
+import views.txt.AccountingRowController.select;
+import views.txt.AccountingRowController.autocomplete;
 import views.html.AccountingRowController.summary;
 
 import java.text.SimpleDateFormat;
@@ -138,6 +140,27 @@ public class AccountingRowController extends Controller {
         int month = accountingRow.getMonth();
         return ok(edit.render(rowType, year, month, accountingRowForm));
     }
+
+    public static Result autocomplete(String rowType, String startWith){
+        ERowType eRowType = ERowType.value(rowType);
+        if (eRowType == null) {
+            return notFound();
+        }
+        List <String> labels = AccountingRow.findDistinctLabelByRowTypeAndStartWith(eRowType, startWith);
+        response().setContentType("application/json");
+        return ok(autocomplete.render(labels));
+    }
+
+    public static Result select(String rowType, String label){
+        ERowType eRowType = ERowType.value(rowType);
+        if (eRowType == null) {
+            return notFound();
+        }
+        AccountingRow accountingRow = AccountingRow.findByRowTypeAndLabel(eRowType, label);
+        response().setContentType("application/json");
+        return ok(select.render(accountingRow));
+    }
+
 
 
 }

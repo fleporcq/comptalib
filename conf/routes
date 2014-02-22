@@ -20,6 +20,8 @@ GET         /:year/:month/export                            controllers.ExportCo
 GET         /:year/export                                   controllers.ExportController.exportYear(year:Int)
 
 
+GET         /accounting/autocomplete/:rowType/:startWith    controllers.AccountingRowController.autocomplete(rowType, startWith:String)
+GET         /accounting/select/:rowType/:label              controllers.AccountingRowController.select(rowType, label:String)
 GET         /accounting/:year/:month/:rowType               controllers.AccountingRowController.byMonth(rowType, year:Int, month:Int)
 GET         /accounting/:year                               controllers.AccountingRowController.january(year:Int)
 GET         /summary/:year/:rowType                         controllers.AccountingRowController.summary(rowType, year:Int)

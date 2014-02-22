@@ -56,6 +56,10 @@
         accounting.month = "@DateUtils.month(month)";
         accounting.type = "@rowType";
     </script>
+    @helper.javascriptRouter("jsRoutes")(
+        routes.javascript.AccountingRowController.autocomplete,
+        routes.javascript.AccountingRowController.select
+    )
 }
 
 @views.html.AccountingRowController.accounting(year, toolbar, footer, styles, scripts) {
@@ -138,13 +142,13 @@
                     <td>@if(accountingRow.date != null){@accountingRow.date.format("dd")}</td>
                     <td class="capitalize"><a class="edit-row-link" href="@routes.AccountingRowController.edit(accountingRow.id)">@accountingRow.label</a></td>
                     @for(treasury <- treasuries) {
-                        <td class="numeric">@if(accountingRow.treasury==treasury){@CurrencyUtils.format(accountingRow.getTotalAmount())}</td>
+                        <td class="numeric">@if(accountingRow.treasury==treasury){<span class="tip" title="@accountingRow.date.format("dd/MM/yyyy") - @accountingRow.label">@CurrencyUtils.format(accountingRow.getTotalAmount())</span>}</td>
                     }
                     @if(ERowType.value(rowType) == ERowType.EXPENSE){
-                        <td class="numeric">@if(accountingRow.personalWithdrawal.intValue() > 0){@CurrencyUtils.format(accountingRow.getPersonalWithdrawal())}</td>
+                        <td class="numeric">@if(accountingRow.personalWithdrawal.intValue() > 0){<span class="tip" title="@accountingRow.date.format("dd/MM/yyyy") - @accountingRow.label">@CurrencyUtils.format(accountingRow.getPersonalWithdrawal())</span>}</td>
                     }
                     @for(leafCategory:Category <- parentCategories.getLeafs()) {
-                        <td class="numeric">@if(accountingRow.category==leafCategory){@CurrencyUtils.format(accountingRow.getAmount())}</td>
+                        <td class="numeric">@if(accountingRow.category==leafCategory){<span class="tip" title="@accountingRow.date.format("dd/MM/yyyy") - @accountingRow.label">@CurrencyUtils.format(accountingRow.getAmount())</span>}</td>
                     }
                 </tr>
             }

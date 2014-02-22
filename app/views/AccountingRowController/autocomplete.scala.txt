@@ -1,0 +1,7 @@
+@(labels: List[String])
+[
+@for((label:String, index) <- labels.zipWithIndex) {
+    "@label"
+    @if(index < labels.size() - 1){,}
+}
+]
